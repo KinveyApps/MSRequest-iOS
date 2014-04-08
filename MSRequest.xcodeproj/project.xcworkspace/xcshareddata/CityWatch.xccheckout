@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>43032896-37CC-42F1-8616-AC089F5C5C04</string>
+	<key>IDESourceControlProjectName</key>
+	<string>CityWatch</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>F0962F11-7BDF-490D-95DF-2D61505A86FE</key>
+		<string>https://github.com/KinveyApps/CityWatch-iOS.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>CityWatch.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>F0962F11-7BDF-490D-95DF-2D61505A86FE</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/KinveyApps/CityWatch-iOS.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>F0962F11-7BDF-490D-95DF-2D61505A86FE</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>F0962F11-7BDF-490D-95DF-2D61505A86FE</string>
+			<key>IDESourceControlWCCName</key>
+			<string>CityWatch-iOS</string>
+		</dict>
+	</array>
+</dict>
+</plist>
