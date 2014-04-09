@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B3743EA18F5997F00C32AD6 /* TypesOfReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3743E918F5997F00C32AD6 /* TypesOfReport.m */; };
+		1B3743EF18F599A400C32AD6 /* AuthenticationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3743EC18F599A400C32AD6 /* AuthenticationHelper.m */; };
+		1B3743F018F599A400C32AD6 /* DataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3743EE18F599A400C32AD6 /* DataHelper.m */; };
 		1B76CBC018F42120004713E1 /* KinveyKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B76CBBF18F42120004713E1 /* KinveyKit.framework */; };
 		1B76CBD218F43896004713E1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CBD118F43896004713E1 /* AppDelegate.m */; };
 		1B76CBD518F43920004713E1 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B76CBD318F43920004713E1 /* MainStoryboard.storyboard */; };
@@ -28,7 +31,6 @@
 		1B76CC0418F43A37004713E1 /* ReportModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CC0318F43A37004713E1 /* ReportModel.m */; };
 		1B76CC0718F43A42004713E1 /* ReportService.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CC0618F43A42004713E1 /* ReportService.m */; };
 		1B76CC0A18F43A52004713E1 /* ReportUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CC0918F43A52004713E1 /* ReportUploader.m */; };
-		1B76CC0D18F43A61004713E1 /* AuthenticationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CC0C18F43A61004713E1 /* AuthenticationHelper.m */; };
 		1B76CC1418F43A74004713E1 /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CC0F18F43A74004713E1 /* UIImage+Alpha.m */; };
 		1B76CC1518F43A74004713E1 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CC1118F43A74004713E1 /* UIImage+Resize.m */; };
 		1B76CC1618F43A74004713E1 /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CC1318F43A74004713E1 /* UIImage+RoundedCorner.m */; };
@@ -90,6 +92,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1B3743E818F5997F00C32AD6 /* TypesOfReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TypesOfReport.h; path = MSRequest/Model/TypesOfReport.h; sourceTree = SOURCE_ROOT; };
+		1B3743E918F5997F00C32AD6 /* TypesOfReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TypesOfReport.m; path = MSRequest/Model/TypesOfReport.m; sourceTree = SOURCE_ROOT; };
+		1B3743EB18F599A400C32AD6 /* AuthenticationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AuthenticationHelper.h; path = MSRequest/Helpers/AuthenticationHelper.h; sourceTree = SOURCE_ROOT; };
+		1B3743EC18F599A400C32AD6 /* AuthenticationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AuthenticationHelper.m; path = MSRequest/Helpers/AuthenticationHelper.m; sourceTree = SOURCE_ROOT; };
+		1B3743ED18F599A400C32AD6 /* DataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataHelper.h; path = MSRequest/Helpers/DataHelper.h; sourceTree = SOURCE_ROOT; };
+		1B3743EE18F599A400C32AD6 /* DataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataHelper.m; path = MSRequest/Helpers/DataHelper.m; sourceTree = SOURCE_ROOT; };
 		1B76CBBF18F42120004713E1 /* KinveyKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KinveyKit.framework; sourceTree = "<group>"; };
 		1B76CBC618F425AC004713E1 /* SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SynthesizeSingleton.h; path = Externals/SynthesizeSingleton.h; sourceTree = SOURCE_ROOT; };
 		1B76CBD018F43896004713E1 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = MSRequest/AppDelegate.h; sourceTree = SOURCE_ROOT; };
@@ -130,8 +138,6 @@
 		1B76CC0618F43A42004713E1 /* ReportService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReportService.m; path = MSRequest/ReportService.m; sourceTree = SOURCE_ROOT; };
 		1B76CC0818F43A52004713E1 /* ReportUploader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReportUploader.h; path = MSRequest/ReportUploader.h; sourceTree = SOURCE_ROOT; };
 		1B76CC0918F43A52004713E1 /* ReportUploader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReportUploader.m; path = MSRequest/ReportUploader.m; sourceTree = SOURCE_ROOT; };
-		1B76CC0B18F43A61004713E1 /* AuthenticationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AuthenticationHelper.h; path = MSRequest/AuthenticationHelper.h; sourceTree = SOURCE_ROOT; };
-		1B76CC0C18F43A61004713E1 /* AuthenticationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AuthenticationHelper.m; path = MSRequest/AuthenticationHelper.m; sourceTree = SOURCE_ROOT; };
 		1B76CC0E18F43A74004713E1 /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Alpha.h"; path = "MSRequest/UIImage+Alpha.h"; sourceTree = SOURCE_ROOT; };
 		1B76CC0F18F43A74004713E1 /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Alpha.m"; path = "MSRequest/UIImage+Alpha.m"; sourceTree = SOURCE_ROOT; };
 		1B76CC1018F43A74004713E1 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Resize.h"; path = "MSRequest/UIImage+Resize.h"; sourceTree = SOURCE_ROOT; };
@@ -242,8 +248,10 @@
 		1B76CBC118F4220C004713E1 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				1B76CC0B18F43A61004713E1 /* AuthenticationHelper.h */,
-				1B76CC0C18F43A61004713E1 /* AuthenticationHelper.m */,
+				1B3743EB18F599A400C32AD6 /* AuthenticationHelper.h */,
+				1B3743EC18F599A400C32AD6 /* AuthenticationHelper.m */,
+				1B3743ED18F599A400C32AD6 /* DataHelper.h */,
+				1B3743EE18F599A400C32AD6 /* DataHelper.m */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -354,6 +362,8 @@
 				1B76CC0618F43A42004713E1 /* ReportService.m */,
 				1B76CC0818F43A52004713E1 /* ReportUploader.h */,
 				1B76CC0918F43A52004713E1 /* ReportUploader.m */,
+				1B3743E818F5997F00C32AD6 /* TypesOfReport.h */,
+				1B3743E918F5997F00C32AD6 /* TypesOfReport.m */,
 			);
 			name = Models;
 			path = ../Potholes;
@@ -552,13 +562,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B3743F018F599A400C32AD6 /* DataHelper.m in Sources */,
 				1B76CBD818F43947004713E1 /* CityWatchNavigationBar.m in Sources */,
 				1B76CBF218F439E3004713E1 /* NewReportViewController.m in Sources */,
 				1B76CBE918F439B0004713E1 /* DescriptionEditorViewController.m in Sources */,
 				1B76CC0118F43A22004713E1 /* MapAnnotation.m in Sources */,
 				1B76CC1618F43A74004713E1 /* UIImage+RoundedCorner.m in Sources */,
 				1B76CBDE18F43964004713E1 /* PullToRefreshView.m in Sources */,
-				1B76CC0D18F43A61004713E1 /* AuthenticationHelper.m in Sources */,
 				1B76CBEF18F439CC004713E1 /* MapViewController.m in Sources */,
 				1B76CC0718F43A42004713E1 /* ReportService.m in Sources */,
 				1B76CC5C18F441FB004713E1 /* DejalActivityView.m in Sources */,
@@ -567,6 +577,7 @@
 				1B76CC1418F43A74004713E1 /* UIImage+Alpha.m in Sources */,
 				1B76CBF518F439EF004713E1 /* PickerTableViewController.m in Sources */,
 				1B76CBF818F439FD004713E1 /* ReportDetailViewController.m in Sources */,
+				1B3743EA18F5997F00C32AD6 /* TypesOfReport.m in Sources */,
 				1B76CBFE18F43A14004713E1 /* ReportsRootViewController.m in Sources */,
 				1B76CC0418F43A37004713E1 /* ReportModel.m in Sources */,
 				1B76CC5818F44039004713E1 /* SignInViewController.m in Sources */,
@@ -575,6 +586,7 @@
 				1B76CBE118F4398D004713E1 /* ActivityViewController.m in Sources */,
 				1B76CC1518F43A74004713E1 /* UIImage+Resize.m in Sources */,
 				1B76CC0A18F43A52004713E1 /* ReportUploader.m in Sources */,
+				1B3743EF18F599A400C32AD6 /* AuthenticationHelper.m in Sources */,
 				1B76CC1B18F43AA8004713E1 /* main.m in Sources */,
 				1B76CBEC18F439BA004713E1 /* ImageScrollViewController.m in Sources */,
 			);

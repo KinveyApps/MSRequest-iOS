@@ -7,8 +7,8 @@
 //
 
 #import "ActivityViewController.h"
-
 #import "AuthenticationHelper.h"
+#import "DataHelper.h"
 
 @interface ActivityViewController ()
 
@@ -31,6 +31,7 @@
     if (![AuthenticationHelper instance].isSignedIn) {
         [self performSegueWithIdentifier:@"kSegueIdentifierModalSingInView" sender:self];
     }
+    
     self.navigationController.toolbarHidden = YES;
 }
 
