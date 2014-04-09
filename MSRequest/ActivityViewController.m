@@ -28,10 +28,33 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    if (![AuthenticationHelper instance].isSignedIn) {
+        [self performSegueWithIdentifier:@"kSegueIdentifierModalSingInView" sender:self];
+    }
+    self.navigationController.toolbarHidden = YES;
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+    
     if ([AuthenticationHelper instance].isSignedIn) {
         
-    }else{
-        [self performSegueWithIdentifier:@"kSegueIdentifierModalSingInView" sender:self];
+        [[KCSUser activeUser] refreshFromServer:^(NSArray *objectsOrNil, NSError *errorOrNil){
+            
+            if (!errorOrNil) {
+                [self performSegueWithIdentifier:@"kSegueIdentifierPushReportRootView" sender:self];
+            }else{
+                [self performSegueWithIdentifier:@"kSegueIdentifierModalSingInView" sender:self];
+                
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Erro"
+                                                                    message:errorOrNil.localizedDescription
+                                                                   delegate:nil
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles:nil];
+                [alertView show];
+            }
+        }];
     }
 }
 

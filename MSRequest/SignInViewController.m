@@ -99,10 +99,7 @@
                                                  
 												 [DejalActivityView removeView];
                                                  
-												 [self.navigationController dismissViewControllerAnimated:NO
-																							   completion:^{
-																								   [self dismissModalViewControllerAnimated:YES];
-																							   }];
+												 [self dismissModalViewControllerAnimated:YES];
 											 }
 											 onFailure:^(NSError *error) {
                                                  
