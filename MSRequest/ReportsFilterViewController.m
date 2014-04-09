@@ -81,7 +81,8 @@ NSString *const kSortOptionKey = @"sortOption";
                          ((UIView *)sender).transform = CGAffineTransformMakeRotation(M_PI - 0.01);
                      }
                      completion:^(BOOL finished) {
-                         [self dismissModalViewControllerAnimated:YES];
+//                         [self dismissModalViewControllerAnimated:YES];
+                         [self dismissViewControllerAnimated:YES completion:nil];
                      }
      ];
 }

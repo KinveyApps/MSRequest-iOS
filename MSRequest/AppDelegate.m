@@ -41,10 +41,6 @@
     
     _rvc = (ReportsRootViewController*)[(UINavigationController*)self.window.rootViewController topViewController];
     
-
-    
-  dispatch_async(dispatch_get_current_queue(), ^{
-    });
     
     return YES;
 }

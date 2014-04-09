@@ -161,7 +161,8 @@ typedef enum {
             break;
     }
     
-    [self presentModalViewController:self.imagePickerController animated:YES];
+//    [self presentModalViewController:self.imagePickerController animated:YES];
+    [self presentViewController:self.imagePickerController animated:YES completion:nil];
     [self.navigationController setNavigationBarHidden:YES animated:NO]; // override showing of nav bar
 }
 
@@ -207,7 +208,8 @@ typedef enum {
 #pragma mark - UIImagePickerControllerDelegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    [self dismissModalViewControllerAnimated:YES];
+//    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
     
     // reset from default state
     self.imagePickerButton.backgroundColor = [UIColor clearColor];
@@ -237,7 +239,9 @@ typedef enum {
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [self dismissModalViewControllerAnimated:YES];
+//    [self dismissModalViewControllerAnimated:YES];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
@@ -292,7 +296,8 @@ typedef enum {
                          ((UIView *)sender).transform = CGAffineTransformMakeRotation(M_PI - 0.01);
                      } 
                      completion:^(BOOL finished) {
-                         [self dismissModalViewControllerAnimated:YES];
+//                         [self dismissModalViewControllerAnimated:YES];
+                         [self dismissViewControllerAnimated:YES completion:nil];
                      }
      ];
 }
@@ -308,7 +313,8 @@ typedef enum {
         dispatch_async(mainThreadQueue, ^{
             [[ReportService sharedInstance] addReport:self.report];
             [[ReportService sharedInstance] pushReport:self.report];
-            [self dismissModalViewControllerAnimated:YES];
+//            [self dismissModalViewControllerAnimated:YES];
+            [self dismissViewControllerAnimated:YES completion:nil];
         });
     });
     

@@ -146,9 +146,6 @@
 {
     [[KCSUser activeUser] logout];
 
-    
-    dispatch_async(dispatch_get_current_queue(), ^{
-    });
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
