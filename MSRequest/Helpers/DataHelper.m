@@ -107,6 +107,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
     return query;
 }
 
+
 #pragma mark - Types of Report
 #pragma mark - Load Entity
 
@@ -132,6 +133,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
                                              cachePolicy:useCache ? KCSCachePolicyLocalFirst : KCSCachePolicyNetworkFirst];
     
 }
+
 
 #pragma mark - Reports
 #pragma mark - Save and Load Entity
@@ -175,6 +177,74 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
                            }
                              withProgressBlock:nil];
 }
+
+
+#pragma mark - Image
+#pragma mark - Save and Load Attributes
+
+- (void)loadImageByID:(NSString *)imageID OnSuccess:(void (^)(UIImage *))reportSuccess onFailure:(void(^)(NSError *))reportFailure{
+    
+    //Kinvey: Laod image file
+    [KCSFileStore downloadFile:imageID                          //File ID
+                       options:@{KCSFileOnlyIfNewer : @(YES)}   //Get file from cache if can
+               completionBlock: ^(NSArray *downloadedResources, NSError *error) {
+                   
+                   if (error == nil) {
+                       KCSFile* file = downloadedResources[0];
+                       NSURL* fileURL = file.localURL;
+                       UIImage* image = [UIImage imageWithContentsOfFile:[fileURL path]];
+                       
+                       //Return to main thread for update UI
+                       dispatch_async(dispatch_get_main_queue(), ^{
+                           if (reportSuccess) {
+                               reportSuccess(image);
+                           }
+                       });
+                       
+                   } else {
+                       //Return to main thread for update UI
+                       dispatch_async(dispatch_get_main_queue(), ^{
+                           NSLog(@"Got an error: %@", error);
+                           if (reportFailure) {
+                               reportFailure(error);
+                           }
+                       });
+                   }
+               } progressBlock:nil];
+}
+
+- (void)saveImage:(UIImage *)image OnSuccess:(void (^)(NSString *))reportSuccess onFailure:(void(^)(NSError *))reportFailure{
+    
+    KCSMetadata *metadata = [[KCSMetadata alloc] init];
+    [metadata setGloballyReadable:YES];
+    [metadata setGloballyWritable:YES];
+    
+    [KCSFileStore uploadData:UIImagePNGRepresentation(image)
+                     options:@{KCSFileACL: metadata,
+                               KCSFilePublic :@(YES)}
+             completionBlock:^(KCSFile* uploadInfo, NSError* error){
+                 
+                 if (!error) {
+                     NSString *fileID = uploadInfo.fileId;
+                     
+                     //Return to main thread for update UI
+                     dispatch_async(dispatch_get_main_queue(), ^{
+                         if (reportSuccess) {
+                             reportSuccess(fileID);
+                         }
+                     });
+                 }else{
+                     
+                     //Return to main thread for update UI
+                     dispatch_async(dispatch_get_main_queue(), ^{
+                         if (reportFailure) {
+                             reportFailure(error);
+                         }
+                     });
+                 }
+             }progressBlock:nil];
+}
+
 
 #pragma mark - USER
 #pragma mark - Save and Load Attributes
