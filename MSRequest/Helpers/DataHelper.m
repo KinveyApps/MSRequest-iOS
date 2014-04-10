@@ -19,7 +19,7 @@
 @interface DataHelper ()
 
 @property (nonatomic, strong) KCSLinkedAppdataStore *typesOfReportLinkedAppdataStore;
-
+@property (nonatomic, strong) KCSLinkedAppdataStore *reportsLinkedAppdataStore;
 
 @end
 
@@ -49,6 +49,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
         self.typesOfReportLinkedAppdataStore = [KCSLinkedAppdataStore storeWithOptions:@{ KCSStoreKeyResource       : collectionTypesOfReport,          //collection
                                                                                           KCSStoreKeyCachePolicy    : @(KCSCachePolicyNetworkFirst)}];  //default cache policy
         
+        KCSCollection *collectionReports = [KCSCollection collectionFromString:REPORT_KINVEY_COLLECTIONS_NAME
+                                                                       ofClass:[Report class]];
+        self.reportsLinkedAppdataStore = [KCSLinkedAppdataStore storeWithOptions:@{ KCSStoreKeyResource       : collectionReports,          //collection
+                                                                                    KCSStoreKeyCachePolicy    : @(KCSCachePolicyNetworkFirst)}];  //default cache policy
 
 	}
     
@@ -103,13 +107,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
     return query;
 }
 
-#pragma mark - QUOTE
-#pragma mark - Save and Load Entity
+#pragma mark - Types of Report
+#pragma mark - Load Entity
 
 - (void)loadTypesOfReportUseCache:(BOOL)useCache OnSuccess:(void (^)(NSArray *))reportSuccess onFailure:(void (^)(NSError *))reportFailure{
 
-    KCSQuery *query = [KCSQuery queryOnField:@"additionalAttributes.1"
-                                   withRegex:[self regexForContaintSubstring:@"lev"]];
+    KCSQuery *query = [KCSQuery query];
     
     //Kinvey: Load entity from Quote collection which correspond query
 	[self.typesOfReportLinkedAppdataStore queryWithQuery:query
@@ -130,25 +133,48 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
     
 }
 
-//- (void)saveQuote:(Quote *)quote OnSuccess:(void (^)(NSArray *))reportSuccess onFailure:(STErrorBlock)reportFailure{
-//    
-//    //Kinvey: Save object to Quote collection
-//    [self.quotesStore saveObject:quote
-//             withCompletionBlock:^(NSArray *objectsOrNil, NSError *errorOrNil) {
-//                 
-//                 //Return to main thread for update UI
-//                 dispatch_async(dispatch_get_main_queue(), ^{
-//                     if (errorOrNil != nil) {
-//                         if (reportFailure) reportFailure(errorOrNil);
-//                     } else {
-//                         if (reportSuccess) reportSuccess(objectsOrNil);
-//                     }
-//                 });
-//                 
-//             }
-//               withProgressBlock:nil];
-//    
-//}
+#pragma mark - Types of Report
+#pragma mark - Save and Load Entity
+
+- (void)loadReportUseCache:(BOOL)useCache withQuery:(KCSQuery *)query OnSuccess:(void (^)(NSArray *))reportSuccess onFailure:(void (^)(NSError *))reportFailure{
+    
+    //Kinvey: Load entity from Quote collection which correspond query
+	[self.reportsLinkedAppdataStore queryWithQuery:(query ? query : [KCSQuery query])
+                               withCompletionBlock:^(NSArray *objectsOrNil, NSError *errorOrNil) {
+                                   
+                                   //Return to main thread for update UI
+                                   dispatch_async(dispatch_get_main_queue(), ^{
+                                       if (!errorOrNil) {
+                                           if (reportSuccess) reportSuccess(objectsOrNil);
+                                       }else{
+                                           if (reportFailure) reportFailure(errorOrNil);
+                                       }
+                                   });
+                                   
+                               }
+                                 withProgressBlock:nil
+                                       cachePolicy:useCache ? KCSCachePolicyLocalFirst : KCSCachePolicyNetworkFirst];
+    
+}
+
+- (void)saveReport:(Report *)report OnSuccess:(void (^)(NSArray *))reportSuccess onFailure:(void (^)(NSError *))reportFailure{
+
+    //Kinvey: Save object to Quote collection
+    [self.reportsLinkedAppdataStore saveObject:report
+                           withCompletionBlock:^(NSArray *objectsOrNil, NSError *errorOrNil) {
+                               
+                               //Return to main thread for update UI
+                               dispatch_async(dispatch_get_main_queue(), ^{
+                                   if (errorOrNil != nil) {
+                                       if (reportFailure) reportFailure(errorOrNil);
+                                   } else {
+                                       if (reportSuccess) reportSuccess(objectsOrNil);
+                                   }
+                               });
+                               
+                           }
+                             withProgressBlock:nil];
+}
 
 #pragma mark - USER
 #pragma mark - Save and Load Attributes
