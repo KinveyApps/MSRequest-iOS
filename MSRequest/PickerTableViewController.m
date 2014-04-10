@@ -39,7 +39,8 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    cell.textLabel.text = [self.cellTitles objectAtIndex:indexPath.row];
+    TypeOfReport *type = (TypeOfReport *)self.cellTitles[indexPath.row];
+    cell.textLabel.text = type.name;
     if (indexPath.row == self.selectedRow) cell.accessoryType = UITableViewCellAccessoryCheckmark;
     
     return cell;

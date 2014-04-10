@@ -18,11 +18,12 @@
 //
 
 #import <UIKit/UIKit.h>
-@class ReportModel;
+#import "Report.h"
+
 @interface ImageScrollViewController : UIViewController <UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *mainScrollView;
 @property (weak, nonatomic) IBOutlet UIImageView *reportImageView;
-@property (strong, nonatomic) ReportModel *report;
+@property (strong, nonatomic) Report *report;
 
 @end

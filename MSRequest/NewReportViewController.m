@@ -21,9 +21,9 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "MapAnnotation.h"
-#import "ReportService.h"
 #import "UIImage+Resize.h"
 #import "AppDelegate.h"
+#import "DataHelper.h"
 
 #define MAX_IMAGE_BUTTON_WIDTH      280.0f
 #define MAX_IMAGE_BUTTON_HEIGHT     160.0f
@@ -58,9 +58,9 @@ typedef enum {
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {    
     if ([segue.identifier isEqualToString:@"kSegueIdentifierPushPickerTable"]) {
         ((PickerTableViewController *)segue.destinationViewController).delegate = self;
-        ((PickerTableViewController *)segue.destinationViewController).cellTitles = self.report.validCategories;
-        if (![self.report.category isEqualToString:@""]) {
-            ((PickerTableViewController *)segue.destinationViewController).selectedRow = [self.report.validCategories indexOfObject:self.report.category];
+        ((PickerTableViewController *)segue.destinationViewController).cellTitles = [DataHelper instance].typesOfReport;
+        if (![self.report.type.name isEqualToString:@""]) {
+            ((PickerTableViewController *)segue.destinationViewController).selectedRow = [[DataHelper instance].typesOfReport indexOfObject:self.report.type];
         }
         else ((PickerTableViewController *)segue.destinationViewController).selectedRow = -1;
     }
@@ -70,7 +70,7 @@ typedef enum {
     }
     else if ([segue.identifier isEqualToString:@"kSegueIdentifierPushDescription"]) {
         ((DescriptionEditorViewController *)segue.destinationViewController).delegate = self;
-        ((DescriptionEditorViewController *)segue.destinationViewController).description = self.report.description;
+        ((DescriptionEditorViewController *)segue.destinationViewController).description = self.report.descriptionOfReport;
     }
 }
 
@@ -94,7 +94,7 @@ typedef enum {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.report = [ReportModel newReportModel];
+    self.report = [[Report alloc] init];
         
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" 
                                                                              style:UIBarButtonItemStyleBordered 
@@ -170,8 +170,8 @@ typedef enum {
 
 - (void)pickerTableViewController:(PickerTableViewController *)picker selectedRow:(NSInteger)row {
     [self.navigationController popViewControllerAnimated:YES];
-    self.report.category = self.report.validCategories[row];
-    self.reportCategoryTextField.text = self.report.category;
+    self.report.type = [DataHelper instance].typesOfReport[row];
+    self.reportCategoryTextField.text = self.report.type.name;
     [self checkIfSubmitButtonShouldBeEnabled];
 }
 
@@ -180,9 +180,8 @@ typedef enum {
 - (void)mapViewControllerDoneButtonPressedWithAnnotation:(MapAnnotation *)annotation {
     [self.navigationController popViewControllerAnimated:YES];
     self.reportLocationTextField.text = annotation.subtitle;
-    self.report.locationDescription = annotation.subtitle;
-    self.report.lat = annotation.coordinate.latitude;
-    self.report.lon = annotation.coordinate.longitude;
+    self.report.locationString = annotation.subtitle;
+    self.report.geoCoord = [CLLocation locationFromKinveyValue:CLLocationCoordinate2DToKCS(annotation.coordinate)];
 //    self.report.location = annotation.coordinate;
     [self checkIfSubmitButtonShouldBeEnabled];
 }
@@ -191,7 +190,7 @@ typedef enum {
 
 - (void)descriptionEditorFinishedEditingWithText:(NSString *)description {
     [self.navigationController popViewControllerAnimated:YES];
-    self.report.description = description;
+    self.report.descriptionOfReport = description;
 //    NSLinguisticTagger* tagger = [[NSLinguisticTagger alloc] initWithTagSchemes:@[] options:0];
 //    [tagger setString:description];
 //    NSRange r = [tagger sentenceRangeForRange:NSMakeRange(0, 1)];
@@ -283,10 +282,8 @@ typedef enum {
     // update text field with new location
     if ([self.reportLocationTextField.text isEqualToString:@""]) {
         self.reportLocationTextField.text = annotation.subtitle;
-        self.report.locationDescription = annotation.subtitle;
-        self.report.lon = annotation.coordinate.longitude;
-        self.report.lat = annotation.coordinate.latitude;
-        self.report.summary = annotation.subtitle;
+        self.report.locationString = annotation.subtitle;
+        self.report.geoCoord = [CLLocation locationFromKinveyValue:CLLocationCoordinate2DToKCS(annotation.coordinate)];
     }
 }
 
@@ -303,22 +300,22 @@ typedef enum {
 }
 
 - (IBAction)submitButtonPressed:(id)sender {
-    self.report.timestamp = [NSDate date];
+    self.report.metadata = [[KCSMetadata alloc] init];
     
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(queue, ^{
         UIImage *smallImage = [self.image resizedImageWithContentMode:UIViewContentModeScaleAspectFit bounds:CGSizeMake(640, 640) interpolationQuality:kCGInterpolationDefault];
-        self.report.image = smallImage;
-        dispatch_queue_t mainThreadQueue = dispatch_get_main_queue();
-        dispatch_async(mainThreadQueue, ^{
-            [[ReportService sharedInstance] addReport:self.report];
-            [[ReportService sharedInstance] pushReport:self.report];
-//            [self dismissModalViewControllerAnimated:YES];
-            [self dismissViewControllerAnimated:YES completion:nil];
-        });
+        
+        [[DataHelper instance] saveImage:smallImage
+                               OnSuccess:^(NSString *imageID){
+                                   self.report.imageId = imageID;
+                                   
+                                   [[DataHelper instance] saveReport:self.report
+                                                           OnSuccess:^(NSArray *reports){
+                                                               [self dismissViewControllerAnimated:YES completion:nil];
+                                                           }onFailure:nil];
+                               }onFailure:nil];
     });
-    
-
 }
 
 - (void)viewDidUnload

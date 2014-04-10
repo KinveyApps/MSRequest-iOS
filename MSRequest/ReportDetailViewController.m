@@ -20,6 +20,7 @@
 #import "ReportDetailViewController.h"
 #import "ImageScrollViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "DataHelper.h"
 
 #define CELL_HEIGHT_PADDING     14.0
 #define MAX_IMAGE_HEIGHT     180.0f
@@ -47,12 +48,16 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationItem.title = [self.report.category capitalizedString];
+    self.navigationItem.title = [self.report.type.name capitalizedString];
     self.imageCell.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
-    self.reportCategoryLabel.text = self.report.category;
-    self.reportLocationLabel.text = self.report.locationDescription;
-    self.reportDescriptionLabel.text = self.report.description;
-    self.reportImageView.image = self.report.image;
+    self.reportCategoryLabel.text = self.report.type.name;
+    self.reportLocationLabel.text = self.report.locationString;
+    self.reportDescriptionLabel.text = self.report.descriptionOfReport;
+    
+    [[DataHelper instance] loadImageByID:self.report.imageId
+                               OnSuccess:^(UIImage *image){
+                                   self.reportImageView.image = image;
+                               }onFailure:nil];
 }
 
 #pragma mark - segue methods

@@ -18,11 +18,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ReportModel.h"
+#import "Report.h"
+
 
 @interface ReportDetailViewController : UITableViewController
 
-@property (strong, nonatomic) ReportModel *report;
+@property (strong, nonatomic) Report *report;
 
 @property (weak, nonatomic) IBOutlet UIImageView *reportImageView;
 @property (weak, nonatomic) IBOutlet UITableViewCell *imageCell;

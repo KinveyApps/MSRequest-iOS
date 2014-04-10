@@ -22,6 +22,7 @@
 #import "CustomReportTableViewCell.h"
 #import "ReportsFilterViewController.h"
 #import "PullToRefreshView.h"
+#import "Report.h"
 
 @class ReportModel;
 
@@ -41,8 +42,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toggleViewButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
-- (void) refreshData;
-- (void)showDetailViewForReport:(ReportModel *)report;
+- (void)showDetailViewForReport:(Report *)report;
 
 - (IBAction)logout:(id)sender;
 @end

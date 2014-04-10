@@ -27,6 +27,7 @@
 + (DataHelper *)instance;
 
 @property (strong, nonatomic) NSDateFormatter *formatter;
+@property (strong, nonatomic) NSArray *typesOfReport;
 
 - (void)loadTypesOfReportUseCache:(BOOL)useCache OnSuccess:(void (^)(NSArray *))reportSuccess onFailure:(void (^)(NSError *))reportFailure;
 //- (void)saveQuote:(Quote *)quote OnSuccess:(void (^)(NSArray *))reportSuccess onFailure:(STErrorBlock)reportFailure;

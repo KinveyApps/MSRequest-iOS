@@ -21,7 +21,7 @@
              @"state"                       : @"state",
              @"geoCoord"                    : KCSEntityKeyGeolocation,
              @"locationString"              : @"locationString",
-             @"descrition"                  : @"descrition"};
+             @"descriptionOfReport"         : @"descriptionOfReport"};
 }
 
 + (NSDictionary *)kinveyPropertyToCollectionMapping{

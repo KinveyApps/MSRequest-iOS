@@ -19,7 +19,7 @@
 
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
-#import "ReportModel.h"
+#import "Report.h"
 
 @protocol MapAnnotationDelegate;
 
@@ -35,10 +35,10 @@
 @property (strong, nonatomic) NSString *city;
 @property (weak, nonatomic) id <MapAnnotationDelegate> delegate;
 @property (strong, nonatomic) UIImage *image;
-@property (strong, nonatomic) ReportModel *reportModel;
+@property (strong, nonatomic) Report *reportModel;
 
 - (id)initWithCoordinate:(CLLocationCoordinate2D)myCoord title:(NSString *)myTitle;
-- (id)initWithReport:(ReportModel *)aReport;
+- (id)initWithReport:(Report *)aReport;
 - (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate NS_AVAILABLE(NA, 4_0);
 - (void)setAddressFields:(CLLocation *)loc;
 

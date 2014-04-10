@@ -18,7 +18,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ReportModel.h"
 #import "PickerTableViewController.h"
 #import "MapViewController.h"
 #import "DescriptionEditorViewController.h"
@@ -27,7 +26,7 @@
 PickerTableViewControllerDelegate, MapViewControllerDelegate, DescriptionEditorViewControllerDelegate, 
 UITextFieldDelegate, MapAnnotationDelegate>
 
-@property (strong, nonatomic) ReportModel *report;
+@property (strong, nonatomic) Report *report;
 @property (weak, nonatomic) IBOutlet UIButton *imagePickerButton;
 @property (weak, nonatomic) IBOutlet UITextField *reportCategoryTextField;
 @property (weak, nonatomic) IBOutlet UITextField *reportLocationTextField;

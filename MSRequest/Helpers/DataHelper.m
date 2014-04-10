@@ -51,8 +51,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
         
         KCSCollection *collectionReports = [KCSCollection collectionFromString:REPORT_KINVEY_COLLECTIONS_NAME
                                                                        ofClass:[Report class]];
-        self.reportsLinkedAppdataStore = [KCSLinkedAppdataStore storeWithOptions:@{ KCSStoreKeyResource       : collectionReports,              //collection
-                                                                                    KCSStoreKeyCachePolicy    : @(KCSCachePolicyNetworkFirst)}];  //default cache policy
+        self.reportsLinkedAppdataStore = [KCSLinkedAppdataStore storeWithOptions:@{ KCSStoreKeyResource       : collectionReports,                  //collection
+                                                                                    KCSStoreKeyCachePolicy    : @(KCSCachePolicyNetworkFirst)}];    //default cache policy
 
 	}
     
@@ -122,6 +122,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
                                          //Return to main thread for update UI
                                          dispatch_async(dispatch_get_main_queue(), ^{
                                              if (!errorOrNil) {
+                                                 self.typesOfReport = objectsOrNil;
                                                  if (reportSuccess) reportSuccess(objectsOrNil);
                                              }else{
                                                  if (reportFailure) reportFailure(errorOrNil);

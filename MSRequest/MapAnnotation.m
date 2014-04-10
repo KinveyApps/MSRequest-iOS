@@ -19,6 +19,7 @@
 
 #import "MapAnnotation.h"
 #import "UIImage+Resize.h"
+#import "DataHelper.h"
 
 @implementation MapAnnotation
 @synthesize subtitle=_subtitle;
@@ -33,21 +34,24 @@
     return self;
 }
 
-- (id)initWithReport:(ReportModel *)report {
+- (id)initWithReport:(Report *)report {
     self = [super init];
     if (self) {
         _reportModel = report;
-        _coordinate = CLLocationCoordinate2DMake(report.lat, report.lon);
-        _title = report.category;
+        _coordinate = report.geoCoord.coordinate;
+        _title = report.type.name;
         //identifier = aReport.identifier;
         // MB create image from imagePath
         //image = [aReport.image copy];
-        UIImage *thumbnail = report.image;
-        thumbnail = [thumbnail thumbnailImage:100 transparentBorder:0 cornerRadius:7 interpolationQuality:kCGInterpolationDefault];
-        dispatch_queue_t mainThreadQueue = dispatch_get_main_queue();
-        dispatch_async(mainThreadQueue, ^{
-            _image = thumbnail;
-        });
+        [[DataHelper instance] loadImageByID:report.imageId
+                                   OnSuccess:^(UIImage *image){
+                                       
+                                       UIImage *thumbnail = image;
+                                       thumbnail = [thumbnail thumbnailImage:100 transparentBorder:0 cornerRadius:7 interpolationQuality:kCGInterpolationDefault];
+                                       _image = thumbnail;
+                                       
+                                   }onFailure:nil];
+         
         [self setAddressFields:[[CLLocation alloc] initWithLatitude:_coordinate.latitude longitude:_coordinate.longitude]];
     }
     return self;

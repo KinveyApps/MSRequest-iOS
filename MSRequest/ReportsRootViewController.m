@@ -18,12 +18,11 @@
 //
 
 #import "ReportsRootViewController.h"
-#import "ReportModel.h"
-#import "ReportService.h"
 #import "MapAnnotation.h"
 #import "ReportDetailViewController.h"
 #import "UIImage+Resize.h"
 
+#import "DataHelper.h"
 #import <KinveyKit/KinveyKit.h>
 
 #import "AppDelegate.h"
@@ -32,7 +31,7 @@
 
 @interface ReportsRootViewController () <CLLocationManagerDelegate>
 @property (nonatomic, retain) CLLocationManager* locationManager;
-- (void) setThumbnailForCell:(CustomReportTableViewCell *)cell withReport:(ReportModel *)report;
+- (void) setThumbnailForCell:(CustomReportTableViewCell *)cell withImage:(UIImage *)image;
 @end
 
 @implementation ReportsRootViewController
@@ -59,7 +58,7 @@
 }
 
 
-- (float)reportDistanceFromCurrentLocation:(ReportModel *)report
+- (float)reportDistanceFromCurrentLocation:(Report *)report
 {
     if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized) {
         CLLocationCoordinate2D userCoordinate = [self.locationManager location].coordinate;
@@ -68,13 +67,9 @@
                                                        horizontalAccuracy:1
                                                          verticalAccuracy:1
                                                                 timestamp:nil];
-        CLLocation *reportLocation = [[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(report.lat, report.lon)
-                                                                   altitude:1
-                                                         horizontalAccuracy:1
-                                                           verticalAccuracy:1
-                                                                  timestamp:nil];
         
-        return [reportLocation distanceFromLocation:userLocation];  // meters
+        
+        return [report.geoCoord distanceFromLocation:userLocation];  // meters
     } else {
         return INFINITY;
     }
@@ -86,8 +81,8 @@
     if (currentTableSortOption == SortOptionRecent) {
         // sort array based on time submitted
         sortedArray = [data sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-            NSDate *first = [(ReportModel *)obj1 timestamp];
-            NSDate *second = [(ReportModel *)obj2 timestamp];
+            NSDate *first = [(Report *)obj1 metadata].lastModifiedTime;
+            NSDate *second = [(Report *)obj2 metadata].lastModifiedTime;
             return [second compare:first];
         }];
     }
@@ -104,35 +99,22 @@
     self.reportsData = sortedArray;
 }
 
-- (void)dataLoaded:(NSNotification *) notification 
+- (void)dataLoad
 {
     [pullView finishedLoading];
     [self.activityIndicator stopAnimating];
     [self.activityIndicator removeFromSuperview];
-    self.reportsData = [[ReportService sharedInstance] reports];
-    [self sortReportsData:self.reportsData];
-    [self.reportsTableView reloadData];
+    
+    [[DataHelper instance] loadReportUseCache:YES
+                                    withQuery:nil
+                                    OnSuccess:^(NSArray *reports){
+                                        self.reportsData = reports;
+                                        [self sortReportsData:self.reportsData];
+                                        [self.reportsTableView reloadData];
+                                    }onFailure:nil];
 }
 
-- (void)imageDownloaded:(NSNotification *) notification 
-{
-    ReportModel *report = notification.object;
-    int index = [self.reportsData indexOfObject:report];
-    if (index >= 0) {
-        CustomReportTableViewCell *cell = (CustomReportTableViewCell *)[self.reportsTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
-        if (cell) {
-            [self setThumbnailForCell:cell withReport:report];
-        }
-                
-    }
-}
-
-- (void)refreshData 
-{
-    [[ReportService sharedInstance] pullReports];
-}
-
-- (void)showDetailViewForReport:(ReportModel *)report
+- (void)showDetailViewForReport:(Report *)report
 {
     if (self.navigationController.topViewController != self) {
         //if the there is a subview showing, go back to the beginning, in order to preserve the stack behavior
@@ -151,7 +133,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"kSegueIdentifierPushReportDetails"]) {
-        if ([sender isKindOfClass:[ReportModel class]]) {
+        if ([sender isKindOfClass:[Report class]]) {
             ((ReportDetailViewController *)segue.destinationViewController).report = sender;
         }
     }
@@ -177,14 +159,7 @@
     
     currentFilterOption = FilterOptionAll;
     currentTableSortOption = SortOptionRecent;
-    [[NSNotificationCenter defaultCenter] addObserver:self 
-                                             selector:@selector(dataLoaded:) 
-                                                 name:NOTIFY_FetchComplete 
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self 
-                                             selector:@selector(imageDownloaded:) 
-                                                 name:NOTIFY_ImageDownloaded 
-                                               object:nil];
+    [self dataLoad];
     
     
   //  [self.activityIndicator startAnimating];
@@ -202,15 +177,13 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-    self.reportsData = [ReportService sharedInstance].reports;
-    [self sortReportsData:self.reportsData];
-    [self.reportsTableView reloadData];
+    [self dataLoad];
     
 }
 
 - (void)pullToRefreshViewShouldRefresh:(PullToRefreshView *)view
 {
-    [self refreshData];
+    [self dataLoad];
 }
 
 - (IBAction)toggleViewButtonValueChanged:(id)sender {
@@ -228,7 +201,7 @@
                          }
                          completion:^(BOOL finished) {
                              NSMutableArray *reportAnnotations = [[NSMutableArray alloc] init];
-                             for (ReportModel *report in self.reportsData) {
+                             for (Report *report in self.reportsData) {
                                  MapAnnotation *annotation = [[MapAnnotation alloc] initWithReport:report];
                                  [reportAnnotations addObject:annotation];
                              }
@@ -280,14 +253,14 @@
 - (void)reportFilterEditingFinishedWithOptions:(NSDictionary *)options {
     currentFilterOption = [[options objectForKey:kFilterOptionKey] intValue];
     currentTableSortOption = [[options objectForKey:kSortOptionKey] intValue];
-    [self refreshData];
+    [self dataLoad];
     [self.reportsTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationBottom];
 }
 
 - (void)reportFilterEditingFinishedWithFilterOption:(NSInteger)filterRow sortOption:(NSInteger)sortRow {
     currentFilterOption = filterRow;
     currentTableSortOption = sortRow;
-    [self refreshData];
+    [self dataLoad];
     [self.reportsTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationBottom];
 }
 
@@ -312,21 +285,25 @@
         self.cellFromNib = nil;
     }
     
-    ReportModel *report = [self.reportsData objectAtIndex:indexPath.row];
+    Report *report = [self.reportsData objectAtIndex:indexPath.row];
     
     // populate image and labels of cell
-    cell.reportLocation.text = report.locationDescription;
-    cell.reportCategory.text = report.category;
-    cell.reportDescription.text = report.description;
+    cell.reportLocation.text = report.locationString;
+    cell.reportCategory.text = report.type.name;
+    cell.reportDescription.text = report.descriptionOfReport;
     cell.reportDistance.text = [NSString stringWithFormat:@"%.1f miles",[self reportDistanceFromCurrentLocation:report]*MILES_PER_METER];
 
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateStyle = NSDateFormatterShortStyle;
     dateFormatter.timeStyle = NSDateFormatterShortStyle;
-    cell.reportTime.text = [dateFormatter stringFromDate:report.timestamp];
+    cell.reportTime.text = [dateFormatter stringFromDate:report.metadata.lastModifiedTime];
     
-    if (report.image) {
-        [self setThumbnailForCell:cell withReport:report];
+    if (report.imageId) {
+        [[DataHelper instance] loadImageByID:report.imageId
+                                   OnSuccess:^(UIImage *image){
+                                       [self setThumbnailForCell:cell withImage:image];
+                                       [self.view setNeedsDisplay];
+                                   }onFailure:nil];
     } else {
         cell.reportImage.image = nil;
     }
@@ -334,23 +311,23 @@
     return cell;
 }
 
-- (void) setThumbnailForCell:(CustomReportTableViewCell *)cell withReport:(ReportModel *)report
+- (void) setThumbnailForCell:(CustomReportTableViewCell *)cell withImage:(UIImage *)image
 {
     // load the image on a background thread and update the screen on the main thread.
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(queue, ^{
-        UIImage *image = report.image;
-        image = [image thumbnailImage:100 transparentBorder:0 cornerRadius:7 interpolationQuality:kCGInterpolationDefault];
+        UIImage *imageBlock = image;
+        imageBlock = [imageBlock thumbnailImage:100 transparentBorder:0 cornerRadius:7 interpolationQuality:kCGInterpolationDefault];
         dispatch_queue_t mainThreadQueue = dispatch_get_main_queue();
         dispatch_async(mainThreadQueue, ^{
-            cell.reportImage.image = image;
+            cell.reportImage.image = imageBlock;
         });
     });
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    ReportModel *selectedReport = [self.reportsData objectAtIndex:indexPath.row];
+    Report *selectedReport = [self.reportsData objectAtIndex:indexPath.row];
     [self showDetailViewForReport:selectedReport];
 }
 

@@ -18,8 +18,7 @@
 //
 
 #import "ImageScrollViewController.h"
-
-#import "ReportModel.h"
+#import "DataHelper.h"
 
 @implementation ImageScrollViewController
 
@@ -42,7 +41,11 @@
 	_mainScrollView.clipsToBounds = YES;
 	_mainScrollView.delegate = self;
     
-    _reportImageView.image = self.report.image;
+    [[DataHelper instance] loadImageByID:self.report.imageId
+                               OnSuccess:^(UIImage *image){
+                                   _reportImageView.image = image;
+                               }onFailure:nil];
+    
     _reportImageView.center = CGPointMake(_reportImageView.center.x, _reportImageView.center.y - _mainScrollView.frame.origin.y/2);
     
     UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapGestureHandler:)];

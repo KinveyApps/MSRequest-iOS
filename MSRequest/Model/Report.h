@@ -24,6 +24,6 @@
 @property (nonatomic, retain) NSNumber *state;
 @property (nonatomic, retain) CLLocation *geoCoord;
 @property (nonatomic, copy) NSString *locationString;
-@property (nonatomic, copy) NSString *descrition;
+@property (nonatomic, copy) NSString *descriptionOfReport;
 
 @end

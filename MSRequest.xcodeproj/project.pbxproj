@@ -29,9 +29,6 @@
 		1B76CBFB18F43A0B004713E1 /* ReportsFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CBFA18F43A0B004713E1 /* ReportsFilterViewController.m */; };
 		1B76CBFE18F43A14004713E1 /* ReportsRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CBFD18F43A14004713E1 /* ReportsRootViewController.m */; };
 		1B76CC0118F43A22004713E1 /* MapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CC0018F43A22004713E1 /* MapAnnotation.m */; };
-		1B76CC0418F43A37004713E1 /* ReportModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CC0318F43A37004713E1 /* ReportModel.m */; };
-		1B76CC0718F43A42004713E1 /* ReportService.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CC0618F43A42004713E1 /* ReportService.m */; };
-		1B76CC0A18F43A52004713E1 /* ReportUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CC0918F43A52004713E1 /* ReportUploader.m */; };
 		1B76CC1418F43A74004713E1 /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CC0F18F43A74004713E1 /* UIImage+Alpha.m */; };
 		1B76CC1518F43A74004713E1 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CC1118F43A74004713E1 /* UIImage+Resize.m */; };
 		1B76CC1618F43A74004713E1 /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CC1318F43A74004713E1 /* UIImage+RoundedCorner.m */; };
@@ -135,12 +132,6 @@
 		1B76CBFD18F43A14004713E1 /* ReportsRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReportsRootViewController.m; path = MSRequest/ReportsRootViewController.m; sourceTree = SOURCE_ROOT; };
 		1B76CBFF18F43A22004713E1 /* MapAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapAnnotation.h; path = MSRequest/MapAnnotation.h; sourceTree = SOURCE_ROOT; };
 		1B76CC0018F43A22004713E1 /* MapAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapAnnotation.m; path = MSRequest/MapAnnotation.m; sourceTree = SOURCE_ROOT; };
-		1B76CC0218F43A37004713E1 /* ReportModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReportModel.h; path = MSRequest/ReportModel.h; sourceTree = SOURCE_ROOT; };
-		1B76CC0318F43A37004713E1 /* ReportModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReportModel.m; path = MSRequest/ReportModel.m; sourceTree = SOURCE_ROOT; };
-		1B76CC0518F43A42004713E1 /* ReportService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReportService.h; path = MSRequest/ReportService.h; sourceTree = SOURCE_ROOT; };
-		1B76CC0618F43A42004713E1 /* ReportService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReportService.m; path = MSRequest/ReportService.m; sourceTree = SOURCE_ROOT; };
-		1B76CC0818F43A52004713E1 /* ReportUploader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReportUploader.h; path = MSRequest/ReportUploader.h; sourceTree = SOURCE_ROOT; };
-		1B76CC0918F43A52004713E1 /* ReportUploader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReportUploader.m; path = MSRequest/ReportUploader.m; sourceTree = SOURCE_ROOT; };
 		1B76CC0E18F43A74004713E1 /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Alpha.h"; path = "MSRequest/UIImage+Alpha.h"; sourceTree = SOURCE_ROOT; };
 		1B76CC0F18F43A74004713E1 /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Alpha.m"; path = "MSRequest/UIImage+Alpha.m"; sourceTree = SOURCE_ROOT; };
 		1B76CC1018F43A74004713E1 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Resize.h"; path = "MSRequest/UIImage+Resize.h"; sourceTree = SOURCE_ROOT; };
@@ -359,12 +350,6 @@
 			children = (
 				1B76CBFF18F43A22004713E1 /* MapAnnotation.h */,
 				1B76CC0018F43A22004713E1 /* MapAnnotation.m */,
-				1B76CC0218F43A37004713E1 /* ReportModel.h */,
-				1B76CC0318F43A37004713E1 /* ReportModel.m */,
-				1B76CC0518F43A42004713E1 /* ReportService.h */,
-				1B76CC0618F43A42004713E1 /* ReportService.m */,
-				1B76CC0818F43A52004713E1 /* ReportUploader.h */,
-				1B76CC0918F43A52004713E1 /* ReportUploader.m */,
 				1B3743E818F5997F00C32AD6 /* TypeOfReport.h */,
 				1B3743E918F5997F00C32AD6 /* TypeOfReport.m */,
 				1B3743F118F683DF00C32AD6 /* Report.h */,
@@ -575,7 +560,6 @@
 				1B76CC1618F43A74004713E1 /* UIImage+RoundedCorner.m in Sources */,
 				1B76CBDE18F43964004713E1 /* PullToRefreshView.m in Sources */,
 				1B76CBEF18F439CC004713E1 /* MapViewController.m in Sources */,
-				1B76CC0718F43A42004713E1 /* ReportService.m in Sources */,
 				1B76CC5C18F441FB004713E1 /* DejalActivityView.m in Sources */,
 				1B76CBFB18F43A0B004713E1 /* ReportsFilterViewController.m in Sources */,
 				1B76CBE518F439A1004713E1 /* CustomReportTableViewCell.m in Sources */,
@@ -585,13 +569,11 @@
 				1B3743F318F683DF00C32AD6 /* Report.m in Sources */,
 				1B3743EA18F5997F00C32AD6 /* TypeOfReport.m in Sources */,
 				1B76CBFE18F43A14004713E1 /* ReportsRootViewController.m in Sources */,
-				1B76CC0418F43A37004713E1 /* ReportModel.m in Sources */,
 				1B76CC5818F44039004713E1 /* SignInViewController.m in Sources */,
 				1B76CBD218F43896004713E1 /* AppDelegate.m in Sources */,
 				1B76CBDB18F4395A004713E1 /* CityWatchToolbar.m in Sources */,
 				1B76CBE118F4398D004713E1 /* ActivityViewController.m in Sources */,
 				1B76CC1518F43A74004713E1 /* UIImage+Resize.m in Sources */,
-				1B76CC0A18F43A52004713E1 /* ReportUploader.m in Sources */,
 				1B3743EF18F599A400C32AD6 /* AuthenticationHelper.m in Sources */,
 				1B76CC1B18F43AA8004713E1 /* main.m in Sources */,
 				1B76CBEC18F439BA004713E1 /* ImageScrollViewController.m in Sources */,
