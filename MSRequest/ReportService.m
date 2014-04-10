@@ -38,7 +38,7 @@
         _imageDownloaders = [[NSMutableDictionary alloc] init];
         
         //Create a caching store that loads from the Reports collection
-        KCSCollection* collection = [KCSCollection collectionFromString:@"Reports" ofClass:[ReportModel class]];
+        KCSCollection* collection = [KCSCollection collectionFromString:@"R" ofClass:[ReportModel class]];
         _store = [KCSLinkedAppdataStore storeWithCollection:collection options:@{ KCSStoreKeyCachePolicy : @(KCSCachePolicyNetworkFirst)}];
     }
     

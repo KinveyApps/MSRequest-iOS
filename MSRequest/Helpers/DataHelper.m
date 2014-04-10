@@ -51,7 +51,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
         
         KCSCollection *collectionReports = [KCSCollection collectionFromString:REPORT_KINVEY_COLLECTIONS_NAME
                                                                        ofClass:[Report class]];
-        self.reportsLinkedAppdataStore = [KCSLinkedAppdataStore storeWithOptions:@{ KCSStoreKeyResource       : collectionReports,          //collection
+        self.reportsLinkedAppdataStore = [KCSLinkedAppdataStore storeWithOptions:@{ KCSStoreKeyResource       : collectionReports,              //collection
                                                                                     KCSStoreKeyCachePolicy    : @(KCSCachePolicyNetworkFirst)}];  //default cache policy
 
 	}
@@ -133,7 +133,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
     
 }
 
-#pragma mark - Types of Report
+#pragma mark - Reports
 #pragma mark - Save and Load Entity
 
 - (void)loadReportUseCache:(BOOL)useCache withQuery:(KCSQuery *)query OnSuccess:(void (^)(NSArray *))reportSuccess onFailure:(void (^)(NSError *))reportFailure{

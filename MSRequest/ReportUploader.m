@@ -34,7 +34,7 @@
 {
     if (self = [super init]) {
         self.report = report;
-        KCSCollection* collection = [KCSCollection collectionFromString:@"Reports" ofClass:[ReportModel class]];
+        KCSCollection* collection = [KCSCollection collectionFromString:@"R" ofClass:[ReportModel class]];
         _kinveyStore = [KCSLinkedAppdataStore storeWithCollection:collection options:@{ KCSStoreKeyCachePolicy : @(KCSCachePolicyNetworkFirst)}];
     }
     
