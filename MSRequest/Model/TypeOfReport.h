@@ -16,7 +16,7 @@
 @property (nonatomic, retain) KCSMetadata *metadata;    //Kinvey metadata
 
 @property (nonatomic, copy) NSString *name;
-@property (nonatomic, copy) NSArray *reportState;
-@property (nonatomic, copy) NSArray *additionalAttributes;
+@property (nonatomic, retain) NSArray *reportState;
+@property (nonatomic, retain) NSArray *additionalAttributes;
 
 @end

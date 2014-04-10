@@ -10,6 +10,7 @@
 		1B3743EA18F5997F00C32AD6 /* TypeOfReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3743E918F5997F00C32AD6 /* TypeOfReport.m */; };
 		1B3743EF18F599A400C32AD6 /* AuthenticationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3743EC18F599A400C32AD6 /* AuthenticationHelper.m */; };
 		1B3743F018F599A400C32AD6 /* DataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3743EE18F599A400C32AD6 /* DataHelper.m */; };
+		1B3743F318F683DF00C32AD6 /* Report.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3743F218F683DF00C32AD6 /* Report.m */; };
 		1B76CBC018F42120004713E1 /* KinveyKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B76CBBF18F42120004713E1 /* KinveyKit.framework */; };
 		1B76CBD218F43896004713E1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CBD118F43896004713E1 /* AppDelegate.m */; };
 		1B76CBD518F43920004713E1 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B76CBD318F43920004713E1 /* MainStoryboard.storyboard */; };
@@ -98,6 +99,8 @@
 		1B3743EC18F599A400C32AD6 /* AuthenticationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AuthenticationHelper.m; path = MSRequest/Helpers/AuthenticationHelper.m; sourceTree = SOURCE_ROOT; };
 		1B3743ED18F599A400C32AD6 /* DataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataHelper.h; path = MSRequest/Helpers/DataHelper.h; sourceTree = SOURCE_ROOT; };
 		1B3743EE18F599A400C32AD6 /* DataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataHelper.m; path = MSRequest/Helpers/DataHelper.m; sourceTree = SOURCE_ROOT; };
+		1B3743F118F683DF00C32AD6 /* Report.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Report.h; path = MSRequest/Model/Report.h; sourceTree = SOURCE_ROOT; };
+		1B3743F218F683DF00C32AD6 /* Report.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Report.m; path = MSRequest/Model/Report.m; sourceTree = SOURCE_ROOT; };
 		1B76CBBF18F42120004713E1 /* KinveyKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KinveyKit.framework; sourceTree = "<group>"; };
 		1B76CBC618F425AC004713E1 /* SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SynthesizeSingleton.h; path = Externals/SynthesizeSingleton.h; sourceTree = SOURCE_ROOT; };
 		1B76CBD018F43896004713E1 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = MSRequest/AppDelegate.h; sourceTree = SOURCE_ROOT; };
@@ -364,6 +367,8 @@
 				1B76CC0918F43A52004713E1 /* ReportUploader.m */,
 				1B3743E818F5997F00C32AD6 /* TypeOfReport.h */,
 				1B3743E918F5997F00C32AD6 /* TypeOfReport.m */,
+				1B3743F118F683DF00C32AD6 /* Report.h */,
+				1B3743F218F683DF00C32AD6 /* Report.m */,
 			);
 			name = Models;
 			path = ../Potholes;
@@ -577,6 +582,7 @@
 				1B76CC1418F43A74004713E1 /* UIImage+Alpha.m in Sources */,
 				1B76CBF518F439EF004713E1 /* PickerTableViewController.m in Sources */,
 				1B76CBF818F439FD004713E1 /* ReportDetailViewController.m in Sources */,
+				1B3743F318F683DF00C32AD6 /* Report.m in Sources */,
 				1B3743EA18F5997F00C32AD6 /* TypeOfReport.m in Sources */,
 				1B76CBFE18F43A14004713E1 /* ReportsRootViewController.m in Sources */,
 				1B76CC0418F43A37004713E1 /* ReportModel.m in Sources */,

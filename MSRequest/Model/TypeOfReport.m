@@ -13,6 +13,7 @@
 - (NSDictionary *)hostToKinveyPropertyMapping{
     
     return @{@"entityId"                : KCSEntityKeyId,
+             @"metadata"                : KCSEntityKeyMetadata,
              @"name"                    : @"name",
              @"reportState"             : @"reportState",
              @"additionalAttributes"    : @"additionalAttributes"};
