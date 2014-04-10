@@ -10,7 +10,7 @@
 
 #define TYPES_OF_REPORT_KINVEY_COLLECTIONS_NAME @"TypesOfReport"
 
-@interface TypesOfReport : NSObject <KCSPersistable>
+@interface TypeOfReport : NSObject <KCSPersistable>
 
 @property (nonatomic, copy) NSString *entityId;         //Kinvey entity _id
 @property (nonatomic, retain) KCSMetadata *metadata;    //Kinvey metadata

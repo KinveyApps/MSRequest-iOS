@@ -45,7 +45,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
         
         //Kinvey: Here we define our collection to use
         KCSCollection *collectionTypesOfReport = [KCSCollection collectionFromString:TYPES_OF_REPORT_KINVEY_COLLECTIONS_NAME
-                                                                             ofClass:[TypesOfReport class]];
+                                                                             ofClass:[TypeOfReport class]];
         self.typesOfReportLinkedAppdataStore = [KCSLinkedAppdataStore storeWithOptions:@{ KCSStoreKeyResource       : collectionTypesOfReport,          //collection
                                                                                           KCSStoreKeyCachePolicy    : @(KCSCachePolicyNetworkFirst)}];  //default cache policy
         
@@ -108,7 +108,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
 
 - (void)loadTypesOfReportUseCache:(BOOL)useCache OnSuccess:(void (^)(NSArray *))reportSuccess onFailure:(void (^)(NSError *))reportFailure{
 
-    KCSQuery *query = [KCSQuery query];
+    KCSQuery *query = [KCSQuery queryOnField:@"additionalAttributes.1"
+                                   withRegex:[self regexForContaintSubstring:@"lev"]];
     
     //Kinvey: Load entity from Quote collection which correspond query
 	[self.typesOfReportLinkedAppdataStore queryWithQuery:query

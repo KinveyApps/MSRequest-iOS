@@ -15,7 +15,7 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "TypesOfReport.h"
+#import "TypeOfReport.h"
 
 //Define date format
 #define FORMAT_DATE                             @"dd/MM/yyyy"

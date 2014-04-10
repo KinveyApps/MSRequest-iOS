@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Intrepid Pursuits. All rights reserved.
 //
 
-#import "TypesOfReport.h"
+#import "TypeOfReport.h"
 
-@implementation TypesOfReport
+@implementation TypeOfReport
 
 - (NSDictionary *)hostToKinveyPropertyMapping{
     
