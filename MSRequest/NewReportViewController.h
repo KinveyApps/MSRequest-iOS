@@ -27,10 +27,5 @@ PickerTableViewControllerDelegate, MapViewControllerDelegate, DescriptionEditorV
 UITextFieldDelegate, MapAnnotationDelegate>
 
 @property (strong, nonatomic) Report *report;
-@property (weak, nonatomic) IBOutlet UIButton *imagePickerButton;
-@property (weak, nonatomic) IBOutlet UITextField *reportCategoryTextField;
-@property (weak, nonatomic) IBOutlet UITextField *reportLocationTextField;
-@property (weak, nonatomic) IBOutlet UITextField *reportDescriptionTextField;
-@property (weak, nonatomic) IBOutlet UIButton *submitButton;
 
 @end

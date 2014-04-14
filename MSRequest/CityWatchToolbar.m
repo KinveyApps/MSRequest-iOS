@@ -25,7 +25,7 @@
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        [self setBackgroundImage:[UIImage imageNamed:@"blue_top_bar_no_tab.png"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
+
     }
     return self;
 }

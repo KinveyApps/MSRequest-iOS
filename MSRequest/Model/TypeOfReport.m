@@ -12,17 +12,12 @@
 
 - (NSDictionary *)hostToKinveyPropertyMapping{
     
-    return @{@"entityId"                : KCSEntityKeyId,
-             @"metadata"                : KCSEntityKeyMetadata,
-             @"name"                    : @"name",
-             @"reportState"             : @"reportState",
-             @"additionalAttributes"    : @"additionalAttributes"};
-}
-
-+ (NSDictionary *)kinveyObjectBuilderOptions{
-    
-    return @{KCS_REFERENCE_MAP_KEY  : @{@"reportState"          : [NSString class],
-                                        @"additionalAttributes" : [NSString class]}};
+    return @{@"entityId"                        : KCSEntityKeyId,
+             @"metadata"                        : KCSEntityKeyMetadata,
+             @"name"                            : @"name",
+             @"reportState"                     : @"reportState",
+             @"additionalAttributes"            : @"additionalAttributes",
+             @"additionalAttributesValidValues" : @"additionalAttributesValidValues"};
 }
 
 @end

@@ -36,12 +36,17 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-    
+
     [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBarHidden = YES;
+    self.navigationController.toolbarHidden = YES;
     
     if ([AuthenticationHelper instance].isSignedIn) {
         
         [self preloadDataAndOpenReportRootView];
+    }else{
+        [self performSegueWithIdentifier:@"kSegueIdentifierModalSingInView" sender:self];
     }
 }
 

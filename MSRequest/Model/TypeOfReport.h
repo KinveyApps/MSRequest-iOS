@@ -18,5 +18,6 @@
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, retain) NSArray *reportState;
 @property (nonatomic, retain) NSArray *additionalAttributes;
+@property (nonatomic, retain) NSArray *additionalAttributesValidValues;
 
 @end

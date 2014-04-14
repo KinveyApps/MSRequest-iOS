@@ -28,7 +28,7 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    self.navigationController.navigationBar.alpha = 1;
+
 }
 
 - (void)viewDidLoad
@@ -105,7 +105,6 @@
     [UIView animateWithDuration:0.5 
                      animations:^{
                          float alpha = self.navigationController.navigationBar.alpha;
-                         self.navigationController.navigationBar.alpha = (alpha == 0) ? 1 : 0;
                      }
                      completion:^(BOOL finished) {
                          // if nav bar is hidden, unhide it before animation, since alpha is already 0

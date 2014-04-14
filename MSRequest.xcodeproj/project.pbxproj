@@ -11,6 +11,9 @@
 		1B3743EF18F599A400C32AD6 /* AuthenticationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3743EC18F599A400C32AD6 /* AuthenticationHelper.m */; };
 		1B3743F018F599A400C32AD6 /* DataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3743EE18F599A400C32AD6 /* DataHelper.m */; };
 		1B3743F318F683DF00C32AD6 /* Report.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3743F218F683DF00C32AD6 /* Report.m */; };
+		1B3743F718F7FF1000C32AD6 /* PhotoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3743F618F7FF1000C32AD6 /* PhotoTableViewCell.m */; };
+		1B3743FA18F7FFE500C32AD6 /* LabelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3743F918F7FFE500C32AD6 /* LabelTableViewCell.m */; };
+		1B3743FD18F800F600C32AD6 /* TextFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3743FC18F800F600C32AD6 /* TextFieldTableViewCell.m */; };
 		1B76CBC018F42120004713E1 /* KinveyKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B76CBBF18F42120004713E1 /* KinveyKit.framework */; };
 		1B76CBD218F43896004713E1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CBD118F43896004713E1 /* AppDelegate.m */; };
 		1B76CBD518F43920004713E1 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B76CBD318F43920004713E1 /* MainStoryboard.storyboard */; };
@@ -98,6 +101,12 @@
 		1B3743EE18F599A400C32AD6 /* DataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataHelper.m; path = MSRequest/Helpers/DataHelper.m; sourceTree = SOURCE_ROOT; };
 		1B3743F118F683DF00C32AD6 /* Report.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Report.h; path = MSRequest/Model/Report.h; sourceTree = SOURCE_ROOT; };
 		1B3743F218F683DF00C32AD6 /* Report.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Report.m; path = MSRequest/Model/Report.m; sourceTree = SOURCE_ROOT; };
+		1B3743F518F7FF1000C32AD6 /* PhotoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoTableViewCell.h; path = MSRequest/TableViewCells/PhotoTableViewCell.h; sourceTree = SOURCE_ROOT; };
+		1B3743F618F7FF1000C32AD6 /* PhotoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoTableViewCell.m; path = MSRequest/TableViewCells/PhotoTableViewCell.m; sourceTree = SOURCE_ROOT; };
+		1B3743F818F7FFE500C32AD6 /* LabelTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LabelTableViewCell.h; path = MSRequest/TableViewCells/LabelTableViewCell.h; sourceTree = SOURCE_ROOT; };
+		1B3743F918F7FFE500C32AD6 /* LabelTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LabelTableViewCell.m; path = MSRequest/TableViewCells/LabelTableViewCell.m; sourceTree = SOURCE_ROOT; };
+		1B3743FB18F800F600C32AD6 /* TextFieldTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextFieldTableViewCell.h; path = MSRequest/TableViewCells/TextFieldTableViewCell.h; sourceTree = SOURCE_ROOT; };
+		1B3743FC18F800F600C32AD6 /* TextFieldTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextFieldTableViewCell.m; path = MSRequest/TableViewCells/TextFieldTableViewCell.m; sourceTree = SOURCE_ROOT; };
 		1B76CBBF18F42120004713E1 /* KinveyKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KinveyKit.framework; sourceTree = "<group>"; };
 		1B76CBC618F425AC004713E1 /* SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SynthesizeSingleton.h; path = Externals/SynthesizeSingleton.h; sourceTree = SOURCE_ROOT; };
 		1B76CBD018F43896004713E1 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = MSRequest/AppDelegate.h; sourceTree = SOURCE_ROOT; };
@@ -231,6 +240,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B3743F418F7FEAC00C32AD6 /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				1B3743F518F7FF1000C32AD6 /* PhotoTableViewCell.h */,
+				1B3743F618F7FF1000C32AD6 /* PhotoTableViewCell.m */,
+				1B3743F818F7FFE500C32AD6 /* LabelTableViewCell.h */,
+				1B3743F918F7FFE500C32AD6 /* LabelTableViewCell.m */,
+				1B3743FB18F800F600C32AD6 /* TextFieldTableViewCell.h */,
+				1B3743FC18F800F600C32AD6 /* TextFieldTableViewCell.m */,
+			);
+			name = TableViewCells;
+			sourceTree = "<group>";
+		};
 		1B76CBBE18F42120004713E1 /* KinveyKit-1.26.6 */ = {
 			isa = PBXGroup;
 			children = (
@@ -278,6 +300,7 @@
 				1B76CBD118F43896004713E1 /* AppDelegate.m */,
 				1B76CBD318F43920004713E1 /* MainStoryboard.storyboard */,
 				5EE6632215912A3F00E0C9F9 /* Views */,
+				1B3743F418F7FEAC00C32AD6 /* TableViewCells */,
 				5E2C87A614C5BE1E0062229A /* View Controllers */,
 				5E2C87A514C5BE0D0062229A /* Models */,
 				1B76CBC118F4220C004713E1 /* Helpers */,
@@ -555,9 +578,11 @@
 				1B3743F018F599A400C32AD6 /* DataHelper.m in Sources */,
 				1B76CBD818F43947004713E1 /* CityWatchNavigationBar.m in Sources */,
 				1B76CBF218F439E3004713E1 /* NewReportViewController.m in Sources */,
+				1B3743F718F7FF1000C32AD6 /* PhotoTableViewCell.m in Sources */,
 				1B76CBE918F439B0004713E1 /* DescriptionEditorViewController.m in Sources */,
 				1B76CC0118F43A22004713E1 /* MapAnnotation.m in Sources */,
 				1B76CC1618F43A74004713E1 /* UIImage+RoundedCorner.m in Sources */,
+				1B3743FD18F800F600C32AD6 /* TextFieldTableViewCell.m in Sources */,
 				1B76CBDE18F43964004713E1 /* PullToRefreshView.m in Sources */,
 				1B76CBEF18F439CC004713E1 /* MapViewController.m in Sources */,
 				1B76CC5C18F441FB004713E1 /* DejalActivityView.m in Sources */,
@@ -575,6 +600,7 @@
 				1B76CBE118F4398D004713E1 /* ActivityViewController.m in Sources */,
 				1B76CC1518F43A74004713E1 /* UIImage+Resize.m in Sources */,
 				1B3743EF18F599A400C32AD6 /* AuthenticationHelper.m in Sources */,
+				1B3743FA18F7FFE500C32AD6 /* LabelTableViewCell.m in Sources */,
 				1B76CC1B18F43AA8004713E1 /* main.m in Sources */,
 				1B76CBEC18F439BA004713E1 /* ImageScrollViewController.m in Sources */,
 			);

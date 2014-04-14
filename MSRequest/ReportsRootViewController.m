@@ -38,7 +38,7 @@
 
 - (UITableView *)reportsTableView {
     if (!_reportsTableView) {
-        _reportsTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 372) 
+        _reportsTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
                                                         style:UITableViewStylePlain];
         _reportsTableView.delegate = self;
         _reportsTableView.dataSource = self;
@@ -127,6 +127,7 @@
 - (IBAction)logout:(id)sender
 {
     [[KCSUser activeUser] logout];
+    [self.navigationController popViewControllerAnimated:YES];
 
 }
 
@@ -149,11 +150,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationController.toolbarHidden = NO;
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" 
-                                                                             style:UIBarButtonItemStyleBordered 
-                                                                            target:nil 
-                                                                            action:nil];
+
     tableViewIsVisible = YES;
     [self.mainContentView addSubview:self.reportsTableView];
     
@@ -176,7 +173,9 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
+    self.navigationController.toolbarHidden = NO;
+    self.navigationController.navigationBarHidden = NO;
+    self.navigationItem.hidesBackButton = YES;
     [self dataLoad];
     
 }
@@ -237,15 +236,9 @@
 
 - (IBAction)newReportButtonPressed:(id)sender {
     // animate button
-    [UIView animateWithDuration:0.25 
-                     animations:^{
-                         ((UIButton *)sender).transform = CGAffineTransformMakeRotation(M_PI - 0.01);
-                     }
-                     completion:^(BOOL finished) {
-                         [self performSegueWithIdentifier:@"kSegueIdentifierNewReport" sender:sender];
-                         ((UIButton *)sender).transform = CGAffineTransformIdentity;
-                     }
-     ];
+    
+    [self performSegueWithIdentifier:@"kSegueIdentifierNewReport" sender:sender];
+
 }
 
 #pragma mark - ReportsFilterViewControllerDelegate

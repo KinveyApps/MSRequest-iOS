@@ -32,15 +32,17 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"Cell";
     
-    UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    NSString *cellIdentifier = @"kCellIdentifierTypeOfReport";
+    
+    UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-    TypeOfReport *type = (TypeOfReport *)self.cellTitles[indexPath.row];
-    cell.textLabel.text = type.name;
+    
+    NSString *type = (NSString *)self.cellTitles[indexPath.row];
+    cell.textLabel.text = type;
     if (indexPath.row == self.selectedRow) cell.accessoryType = UITableViewCellAccessoryCheckmark;
     
     return cell;
