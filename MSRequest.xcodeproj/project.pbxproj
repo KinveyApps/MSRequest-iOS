@@ -66,6 +66,9 @@
 		1B76CC5218F43B49004713E1 /* where_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B76CC3818F43B49004713E1 /* where_icon.png */; };
 		1B76CC5818F44039004713E1 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CC5718F44039004713E1 /* SignInViewController.m */; };
 		1B76CC5C18F441FB004713E1 /* DejalActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CC5B18F441FB004713E1 /* DejalActivityView.m */; };
+		1BEAAEDC18FD280E003AE701 /* RootCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BEAAEDB18FD280E003AE701 /* RootCollectionViewCell.m */; };
+		1BEAAEE018FD39E7003AE701 /* KinveyImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BEAAEDE18FD39E7003AE701 /* KinveyImageView.m */; };
+		1BEAAEE118FD39E7003AE701 /* KinveyImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1BEAAEDF18FD39E7003AE701 /* KinveyImageView.xib */; };
 		2736B1B5162C61FA006CF960 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2736B1B4162C61FA006CF960 /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		2736B1B7162C61FF006CF960 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2736B1B6162C61FF006CF960 /* Twitter.framework */; };
 		2736B1BB162C64FD006CF960 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2736B1BA162C64FD006CF960 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -182,6 +185,11 @@
 		1B76CC5A18F441FB004713E1 /* DejalActivityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DejalActivityView.h; sourceTree = "<group>"; };
 		1B76CC5B18F441FB004713E1 /* DejalActivityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DejalActivityView.m; sourceTree = "<group>"; };
 		1B76CC5D18F442A5004713E1 /* STBlocks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = STBlocks.h; path = Externals/STBlocks.h; sourceTree = SOURCE_ROOT; };
+		1BEAAEDA18FD280E003AE701 /* RootCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootCollectionViewCell.h; path = MSRequest/CollectionViewCells/RootCollectionViewCell.h; sourceTree = SOURCE_ROOT; };
+		1BEAAEDB18FD280E003AE701 /* RootCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootCollectionViewCell.m; path = MSRequest/CollectionViewCells/RootCollectionViewCell.m; sourceTree = SOURCE_ROOT; };
+		1BEAAEDD18FD39E7003AE701 /* KinveyImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KinveyImageView.h; path = MSRequest/Views/KinveyImageView.h; sourceTree = SOURCE_ROOT; };
+		1BEAAEDE18FD39E7003AE701 /* KinveyImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KinveyImageView.m; path = MSRequest/Views/KinveyImageView.m; sourceTree = SOURCE_ROOT; };
+		1BEAAEDF18FD39E7003AE701 /* KinveyImageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = KinveyImageView.xib; path = MSRequest/Views/KinveyImageView.xib; sourceTree = SOURCE_ROOT; };
 		2736B1B4162C61FA006CF960 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		2736B1B6162C61FF006CF960 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		2736B1BA162C64FD006CF960 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
@@ -292,6 +300,15 @@
 			path = Externals/DejalActivityView;
 			sourceTree = SOURCE_ROOT;
 		};
+		1BEAAED918FD27A9003AE701 /* CollectionsViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				1BEAAEDA18FD280E003AE701 /* RootCollectionViewCell.h */,
+				1BEAAEDB18FD280E003AE701 /* RootCollectionViewCell.m */,
+			);
+			name = CollectionsViewCells;
+			sourceTree = "<group>";
+		};
 		27B8720B1641BBA7001F590E /* MSRequest */ = {
 			isa = PBXGroup;
 			children = (
@@ -301,6 +318,7 @@
 				1B76CBD318F43920004713E1 /* MainStoryboard.storyboard */,
 				5EE6632215912A3F00E0C9F9 /* Views */,
 				1B3743F418F7FEAC00C32AD6 /* TableViewCells */,
+				1BEAAED918FD27A9003AE701 /* CollectionsViewCells */,
 				5E2C87A614C5BE1E0062229A /* View Controllers */,
 				5E2C87A514C5BE0D0062229A /* Models */,
 				1B76CBC118F4220C004713E1 /* Helpers */,
@@ -460,6 +478,9 @@
 				1B76CBDA18F4395A004713E1 /* CityWatchToolbar.m */,
 				1B76CBDC18F43964004713E1 /* PullToRefreshView.h */,
 				1B76CBDD18F43964004713E1 /* PullToRefreshView.m */,
+				1BEAAEDD18FD39E7003AE701 /* KinveyImageView.h */,
+				1BEAAEDE18FD39E7003AE701 /* KinveyImageView.m */,
+				1BEAAEDF18FD39E7003AE701 /* KinveyImageView.xib */,
 			);
 			name = Views;
 			path = ../Potholes;
@@ -530,6 +551,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BEAAEE118FD39E7003AE701 /* KinveyImageView.xib in Resources */,
 				276C539516308E5800959D74 /* Icon.png in Resources */,
 				1B76CC4118F43B49004713E1 /* ecowatch_blockedriver.png in Resources */,
 				1B76CC4318F43B49004713E1 /* ecowatch_foresttiger.png in Resources */,
@@ -581,6 +603,7 @@
 				1B3743F718F7FF1000C32AD6 /* PhotoTableViewCell.m in Sources */,
 				1B76CBE918F439B0004713E1 /* DescriptionEditorViewController.m in Sources */,
 				1B76CC0118F43A22004713E1 /* MapAnnotation.m in Sources */,
+				1BEAAEDC18FD280E003AE701 /* RootCollectionViewCell.m in Sources */,
 				1B76CC1618F43A74004713E1 /* UIImage+RoundedCorner.m in Sources */,
 				1B3743FD18F800F600C32AD6 /* TextFieldTableViewCell.m in Sources */,
 				1B76CBDE18F43964004713E1 /* PullToRefreshView.m in Sources */,
@@ -590,6 +613,7 @@
 				1B76CBE518F439A1004713E1 /* CustomReportTableViewCell.m in Sources */,
 				1B76CC1418F43A74004713E1 /* UIImage+Alpha.m in Sources */,
 				1B76CBF518F439EF004713E1 /* PickerTableViewController.m in Sources */,
+				1BEAAEE018FD39E7003AE701 /* KinveyImageView.m in Sources */,
 				1B76CBF818F439FD004713E1 /* ReportDetailViewController.m in Sources */,
 				1B3743F318F683DF00C32AD6 /* Report.m in Sources */,
 				1B3743EA18F5997F00C32AD6 /* TypeOfReport.m in Sources */,

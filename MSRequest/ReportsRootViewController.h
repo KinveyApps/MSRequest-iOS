@@ -26,21 +26,7 @@
 
 @class ReportModel;
 
-@interface ReportsRootViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate, ReportsFilterViewControllerDelegate, PullToRefreshViewDelegate> {    
-    BOOL tableViewIsVisible;
-    FilterOption currentFilterOption;
-    SortOption currentTableSortOption;
-    PullToRefreshView *pullView;
-}
-
-@property (strong, nonatomic) NSArray *reportsData;
-@property (weak, nonatomic) IBOutlet UIView *mainContentView;
-@property (strong, nonatomic) UITableView *reportsTableView;
-@property (weak, nonatomic) IBOutlet CustomReportTableViewCell *cellFromNib;
-@property (strong, nonatomic) MKMapView *reportsMapView;
-@property (weak, nonatomic) IBOutlet UIButton *addReportButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *toggleViewButton;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@interface ReportsRootViewController : UIViewController <ReportsFilterViewControllerDelegate>
 
 - (void)showDetailViewForReport:(Report *)report;
 

@@ -33,6 +33,15 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+#ifdef DEBUG
+    //Kinvey: Setup configuration
+	[KCSClient configureLoggingWithNetworkEnabled:YES
+									 debugEnabled:YES
+									 traceEnabled:YES
+								   warningEnabled:YES
+									 errorEnabled:YES];
+#endif
+
     
     _rvc = (ReportsRootViewController*)[(UINavigationController*)self.window.rootViewController topViewController];
     

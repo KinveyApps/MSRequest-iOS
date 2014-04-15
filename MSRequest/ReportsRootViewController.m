@@ -24,37 +24,63 @@
 
 #import "DataHelper.h"
 #import <KinveyKit/KinveyKit.h>
-
+#import "RootCollectionViewCell.h"
 #import "AppDelegate.h"
 
 #define MILES_PER_METER     0.000621371192
 
-@interface ReportsRootViewController () <CLLocationManagerDelegate>
+@interface ReportsRootViewController () <CLLocationManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 @property (nonatomic, retain) CLLocationManager* locationManager;
+@property (strong, nonatomic) NSArray *reportsData;
+@property (strong, nonatomic) KCSQuery *query;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+
 - (void) setThumbnailForCell:(CustomReportTableViewCell *)cell withImage:(UIImage *)image;
+
 @end
 
 @implementation ReportsRootViewController
 
-- (UITableView *)reportsTableView {
-    if (!_reportsTableView) {
-        _reportsTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
-                                                        style:UITableViewStylePlain];
-        _reportsTableView.delegate = self;
-        _reportsTableView.dataSource = self;
-        _reportsTableView.backgroundColor = [UIColor whiteColor];
-        _reportsTableView.rowHeight = 124.0f;
+- (KCSQuery *)query{
+    if (!_query) {
+        _query = [KCSQuery query];
     }
-    return _reportsTableView;
+    return _query;
 }
 
-- (MKMapView *)reportsMapView {
-    if (!_reportsMapView) {
-        _reportsMapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 372)];
-        _reportsMapView.delegate = self;
-        _reportsMapView.showsUserLocation = YES;
+#pragma mark - Collection View
+#pragma mark - Data Source
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+    return self.reportsData.count;
+}
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+    return 1;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    NSString *cellID = @"kRootCollectionViewCell";
+    
+    RootCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellID
+                                                                             forIndexPath:indexPath];
+    if (!cell) {
+        cell = [[RootCollectionViewCell alloc] init];
     }
-    return _reportsMapView;
+    Report *report = (Report *)self.reportsData[indexPath.row];
+    if (report) {
+        cell.typeLabel.text = report.type.name;
+        cell.statusLabel.text = report.type.reportState[[report.state integerValue]];
+        cell.descriptionLabel.text = report.descriptionOfReport;
+        cell.locationsLabel.text = report.locationString;
+        cell.kinveyImageView.kinveyID = report.imageId;
+    }
+    
+    return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    [self showDetailViewForReport:self.reportsData[indexPath.row]];
 }
 
 
@@ -75,42 +101,13 @@
     }
 }
 
-- (void)sortReportsData:(NSArray *)data {
-    NSArray *sortedArray;
-    
-    if (currentTableSortOption == SortOptionRecent) {
-        // sort array based on time submitted
-        sortedArray = [data sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-            NSDate *first = [(Report *)obj1 metadata].lastModifiedTime;
-            NSDate *second = [(Report *)obj2 metadata].lastModifiedTime;
-            return [second compare:first];
-        }];
-    }
-    else if (currentTableSortOption == SortOptionDistance) {
-        // sort array based on distance from current location
-        sortedArray = [data sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-            if ([self reportDistanceFromCurrentLocation:obj1] > [self reportDistanceFromCurrentLocation:obj2]) 
-                return NSOrderedDescending;
-            else if ([self reportDistanceFromCurrentLocation:obj1] < [self reportDistanceFromCurrentLocation:obj2]) 
-                return NSOrderedAscending;
-            return NSOrderedSame;
-        }];
-    }
-    self.reportsData = sortedArray;
-}
+- (void)dataLoad{
 
-- (void)dataLoad
-{
-    [pullView finishedLoading];
-    [self.activityIndicator stopAnimating];
-    [self.activityIndicator removeFromSuperview];
-    
     [[DataHelper instance] loadReportUseCache:YES
                                     withQuery:nil
                                     OnSuccess:^(NSArray *reports){
                                         self.reportsData = reports;
-                                        [self sortReportsData:self.reportsData];
-                                        [self.reportsTableView reloadData];
+                                        [self.collectionView reloadData];
                                     }onFailure:nil];
 }
 
@@ -140,8 +137,6 @@
     }
     else if ([segue.identifier isEqualToString:@"kSegueIdentifierReportFilter"]) {
         ((ReportsFilterViewController *)segue.destinationViewController).delegate = self;
-        ((ReportsFilterViewController *)segue.destinationViewController).selectedFilterOption = currentFilterOption;
-        ((ReportsFilterViewController *)segue.destinationViewController).selectedSortOption = currentTableSortOption;
     }
 }
 
@@ -151,24 +146,13 @@
 {
     [super viewDidLoad];
 
-    tableViewIsVisible = YES;
-    [self.mainContentView addSubview:self.reportsTableView];
-    
-    currentFilterOption = FilterOptionAll;
-    currentTableSortOption = SortOptionRecent;
     [self dataLoad];
-    
-    
-  //  [self.activityIndicator startAnimating];
-  //  [self refreshData];
+
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     self.locationManager.delegate = self;
     [self.locationManager startUpdatingLocation];
-    
-    pullView = [[PullToRefreshView alloc] initWithScrollView:self.reportsTableView];
-    [pullView setDelegate:self];
-    [self.reportsTableView addSubview:pullView];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -185,54 +169,6 @@
     [self dataLoad];
 }
 
-- (IBAction)toggleViewButtonValueChanged:(id)sender {
-    self.reportsTableView.userInteractionEnabled = NO;
-    self.reportsMapView.userInteractionEnabled = NO;
-    
-    if (tableViewIsVisible) {
-        [UIView animateWithDuration:0.5
-                         animations:^{
-                             [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight 
-                                                    forView:self.mainContentView 
-                                                      cache:YES];
-                             [self.reportsTableView removeFromSuperview];
-                             [self.mainContentView addSubview:self.reportsMapView];
-                         }
-                         completion:^(BOOL finished) {
-                             NSMutableArray *reportAnnotations = [[NSMutableArray alloc] init];
-                             for (Report *report in self.reportsData) {
-                                 MapAnnotation *annotation = [[MapAnnotation alloc] initWithReport:report];
-                                 [reportAnnotations addObject:annotation];
-                             }
-                             [self.reportsMapView addAnnotations:[reportAnnotations copy]];
-                             reportAnnotations = nil;
-                         }
-         ];
-    }
-    else {
-        [UIView animateWithDuration:0.5 
-                         animations:^{
-                             [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft 
-                                                    forView:self.mainContentView 
-                                                      cache:NO];
-                             [self.reportsMapView removeFromSuperview];
-                             [self.mainContentView addSubview:self.reportsTableView];
-                         } 
-                         completion:^(BOOL finished) {
-                             for (id <MKAnnotation> annotation in self.reportsMapView.annotations) {
-                                 if ([annotation isKindOfClass:[MapAnnotation class]]) {
-                                     [self.reportsMapView removeAnnotation:annotation];
-                                 }
-                             }
-                         }
-         ];
-        
-    }
-    self.reportsTableView.userInteractionEnabled = YES;
-    self.reportsMapView.userInteractionEnabled = YES;
-    tableViewIsVisible = !tableViewIsVisible;
-
-}
 
 - (IBAction)newReportButtonPressed:(id)sender {
     // animate button
@@ -244,65 +180,19 @@
 #pragma mark - ReportsFilterViewControllerDelegate
 
 - (void)reportFilterEditingFinishedWithOptions:(NSDictionary *)options {
-    currentFilterOption = [[options objectForKey:kFilterOptionKey] intValue];
-    currentTableSortOption = [[options objectForKey:kSortOptionKey] intValue];
-    [self dataLoad];
-    [self.reportsTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationBottom];
+//    currentFilterOption = [[options objectForKey:kFilterOptionKey] intValue];
+//    currentTableSortOption = [[options objectForKey:kSortOptionKey] intValue];
+//    [self dataLoad];
+//    [self.reportsTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationBottom];
 }
 
 - (void)reportFilterEditingFinishedWithFilterOption:(NSInteger)filterRow sortOption:(NSInteger)sortRow {
-    currentFilterOption = filterRow;
-    currentTableSortOption = sortRow;
-    [self dataLoad];
-    [self.reportsTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationBottom];
+//    currentFilterOption = filterRow;
+//    currentTableSortOption = sortRow;
+//    [self dataLoad];
+//    [self.reportsTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationBottom];
 }
 
-#pragma mark - UITableViewDataSource
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.reportsData.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *Identifier = @"CustomReportTableViewCell";
-    
-    CustomReportTableViewCell *cell = (CustomReportTableViewCell *)[tableView dequeueReusableCellWithIdentifier:Identifier];
-    
-    if (cell == nil) {
-        [[NSBundle mainBundle] loadNibNamed:Identifier owner:self options:nil];
-        cell = self.cellFromNib;
-        self.cellFromNib = nil;
-    }
-    
-    Report *report = [self.reportsData objectAtIndex:indexPath.row];
-    
-    // populate image and labels of cell
-    cell.reportLocation.text = report.locationString;
-    cell.reportCategory.text = report.type.name;
-    cell.reportDescription.text = report.descriptionOfReport;
-    cell.reportDistance.text = [NSString stringWithFormat:@"%.1f miles",[self reportDistanceFromCurrentLocation:report]*MILES_PER_METER];
-
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateStyle = NSDateFormatterShortStyle;
-    dateFormatter.timeStyle = NSDateFormatterShortStyle;
-    cell.reportTime.text = [dateFormatter stringFromDate:report.metadata.lastModifiedTime];
-    
-    if (report.imageId) {
-        [[DataHelper instance] loadImageByID:report.imageId
-                                   OnSuccess:^(UIImage *image){
-                                       [self setThumbnailForCell:cell withImage:image];
-                                       [self.view setNeedsDisplay];
-                                   }onFailure:nil];
-    } else {
-        cell.reportImage.image = nil;
-    }
-    
-    return cell;
-}
 
 - (void) setThumbnailForCell:(CustomReportTableViewCell *)cell withImage:(UIImage *)image
 {
@@ -329,80 +219,18 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     //reload the data to update locations
-    [self.reportsTableView reloadData];
+    [self.collectionView reloadData];
+    
 }
 
-#pragma mark - MKMapViewDelegate
-
-- (MKAnnotationView *)mapView:(MKMapView *)aMapView viewForAnnotation:(id<MKAnnotation>)annotation {
-    if ([annotation isKindOfClass:[MKUserLocation class]]) {
-        return nil;
-    }
-    else if ([annotation isKindOfClass:[MapAnnotation class]]) {
-        static NSString *MapAnnotationIdentifier = @"mapAnnotationIdentifier";
-        MKPinAnnotationView *pinView = (MKPinAnnotationView *)[aMapView dequeueReusableAnnotationViewWithIdentifier:MapAnnotationIdentifier];
-        
-        if (pinView == nil) {
-            pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation 
-                                                      reuseIdentifier:MapAnnotationIdentifier];
-        }
-        else {
-            pinView.annotation = annotation;
-        }
-        
-        pinView.pinColor = MKPinAnnotationColorRed;
-        pinView.animatesDrop = YES;
-        pinView.canShowCallout = YES;
-        pinView.draggable = NO;
-                
-        UIImageView *annotationImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
-        annotationImageView.contentMode = UIViewContentModeScaleAspectFit; //UIViewContentModeScaleAspectFill;
-        annotationImageView.image = ((MapAnnotation *) annotation).image; //[UIImage imageNamed:@"earth.jpg"];
-        
-        UIButton *detailButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-        [detailButton addTarget:self action:@selector(calloutButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        detailButton.frame = CGRectMake(0, 0, 32, 32);
-        pinView.leftCalloutAccessoryView = annotationImageView;
-        pinView.rightCalloutAccessoryView = detailButton;
-        
-        return pinView;
-    }
-    return nil;
-}
-
-- (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
-    for (MKAnnotationView *annotationView in views) {
-        // when user location annotation is added, zoom in to location
-        if (annotationView.annotation == mapView.userLocation) {
-            MKCoordinateRegion region;
-            MKCoordinateSpan span;
-            
-            span.latitudeDelta = 0.05;
-            span.longitudeDelta = 0.05;
-            
-            CLLocationCoordinate2D location = mapView.userLocation.location.coordinate;
-
-            region.span = span;
-            region.center = location;
-            
-            [mapView setRegion:region animated:TRUE];
-            [mapView regionThatFits:region];
-        }
-    }
-}
 
 - (IBAction)calloutButtonPressed:(UIButton *)sender {
     MKAnnotationView *view = (MKAnnotationView *)sender.superview/*callout view*/.superview/*annotation view*/;
     [self showDetailViewForReport:((MapAnnotation *)view.annotation).reportModel];
 }
 
-- (void)viewDidUnload
-{
-    [self setToggleViewButton:nil];
-    [self setMainContentView:nil];
-    [self setAddReportButton:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self setActivityIndicator:nil];
+- (void)viewDidUnload{
+
     [super viewDidUnload];
 }
 
