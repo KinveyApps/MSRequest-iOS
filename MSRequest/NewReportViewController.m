@@ -30,15 +30,6 @@
 #import "LabelTableViewCell.h"
 #import "TextFieldTableViewCell.h"
 
-#define MAX_IMAGE_BUTTON_WIDTH      280.0f
-#define MAX_IMAGE_BUTTON_HEIGHT     160.0f
-
-typedef enum {
-    NewReportTextFieldTypeCategory = 0,
-    NewReportTextFieldTypeLocation,
-    NewReportTextFieldTypeDescription
-} NewReportTextFieldType;
-
 typedef enum {
     PhotoNewReportTableViewRowIndex = 0,
     TypeNewReportTableViewRowIndex,
@@ -48,23 +39,26 @@ typedef enum {
     FirstAdditionalAttributeNewReportTableViewRowIndex
 } NewReportTableViewRowIndex;
 
+typedef enum {
+    MainNewReportTableViewSectionIndex = 0,
+    SubmitNewReportTableViewSectionIndex
+} NewReportTableViewSectionIndex;
+
 @interface NewReportViewController() <CLLocationManagerDelegate, UITableViewDataSource, UITableViewDelegate, TextFieldTableViewCellDelegate>
 
-@property (strong, nonatomic) UIImagePickerController *imagePickerController;
 @property (strong, nonatomic) MapAnnotation *reportAnnotation;
 @property (strong, nonatomic) UIImage *image;
 @property (nonatomic, strong) CLLocationManager* locationManager;
-
+@property (strong, nonatomic) NSArray *typeOfReportNames;
 @property (nonatomic, strong) NSMutableArray *additionalAttributedValues;
 @property (nonatomic, strong) NSArray *arrayForPicker;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, weak) TextFieldTableViewCell *currentEditingTextFieldCell;
+@property (strong, nonatomic) UIImagePickerController *imagePickerController;
 @property (strong, nonatomic) NSIndexPath *currentSelectedIndexPath;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomTableViewConstraint;
-
-@property (strong, nonatomic) NSArray *typeOfReportNames;
 
 @end
 
@@ -74,6 +68,7 @@ typedef enum {
 #pragma mark - Setters and Getters
 
 - (NSArray *)typeOfReportNames{
+    
     if ([DataHelper instance].typesOfReport) {
         
         if (!_typeOfReportNames.count) {
@@ -91,19 +86,33 @@ typedef enum {
     return nil;
 }
 
+- (UIImagePickerController *)imagePickerController {
+    
+    if (!_imagePickerController) {
+        _imagePickerController = [[UIImagePickerController alloc] init];
+        _imagePickerController.delegate = (id)self;
+        _imagePickerController.allowsEditing = NO;
+    }
+    
+    return _imagePickerController;
+}
 
 #pragma mark - Table View
 #pragma mark - Data Source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (section == 0) {
+    if (section == MainNewReportTableViewSectionIndex) {
         if (self.report.type) {
+            
             return FirstAdditionalAttributeNewReportTableViewRowIndex + self.report.type.additionalAttributes.count;
+            
         }else{
+            
             return 2;
         }
-    }else if (section == 1){
+    }else if (section == SubmitNewReportTableViewSectionIndex){
         if (self.report.type && self.image) {
+            
             return 1;
         }
     }
@@ -122,7 +131,7 @@ typedef enum {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (indexPath.section == 0) {
+    if (indexPath.section == MainNewReportTableViewSectionIndex) {
         switch (indexPath.row) {
                 
             case PhotoNewReportTableViewRowIndex:{
@@ -178,18 +187,17 @@ typedef enum {
             }break;
         }
 
-    }else if (indexPath.section == 1){
+    }else if (indexPath.section == SubmitNewReportTableViewSectionIndex){
+        
         NSString *photoCellID = @"kCellIdentifierSubmit";
         
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:photoCellID];
-        
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:photoCellID];
         }
         
         return cell;
     }
-
     
     return [[UITableViewCell alloc] init];
 }
@@ -199,17 +207,18 @@ typedef enum {
     NSString *photoCellID = @"kCellIdentifierPhoto";
     
     PhotoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:photoCellID];
-    
     if (!cell) {
         cell = [[PhotoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:photoCellID];
     }
+    
     if (self.image) {
-        cell.imageView.image = self.image;
+        cell.imageView.image = [self.image thumbnailImage:640 transparentBorder:0 cornerRadius:0 interpolationQuality:kCGInterpolationDefault];
+        cell.label.text = @"";
         cell.imageView.contentMode = UIViewContentModeScaleToFill;
     }else{
         cell.imageView.image = [UIImage imageNamed:@"photo_icon"];
+        cell.label.text = @"Tap to add or take a photo";
         cell.imageView.contentMode = UIViewContentModeCenter;
-
     }
     
     return cell;
@@ -220,7 +229,6 @@ typedef enum {
     NSString *labelCellID = @"kCellIdentifierLabel";
 
     LabelTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:labelCellID];
-    
     if (!cell) {
         cell = [[LabelTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:labelCellID];
     }
@@ -239,7 +247,6 @@ typedef enum {
     NSString *textFieldCellID = @"kCellIdentifierTextField";
     
     TextFieldTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:textFieldCellID];
-    
     if (!cell) {
         cell = [[TextFieldTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:textFieldCellID];
     }
@@ -249,7 +256,6 @@ typedef enum {
     }else{
         cell.textField.placeholder = placeholder;
     }
-    
     cell.textField.delegate = cell;
     cell.delegate = self;
     
@@ -257,21 +263,24 @@ typedef enum {
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 0) {
+    
+    if (indexPath.section == MainNewReportTableViewSectionIndex) {
+        
         if (indexPath.row == PhotoNewReportTableViewRowIndex) {
-            return 200;
+            return 320;
         }else{
             return 44;
         }
-    }else if (indexPath.section == 1){
+        
+    }else if (indexPath.section == SubmitNewReportTableViewSectionIndex){
         return 44;
     }
-    
+    return 44;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (indexPath.section == 0) {
+    if (indexPath.section == MainNewReportTableViewSectionIndex) {
         self.currentSelectedIndexPath = indexPath;
         
         switch (indexPath.row) {
@@ -304,27 +313,29 @@ typedef enum {
             }break;
         }
 
-    }else if (indexPath.section == 1){
+    }else if (indexPath.section == SubmitNewReportTableViewSectionIndex){
         self.report.metadata = [[KCSMetadata alloc] init];
+        [self.report.metadata setGloballyReadable:YES];
+        [self.report.metadata setGloballyWritable:YES];
         self.report.valuesAdditionalAttributes = self.additionalAttributedValues;
-        
-        UIImage *smallImage = [self.image resizedImageWithContentMode:UIViewContentModeScaleAspectFit bounds:CGSizeMake(640, 640) interpolationQuality:kCGInterpolationDefault];
         
         [DejalBezelActivityView activityViewForView:self.view withLabel:@"Upload Image"];
         
-        [[DataHelper instance] saveImage:smallImage
+        [[DataHelper instance] saveImage:self.image
                                OnSuccess:^(NSString *imageID){
+                                   
                                    self.report.imageId = imageID;
                                    [DejalBezelActivityView removeView];
                                    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Submit Report"];
                                    
                                    [[DataHelper instance] saveReport:self.report
                                                            OnSuccess:^(NSArray *reports){
+                                                               
                                                                [DejalBezelActivityView removeView];
                                                                [self.navigationController popViewControllerAnimated:YES];
+                                                               
                                                            }onFailure:nil];
                                }onFailure:nil];
-
     }
     
 }
@@ -368,23 +379,10 @@ typedef enum {
 }
 
 
+#pragma mark - Segue
 
-
-
-
-
-
-- (UIImagePickerController *)imagePickerController {
-    if (!_imagePickerController) {
-        _imagePickerController = [[UIImagePickerController alloc] init];
-        _imagePickerController.delegate = (id)self;
-        _imagePickerController.allowsEditing = NO;
-    }
-    return _imagePickerController;
-}
-
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {    
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
     if ([segue.identifier isEqualToString:@"kSegueIdentifierPushPickerTable"]) {
         ((PickerTableViewController *)segue.destinationViewController).delegate = self;
         ((PickerTableViewController *)segue.destinationViewController).cellTitles = self.arrayForPicker;
@@ -402,6 +400,7 @@ typedef enum {
             default:{
                 NSInteger additionalAttributeIndex = self.currentSelectedIndexPath.row - FirstAdditionalAttributeNewReportTableViewRowIndex;
                 NSString *additionalAttributeValue = (NSString *)self.additionalAttributedValues[additionalAttributeIndex];
+                
                 if (additionalAttributeValue.length) {
                     NSInteger pickerIndex = [self.report.type.additionalAttributesValidValues[additionalAttributeIndex] indexOfObject:additionalAttributeValue];
                     ((PickerTableViewController *)segue.destinationViewController).selectedRow = pickerIndex;
@@ -425,18 +424,21 @@ typedef enum {
 #pragma mark - View lifecycle
 
 - (void)viewWillAppear:(BOOL)animated {
+    
     self.navigationController.navigationBarHidden = NO;
     self.navigationController.toolbarHidden = YES;
     self.navigationItem.hidesBackButton = YES;
+    [self.tableView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    
     [self.navigationController setNavigationBarHidden:NO animated:animated];
     [self.locationManager stopMonitoringSignificantLocationChanges];
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad{
+    
     [super viewDidLoad];
     self.report = [[Report alloc] init];
     
@@ -456,10 +458,22 @@ typedef enum {
 
 }
 
+- (void)viewDidUnload
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [super viewDidUnload];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    // Return YES for supported orientations
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
 
 #pragma mark - UIActionSheetDelegate
 
-- (IBAction)imageSourceSelectionButtonPressed {    
+- (IBAction)imageSourceSelectionButtonPressed {
+    
     UIActionSheet *imageSourceSelectorSheet = [[UIActionSheet alloc] initWithTitle:nil 
                                                                           delegate:self 
                                                                  cancelButtonTitle:@"Cancel" 
@@ -470,6 +484,7 @@ typedef enum {
 
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    
     if (buttonIndex == actionSheet.cancelButtonIndex) {
         return;
     }
@@ -495,10 +510,10 @@ typedef enum {
             break;
     }
     
-//    [self presentModalViewController:self.imagePickerController animated:YES];
     [self presentViewController:self.imagePickerController animated:YES completion:nil];
     [self.navigationController setNavigationBarHidden:YES animated:NO]; // override showing of nav bar
 }
+
 
 #pragma mark - PickerTableViewControllerDelegate
 
@@ -525,6 +540,7 @@ typedef enum {
         default:{
             NSInteger additionalAttributeIndex = self.currentSelectedIndexPath.row - FirstAdditionalAttributeNewReportTableViewRowIndex;
             NSString *additionalAttributeValue = (NSString *)self.additionalAttributedValues[additionalAttributeIndex];
+            
             if (![additionalAttributeValue isEqualToString:self.report.type.additionalAttributesValidValues[additionalAttributeIndex][row]]) {
                 self.additionalAttributedValues[additionalAttributeIndex] = self.report.type.additionalAttributesValidValues[additionalAttributeIndex][row];
                 [self.tableView reloadData];
@@ -535,71 +551,53 @@ typedef enum {
 
 - (void)clearAdditionalAttributes{
     self.additionalAttributedValues = [[NSMutableArray alloc] initWithCapacity:self.report.type.additionalAttributes.count];
+    
     for (NSInteger i = 0; i < self.report.type.additionalAttributes.count; i++) {
         [self.additionalAttributedValues addObject:@""];
     }
 }
+
 
 #pragma mark - MapViewControllerDelegate
 
 - (void)mapViewControllerDoneButtonPressedWithAnnotation:(MapAnnotation *)annotation {
     [self.navigationController popViewControllerAnimated:YES];
 
-    self.report.locationString = annotation.subtitle;
+    if (annotation.subtitle.length) {
+        self.report.locationString = annotation.subtitle;
+    }else{
+        self.report.locationString = [NSString stringWithFormat:@"%f°, %f°", annotation.coordinate.longitude, annotation.coordinate.latitude];
+    }
     self.report.geoCoord = [CLLocation locationFromKinveyValue:CLLocationCoordinate2DToKCS(annotation.coordinate)];
-//    self.report.location = annotation.coordinate;
 
     [self.tableView reloadData];
 }
+
 
 #pragma mark - DescriptionEditorViewControllerDelegate
 
 - (void)descriptionEditorFinishedEditingWithText:(NSString *)description {
     [self.navigationController popViewControllerAnimated:YES];
+    
     self.report.descriptionOfReport = description;
-    [self.tableView reloadData]; 
-//    NSLinguisticTagger* tagger = [[NSLinguisticTagger alloc] initWithTagSchemes:@[] options:0];
-//    [tagger setString:description];
-//    NSRange r = [tagger sentenceRangeForRange:NSMakeRange(0, 1)];
-//    self.report.summary = [description substringWithRange:r];
-
+    [self.tableView reloadData];
 }
 
--(NSString *)documentsDirectoryPath {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectoryPath = [paths objectAtIndex:0];
-    return documentsDirectoryPath;
-} 
 
 #pragma mark - UIImagePickerControllerDelegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-//    [self dismissModalViewControllerAnimated:YES];
+    
     [self dismissViewControllerAnimated:YES completion:nil];
     
-    // store new image in report
-    UIImage *newImage = info[UIImagePickerControllerOriginalImage];
-    
-    self.image = newImage;
-    
-    // adjust button size according to new image aspect ratio and max dimensions
-    CGSize newImagePickerButtonSize = newImage.size;
-    if (newImagePickerButtonSize.height > MAX_IMAGE_BUTTON_HEIGHT) {
-        newImagePickerButtonSize.height = MAX_IMAGE_BUTTON_HEIGHT;
-        newImagePickerButtonSize.width = (newImage.size.width/newImage.size.height) * newImagePickerButtonSize.height;
-    }
-    if (newImagePickerButtonSize.width > MAX_IMAGE_BUTTON_WIDTH) {
-        newImagePickerButtonSize.width = MAX_IMAGE_BUTTON_WIDTH;
-        newImagePickerButtonSize.height = (newImage.size.height/newImage.size.width) * newImagePickerButtonSize.width;
-    }
+    self.image = info[UIImagePickerControllerOriginalImage];
     [self.tableView reloadData];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-//    [self dismissModalViewControllerAnimated:YES];
-    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
 
 #pragma mark - Location
 - (void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
@@ -612,51 +610,26 @@ typedef enum {
     [self.locationManager stopUpdatingLocation];
 }
 
+
 #pragma mark - MapAnnotationDelegate
 
 - (void)mapAnnotationFinishedReverseGeocoding:(MapAnnotation *)annotation {
     // update text field with new location
+    if (annotation.subtitle.length) {
         self.report.locationString = annotation.subtitle;
-        self.report.geoCoord = [CLLocation locationFromKinveyValue:CLLocationCoordinate2DToKCS(annotation.coordinate)];
-
-        [self.tableView reloadData];
+    }else{
+        self.report.locationString = [NSString stringWithFormat:@"%f°, %f°", annotation.coordinate.longitude, annotation.coordinate.latitude];
+    }
+    self.report.geoCoord = [CLLocation locationFromKinveyValue:CLLocationCoordinate2DToKCS(annotation.coordinate)];
+    
+    [self.tableView reloadData];
 }
+
+
+#pragma mark - Actions
 
 - (IBAction)cancelButtonPressed:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (IBAction)submitButtonPressed:(id)sender {
-    self.report.metadata = [[KCSMetadata alloc] init];
-    
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_async(queue, ^{
-        UIImage *smallImage = [self.image resizedImageWithContentMode:UIViewContentModeScaleAspectFit bounds:CGSizeMake(640, 640) interpolationQuality:kCGInterpolationDefault];
-        
-        [[DataHelper instance] saveImage:smallImage
-                               OnSuccess:^(NSString *imageID){
-                                   self.report.imageId = imageID;
-                                   
-                                   [[DataHelper instance] saveReport:self.report
-                                                           OnSuccess:^(NSArray *reports){
-                                                               [self dismissViewControllerAnimated:YES completion:nil];
-                                                           }onFailure:nil];
-                               }onFailure:nil];
-    });
-}
-
-- (void)viewDidUnload
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 @end

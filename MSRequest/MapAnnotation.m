@@ -81,11 +81,18 @@
                                   self.streetName = placemark.thoroughfare;
                                   self.city = placemark.locality;
                                   
-                                  NSString *locationString;
-                                  if (!self.streetNumber)
-                                      locationString = [NSString stringWithFormat:@"%@, %@",self.streetName,self.city];
-                                  else
-                                      locationString = [NSString stringWithFormat:@"%@ %@, %@",self.streetNumber,self.streetName,self.city];
+                                  
+                                  
+                                  NSMutableString *locationString = [NSMutableString string];
+                                  if (self.streetNumber) {
+                                      [locationString appendString:self.streetNumber];
+                                  }
+                                  if (self.streetName) {
+                                      [locationString appendString:self.streetName];
+                                  }
+                                  if (self.city) {
+                                      [locationString appendString:self.city];
+                                  }
                                   
                                   _subtitle = locationString;
                               }
