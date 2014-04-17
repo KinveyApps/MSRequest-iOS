@@ -101,9 +101,9 @@
     }
 }
 
-- (void)dataLoad{
+- (void)dataLoadUseCache:(BOOL)cache{
 
-    [[DataHelper instance] loadReportUseCache:YES
+    [[DataHelper instance] loadReportUseCache:cache
                                     withQuery:nil
                                     OnSuccess:^(NSArray *reports){
                                         self.reportsData = reports;
@@ -160,13 +160,12 @@
     self.navigationController.toolbarHidden = NO;
     self.navigationController.navigationBarHidden = NO;
     self.navigationItem.hidesBackButton = YES;
-    [self dataLoad];
+    [self dataLoadUseCache:YES];
     
 }
 
-- (void)pullToRefreshViewShouldRefresh:(PullToRefreshView *)view
-{
-    [self dataLoad];
+- (void)refresh{
+    [self dataLoadUseCache:NO];
 }
 
 
