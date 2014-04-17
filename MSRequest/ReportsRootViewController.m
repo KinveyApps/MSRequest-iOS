@@ -71,10 +71,11 @@
     Report *report = (Report *)self.reportsData[indexPath.row];
     if (report) {
         cell.typeLabel.text = report.type.name;
-        cell.statusLabel.text = report.type.reportState[[report.state integerValue]];
+        cell.statusLabel.text = [NSString stringWithFormat:@"State: %@", report.type.reportState[[report.state integerValue]]];
         cell.descriptionLabel.text = report.descriptionOfReport;
         cell.locationsLabel.text = report.locationString;
-        cell.kinveyImageView.kinveyID = report.imageId;
+        cell.kinveyImageView.kinveyID = report.thumbnailId;
+        cell.distanceLabel.text = [NSString stringWithFormat:@"distance: %.3f km", [self reportDistanceFromCurrentLocation:report]/1000.0];
     }
     
     return cell;
@@ -88,15 +89,17 @@
 - (float)reportDistanceFromCurrentLocation:(Report *)report
 {
     if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized) {
-        CLLocationCoordinate2D userCoordinate = [self.locationManager location].coordinate;
-        CLLocation *userLocation = [[CLLocation alloc] initWithCoordinate:userCoordinate
+        CLLocation *userLocation = [[CLLocation alloc] initWithCoordinate:[self.locationManager location].coordinate
                                                                  altitude:1
                                                        horizontalAccuracy:1
                                                          verticalAccuracy:1
                                                                 timestamp:nil];
-        
-        
-        return [report.geoCoord distanceFromLocation:userLocation];  // meters
+        CLLocation *reportLocation = [[CLLocation alloc] initWithCoordinate:report.geoCoord.coordinate
+                                                                 altitude:1
+                                                       horizontalAccuracy:1
+                                                         verticalAccuracy:1
+                                                                timestamp:nil];
+        return [reportLocation distanceFromLocation:userLocation];  // meters
     } else {
         return INFINITY;
     }
@@ -150,10 +153,9 @@
 {
     [super viewDidLoad];
 
-    [self dataLoad];
-
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    self.locationManager.distanceFilter = 1000.0;
     self.locationManager.delegate = self;
     [self.locationManager startUpdatingLocation];
     
