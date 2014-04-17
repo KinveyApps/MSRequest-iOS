@@ -25,5 +25,5 @@
 @property (nonatomic, retain) CLLocation *geoCoord;
 @property (nonatomic, copy) NSString *locationString;
 @property (nonatomic, copy) NSString *descriptionOfReport;
-
+@property (nonatomic, copy) NSString *thumbnailId;
 @end

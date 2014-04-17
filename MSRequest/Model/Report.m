@@ -21,18 +21,19 @@
              @"state"                       : @"state",
              @"geoCoord"                    : KCSEntityKeyGeolocation,
              @"locationString"              : @"locationString",
-             @"descriptionOfReport"         : @"descriptionOfReport"};
+             @"descriptionOfReport"         : @"descriptionOfReport",
+             @"thumbnailId"                 : @"thumbnailId"};
 }
 
 + (NSDictionary *)kinveyPropertyToCollectionMapping{
     
-    return @{@"type"         : @"TypesOfReport",
-             @"originator"   : KCSUserCollectionName};
+    return @{@"type"        : @"TypesOfReport",
+             @"originator"  : KCSUserCollectionName};
 }
 
 + (NSDictionary *)kinveyObjectBuilderOptions{
     
-    return @{KCS_REFERENCE_MAP_KEY: @{@"type": [TypeOfReport class]}};
+    return @{KCS_REFERENCE_MAP_KEY: @{@"type"   : [TypeOfReport class]}};
 }
 
 @end
