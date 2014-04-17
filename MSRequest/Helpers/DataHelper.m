@@ -216,34 +216,37 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
 
 - (void)saveImage:(UIImage *)image OnSuccess:(void (^)(NSString *))reportSuccess onFailure:(void(^)(NSError *))reportFailure{
     
-    KCSMetadata *metadata = [[KCSMetadata alloc] init];
-    [metadata setGloballyReadable:YES];
-    [metadata setGloballyWritable:YES];
-    
-    [KCSFileStore uploadData:UIImagePNGRepresentation(image)
-                     options:@{KCSFileACL: metadata,
-                               KCSFilePublic :@(YES)}
-             completionBlock:^(KCSFile* uploadInfo, NSError* error){
-                 
-                 if (!error) {
-                     NSString *fileID = uploadInfo.fileId;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        KCSMetadata *metadata = [[KCSMetadata alloc] init];
+        [metadata setGloballyReadable:YES];
+        [metadata setGloballyWritable:YES];
+        
+        [KCSFileStore uploadData:UIImageJPEGRepresentation(image, 0.25)
+                         options:@{KCSFileACL: metadata,
+                                   KCSFilePublic :@(YES)}
+                 completionBlock:^(KCSFile* uploadInfo, NSError* error){
                      
-                     //Return to main thread for update UI
-                     dispatch_async(dispatch_get_main_queue(), ^{
-                         if (reportSuccess) {
-                             reportSuccess(fileID);
-                         }
-                     });
-                 }else{
-                     
-                     //Return to main thread for update UI
-                     dispatch_async(dispatch_get_main_queue(), ^{
-                         if (reportFailure) {
-                             reportFailure(error);
-                         }
-                     });
-                 }
-             }progressBlock:nil];
+                     if (!error) {
+                         NSString *fileID = uploadInfo.fileId;
+                         
+                         //Return to main thread for update UI
+                         dispatch_async(dispatch_get_main_queue(), ^{
+                             if (reportSuccess) {
+                                 reportSuccess(fileID);
+                             }
+                         });
+                     }else{
+                         
+                         //Return to main thread for update UI
+                         dispatch_async(dispatch_get_main_queue(), ^{
+                             if (reportFailure) {
+                                 reportFailure(error);
+                             }
+                         });
+                     }
+                 }progressBlock:nil];
+    });
 }
 
 
