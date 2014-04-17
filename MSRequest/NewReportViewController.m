@@ -48,6 +48,7 @@ typedef enum {
 
 @property (strong, nonatomic) MapAnnotation *reportAnnotation;
 @property (strong, nonatomic) UIImage *image;
+@property (strong, nonatomic) UIImage *thumbnail;
 @property (nonatomic, strong) CLLocationManager* locationManager;
 @property (strong, nonatomic) NSArray *typeOfReportNames;
 @property (nonatomic, strong) NSMutableArray *additionalAttributedValues;
@@ -212,7 +213,7 @@ typedef enum {
     }
     
     if (self.image) {
-        cell.imageView.image = [self.image thumbnailImage:640 transparentBorder:0 cornerRadius:0 interpolationQuality:kCGInterpolationDefault];
+        cell.imageView.image = self.thumbnail;
         cell.label.text = @"";
         cell.imageView.contentMode = UIViewContentModeScaleToFill;
     }else{
@@ -314,30 +315,55 @@ typedef enum {
         }
 
     }else if (indexPath.section == SubmitNewReportTableViewSectionIndex){
-        self.report.metadata = [[KCSMetadata alloc] init];
-        [self.report.metadata setGloballyReadable:YES];
-        [self.report.metadata setGloballyWritable:YES];
-        self.report.valuesAdditionalAttributes = self.additionalAttributedValues;
-        
-        [DejalBezelActivityView activityViewForView:self.view withLabel:@"Upload Image"];
+        [DejalBezelActivityView activityViewForView:self.view.window withLabel:@"Upload Image"];
         
         [[DataHelper instance] saveImage:self.image
                                OnSuccess:^(NSString *imageID){
                                    
                                    self.report.imageId = imageID;
-                                   [DejalBezelActivityView removeView];
-                                   [DejalBezelActivityView activityViewForView:self.view withLabel:@"Submit Report"];
                                    
-                                   [[DataHelper instance] saveReport:self.report
-                                                           OnSuccess:^(NSArray *reports){
-                                                               
-                                                               [DejalBezelActivityView removeView];
-                                                               [self.navigationController popViewControllerAnimated:YES];
-                                                               
-                                                           }onFailure:nil];
-                               }onFailure:nil];
+                                   [[DataHelper instance] saveImage:self.thumbnail
+                                                          OnSuccess:^(NSString *thumbnailID){
+                                                              self.report.thumbnailId = thumbnailID;
+                                                              
+                                                              [DejalBezelActivityView removeView];
+                                                              [DejalBezelActivityView activityViewForView:self.view withLabel:@"Submit Report"];
+                                                              
+                                                              self.report.metadata = [[KCSMetadata alloc] init];
+                                                              [self.report.metadata setGloballyReadable:YES];
+                                                              [self.report.metadata setGloballyWritable:YES];
+                                                              self.report.valuesAdditionalAttributes = self.additionalAttributedValues;
+                                                              
+                                                              [[DataHelper instance] saveReport:self.report
+                                                                                      OnSuccess:^(NSArray *reports){
+                                                                                          
+                                                                                          [DejalBezelActivityView removeView];
+                                                                                          [self.navigationController popViewControllerAnimated:YES];
+                                                                                          
+                                                                                      }onFailure:^(NSError *error){
+                                                                                          [self submitError:error];
+                                                                                      }];
+                                                              
+                                                          }onFailure:^(NSError *error){
+                                                              [self submitError:error];
+                                                          }];
+                                   
+                               }onFailure:^(NSError *error){
+                                   [self submitError:error];
+                               }];
     }
     
+}
+
+- (void)submitError:(NSError *)error{
+    
+    [DejalBezelActivityView removeView];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:error.localizedDescription
+                                                       delegate:nil
+                                              cancelButtonTitle:@"Cancel"
+                                              otherButtonTitles:nil];
+    [alertView show];
 }
 
 
@@ -589,9 +615,19 @@ typedef enum {
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
     [self dismissViewControllerAnimated:YES completion:nil];
-    
     self.image = info[UIImagePickerControllerOriginalImage];
-    [self.tableView reloadData];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        UIImage *image = [self.image resizedImage:self.image.size interpolationQuality:kCGInterpolationNone];
+        UIImage *thumbnail = [self.image thumbnailImage:640 transparentBorder:0 cornerRadius:0 interpolationQuality:kCGInterpolationDefault];
+    
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.image = image;
+            self.thumbnail = thumbnail;
+            [self.tableView reloadData];
+        });
+        
+    });
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
