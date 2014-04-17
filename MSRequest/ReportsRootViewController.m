@@ -34,6 +34,7 @@
 @property (strong, nonatomic) NSArray *reportsData;
 @property (strong, nonatomic) KCSQuery *query;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 - (void) setThumbnailForCell:(CustomReportTableViewCell *)cell withImage:(UIImage *)image;
 
@@ -108,6 +109,9 @@
                                     OnSuccess:^(NSArray *reports){
                                         self.reportsData = reports;
                                         [self.collectionView reloadData];
+                                        if ([self.refreshControl isRefreshing]) {
+                                            [self.refreshControl endRefreshing];
+                                        }
                                     }onFailure:nil];
 }
 
@@ -152,7 +156,12 @@
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     self.locationManager.delegate = self;
     [self.locationManager startUpdatingLocation];
-
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self
+                            action:@selector(refresh)
+                  forControlEvents:UIControlEventValueChanged];
+    [self.collectionView addSubview:self.refreshControl];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
