@@ -9,7 +9,10 @@
         <scene sceneID="f2N-io-0Yr">
             <objects>
                 <navigationController definesPresentationContext="YES" toolbarHidden="NO" id="qza-v7-L5F" sceneMemberID="viewController">
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="W6L-OU-BYN" customClass="CityWatchNavigationBar">
                         <rect key="frame" x="0.0" y="-44" width="0.0" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -21,7 +24,7 @@
                         <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="barTintColor" red="0.82745105029999999" green="0.32549020649999999" blue="0.1411764771" alpha="1" colorSpace="deviceRGB"/>
+                        <color key="barTintColor" red="0.82745105029999999" green="0.32549020649999999" blue="0.1411764771" alpha="0.69999999999999996" colorSpace="deviceRGB"/>
                     </toolbar>
                     <connections>
                         <segue destination="2XM-r5-UTd" kind="relationship" relationship="rootViewController" id="dJV-yi-0Iz"/>
@@ -79,6 +82,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="imageView" destination="Hgq-6h-Cav" id="qht-ba-UPu"/>
+                                            <outlet property="label" destination="SjW-Hw-1Mk" id="1q6-BK-ndr"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="kCellIdentifierLabel" id="tF8-ci-68w" customClass="LabelTableViewCell">
@@ -436,26 +440,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QRv-Nt-nI6">
-                                <rect key="frame" x="0.0" y="-64" width="320" height="632"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QRv-Nt-nI6">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="52Q-cd-QQy">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="632"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    </imageView>
-                                </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="QRv-Nt-nI6" firstAttribute="top" secondItem="Bnr-v9-j3c" secondAttribute="top" id="7kV-D1-hFc"/>
+                            <constraint firstItem="8aE-5K-Bwr" firstAttribute="top" secondItem="QRv-Nt-nI6" secondAttribute="bottom" id="U0Q-Ez-D1s"/>
+                            <constraint firstAttribute="trailing" secondItem="QRv-Nt-nI6" secondAttribute="trailing" id="dG4-fB-wKO"/>
+                            <constraint firstItem="QRv-Nt-nI6" firstAttribute="leading" secondItem="Bnr-v9-j3c" secondAttribute="leading" id="gyz-4G-IQT"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="wif-Tq-R5K"/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="mainScrollView" destination="QRv-Nt-nI6" id="K6v-Fj-0rv"/>
-                        <outlet property="reportImageView" destination="52Q-cd-QQy" id="1hb-Ct-wfr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qaz-Qt-jUz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -667,7 +673,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="MXm-af-Bkb">
+                            <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="MXm-af-Bkb">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -685,7 +691,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ruo-9l-ULn" customClass="KinveyImageView">
+                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S80-Ox-aHh" customClass="KinveyImageView">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -705,7 +711,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Locations" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dvr-5o-Vyb">
-                                                            <rect key="frame" x="20" y="0.0" width="280" height="21"/>
+                                                            <rect key="frame" x="160" y="0.0" width="140" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="21" id="Dxa-9R-BEn"/>
@@ -714,14 +720,27 @@
                                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mYD-On-Veu">
+                                                            <rect key="frame" x="20" y="0.0" width="140" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="21" id="G4C-GZ-P9d"/>
+                                                                <constraint firstAttribute="width" constant="140" id="ome-2o-bpK"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="trailing" secondItem="xzl-sx-cxE" secondAttribute="trailing" constant="20" id="F5V-cd-k9m"/>
+                                                        <constraint firstItem="mYD-On-Veu" firstAttribute="leading" secondItem="8PW-2H-i9M" secondAttribute="leading" constant="20" id="IEC-MC-4xJ"/>
                                                         <constraint firstAttribute="trailing" secondItem="Dvr-5o-Vyb" secondAttribute="trailing" constant="20" id="IOU-5d-gYG"/>
                                                         <constraint firstAttribute="height" constant="44" id="PGv-kH-51V"/>
+                                                        <constraint firstItem="mYD-On-Veu" firstAttribute="top" secondItem="8PW-2H-i9M" secondAttribute="top" id="QpX-6P-81s"/>
                                                         <constraint firstItem="Dvr-5o-Vyb" firstAttribute="top" secondItem="8PW-2H-i9M" secondAttribute="top" id="RfJ-Ly-2fD"/>
-                                                        <constraint firstItem="Dvr-5o-Vyb" firstAttribute="leading" secondItem="8PW-2H-i9M" secondAttribute="leading" constant="20" id="Xc4-6U-76p"/>
+                                                        <constraint firstItem="Dvr-5o-Vyb" firstAttribute="leading" secondItem="mYD-On-Veu" secondAttribute="trailing" id="SbN-fc-ihA"/>
                                                         <constraint firstItem="xzl-sx-cxE" firstAttribute="leading" secondItem="8PW-2H-i9M" secondAttribute="leading" constant="20" id="bHw-vm-UL7"/>
                                                         <constraint firstAttribute="bottom" secondItem="xzl-sx-cxE" secondAttribute="bottom" constant="3" id="dMG-HA-XEy"/>
                                                     </constraints>
@@ -748,7 +767,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="0.5" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstItem="Ceg-fb-0Eh" firstAttribute="leading" secondItem="3h6-Ut-S4G" secondAttribute="leading" constant="20" id="1yX-Mu-gMz"/>
                                                         <constraint firstAttribute="trailing" secondItem="mf4-pl-dCe" secondAttribute="trailing" constant="10" id="5AN-ps-JVa"/>
@@ -773,7 +792,8 @@
                                         </constraints>
                                         <connections>
                                             <outlet property="descriptionLabel" destination="xzl-sx-cxE" id="6p7-V7-hFP"/>
-                                            <outlet property="kinveyImageView" destination="ruo-9l-ULn" id="sdG-Id-DFL"/>
+                                            <outlet property="distanceLabel" destination="mYD-On-Veu" id="20O-eN-wYG"/>
+                                            <outlet property="kinveyImageView" destination="S80-Ox-aHh" id="TGs-gF-RRS"/>
                                             <outlet property="locationsLabel" destination="Dvr-5o-Vyb" id="ola-9t-7pH"/>
                                             <outlet property="statusLabel" destination="mf4-pl-dCe" id="8l6-qt-HIp"/>
                                             <outlet property="typeLabel" destination="Ceg-fb-0Eh" id="QGB-6k-v2y"/>
