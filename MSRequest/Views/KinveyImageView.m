@@ -66,20 +66,17 @@
                            
                            if (error == nil) {
                                KCSFile* file = downloadedResources[0];
-                               NSURL* fileURL = file.localURL;
-                               UIImage* image = [UIImage imageWithContentsOfFile:[fileURL path]];
-                               image = [image thumbnailImage:640
-                                           transparentBorder:0
-                                                cornerRadius:0
-                                        interpolationQuality:kCGInterpolationDefault];
-                               
-                               //Return to main thread for update UI
-                               dispatch_async(dispatch_get_main_queue(), ^{
-                                   self.imageView.image = image;
-                                   [self.spinner stopAnimating];
-                                   [self setNeedsDisplay];
-                                   [self setNeedsLayout];
-                               });
+                               if ([kinveyID isEqualToString:file.fileId]) {
+                                   NSURL* fileURL = file.localURL;
+                                   UIImage* image = [UIImage imageWithContentsOfFile:[fileURL path]];
+                                   
+                                   //Return to main thread for update UI
+                                   dispatch_async(dispatch_get_main_queue(), ^{
+                                       self.imageView.image = image;
+                                       [self.spinner stopAnimating];
+                                       [self.imageView setNeedsDisplay];
+                                   });
+                               }
                                
                            } else {
                                NSLog(@"Got an error: %@", error);
