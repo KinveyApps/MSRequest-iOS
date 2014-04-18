@@ -450,7 +450,7 @@ typedef enum {
 #pragma mark - View lifecycle
 
 - (void)viewWillAppear:(BOOL)animated {
-    
+    [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
     self.navigationController.toolbarHidden = YES;
     self.navigationItem.hidesBackButton = YES;
@@ -458,9 +458,8 @@ typedef enum {
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    
-    [self.navigationController setNavigationBarHidden:NO animated:animated];
     [self.locationManager stopMonitoringSignificantLocationChanges];
+    [super viewWillDisappear:animated];
 }
 
 - (void)viewDidLoad{
@@ -497,17 +496,6 @@ typedef enum {
 }
 
 #pragma mark - UIActionSheetDelegate
-
-- (IBAction)imageSourceSelectionButtonPressed {
-    
-    UIActionSheet *imageSourceSelectorSheet = [[UIActionSheet alloc] initWithTitle:nil 
-                                                                          delegate:self 
-                                                                 cancelButtonTitle:@"Cancel" 
-                                                            destructiveButtonTitle:nil 
-                                                                 otherButtonTitles:@"Take Photo", @"Choose Existing Photo", nil];
-    [imageSourceSelectorSheet showInView:self.view];
-}
-
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
     

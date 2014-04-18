@@ -21,13 +21,30 @@
 #import "ImageScrollViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "DataHelper.h"
+#import "PhotoTableViewCell.h"
+#import "LabelTableViewCell.h"
 
-#define CELL_HEIGHT_PADDING     14.0
-#define MAX_IMAGE_HEIGHT     180.0f
-#define LANDSCAPE_SCALE 4/3
-#define PORTRAIT_SCALE  3/4
+typedef enum {
+    PhotoReportTableViewRowIndex = 0,
+    TypeReportTableViewRowIndex,
+    StateReportTableViewRowIndex,
+    LocationReportTableViewRowIndex,
+    DescriptionReportTableViewRowIndex,
+    FirstAdditionalAttributeReportTableViewRowIndex
+} ReportTableViewRowIndex;
+
+typedef enum {
+    MainReportTableViewSectionIndex = 0,
+    ChangeStatusReportTableViewSectionIndex
+} ReportTableViewSectionIndex;
 
 NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageViewer";
+
+@interface ReportDetailViewController () <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
+
+@property (nonatomic) BOOL statusWasChanged;
+
+@end
 
 @implementation ReportDetailViewController
 
@@ -35,29 +52,28 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
 
 // in viewWillAppear/Disappear, toggle nav bar hidden for smooth transition with parent vc
 - (void)viewWillAppear:(BOOL)animated {
-    [self.navigationController setNavigationBarHidden:NO animated:animated];
-    self.navigationController.navigationBar.translucent = YES;
     [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+    self.navigationController.toolbarHidden = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    [self.navigationController setNavigationBarHidden:YES animated:animated];
     [super viewWillDisappear:animated];
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad{
     [super viewDidLoad];
     self.navigationItem.title = [self.report.type.name capitalizedString];
-    self.imageCell.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
-    self.reportCategoryLabel.text = self.report.type.name;
-    self.reportLocationLabel.text = self.report.locationString;
-    self.reportDescriptionLabel.text = self.report.descriptionOfReport;
-    
-    [[DataHelper instance] loadImageByID:self.report.imageId
-                               OnSuccess:^(UIImage *image){
-                                   self.reportImageView.image = image;
-                               }onFailure:nil];
+}
+
+- (void)viewDidUnload{
+
+    [super viewDidUnload];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
+    // Return YES for supported orientations
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 #pragma mark - segue methods
@@ -70,53 +86,172 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
     }
 }
 
-#pragma mark - UITableViewDelegate
 
-// dynamic row height
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    float labelHeight = 0;
+#pragma mark - Table View
+#pragma mark - Data Source
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    if (indexPath.section == 0) {
-        return self.reportImageView.frame.size.height + 2*CELL_HEIGHT_PADDING;
+    if (self.report.type) {
+        
+        return FirstAdditionalAttributeReportTableViewRowIndex + self.report.type.additionalAttributes.count;
+        
+    }else{
+        
+        return 2;
     }
-    else {
-#ifdef __IPHONE_6_0
-        NSLineBreakMode lineBreakMode = NSLineBreakByWordWrapping;
-#else
-        UILineBreakMode lineBreakMode = UILineBreakModeWordWrap;
-#endif
-        switch (indexPath.row) {
-            case 0:
-                labelHeight = [self.reportCategoryLabel.text sizeWithFont:[UIFont boldSystemFontOfSize:15.0f] constrainedToSize:CGSizeMake(197.0f, 999.0f) lineBreakMode:lineBreakMode].height;
-                break;
-            case 1:
-                labelHeight = [self.reportLocationLabel.text sizeWithFont:[UIFont boldSystemFontOfSize:15.0f] constrainedToSize:CGSizeMake(197.0f, 999.0f) lineBreakMode:lineBreakMode].height;
-                break;
-            case 2:
-                labelHeight = [self.reportDescriptionLabel.text sizeWithFont:[UIFont boldSystemFontOfSize:15.0f] constrainedToSize:CGSizeMake(197.0f, 999.0f) lineBreakMode:lineBreakMode].height;
-                break;
-                
-            default:
-                break;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    if (self.statusWasChanged) {
+        return 2;
+    }
+    return 1;
+}
+
+#pragma mark - Delegate
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+
+    switch (indexPath.row) {
+            
+        case PhotoReportTableViewRowIndex:{
+            PhotoTableViewCell *cell = [self photoCellForTableView:tableView];
+        
+            return cell;
+        }break;
+            
+        case TypeReportTableViewRowIndex:{
+            LabelTableViewCell *cell = [self labelCellForTableView:tableView
+                                                  withCurrentLabel:self.report.type.name
+                                                    orDefaultLabel:@"Selecte type"];
+            [cell setAccessoryType:UITableViewCellAccessoryNone];
+            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            return cell;
+        }break;
+            
+        case StateReportTableViewRowIndex:{
+            LabelTableViewCell *cell = [self labelCellForTableView:tableView
+                                                  withCurrentLabel:self.report.type.reportState[[self.report.state integerValue]]
+                                                    orDefaultLabel: @"Selecte state"];
+            return cell;
+        }break;
+            
+        case LocationReportTableViewRowIndex:{
+            LabelTableViewCell *cell = [self labelCellForTableView:tableView
+                                                  withCurrentLabel:self.report.locationString
+                                                    orDefaultLabel:@"Selecte locations"];
+            [cell setAccessoryType:UITableViewCellAccessoryNone];
+            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            return cell;
+        }break;
+            
+        case DescriptionReportTableViewRowIndex:{
+            LabelTableViewCell *cell = [self labelCellForTableView:tableView
+                                                  withCurrentLabel:self.report.descriptionOfReport
+                                                    orDefaultLabel:@"Tap to add description"];
+            [cell setAccessoryType:UITableViewCellAccessoryNone];
+            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            return cell;
+        }break;
+            
+        default:{
+            NSInteger additionalAttributeIndex = indexPath.row - FirstAdditionalAttributeReportTableViewRowIndex;
+            LabelTableViewCell *cell = [self labelCellForTableView:tableView
+                                                  withCurrentLabel:self.report.valuesAdditionalAttributes[additionalAttributeIndex]
+                                                    orDefaultLabel:[NSString stringWithFormat:@"Selecte %@", self.report.type.additionalAttributes[additionalAttributeIndex]]];
+            [cell setAccessoryType:UITableViewCellAccessoryNone];
+            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            return cell;
+            
+        }break;
+    }
+    
+    return [[UITableViewCell alloc] init];
+}
+
+- (PhotoTableViewCell *)photoCellForTableView:(UITableView *)tableView{
+    
+    NSString *photoCellID = @"kCellIdentifierPhoto";
+    
+    PhotoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:photoCellID];
+    if (!cell) {
+        cell = [[PhotoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:photoCellID];
+    }
+    
+    cell.imageView.image = nil;
+    cell.label.text = @"";
+    if (self.report.thumbnailId) {
+        
+        [[DataHelper instance] loadImageByID:self.report.thumbnailId
+                                   OnSuccess:^(UIImage *image){
+                                       cell.imageView.image = image;
+                                       [cell setNeedsDisplay];
+                                   }onFailure:^(NSError *error){
+                                       cell.label.text = error.localizedDescription;
+                                   }];
+        
+        cell.imageView.contentMode = UIViewContentModeScaleToFill;
+    }else{
+        cell.label.text = @"No thumbnail";
+    }
+    
+    return cell;
+}
+
+- (LabelTableViewCell *)labelCellForTableView:(UITableView *)tableView withCurrentLabel:(NSString *)currentLabel orDefaultLabel:(NSString *)defaultLabel{
+    
+    NSString *labelCellID = @"kCellIdentifierLabel";
+    
+    LabelTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:labelCellID];
+    if (!cell) {
+        cell = [[LabelTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:labelCellID];
+    }
+    
+    if (currentLabel.length) {
+        cell.label.text = currentLabel;
+    }else{
+        cell.label.text = defaultLabel;
+    }
+    
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row == PhotoReportTableViewRowIndex) {
+        return 320;
+    }else{
+        return 44;
+    }
+    return 44;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (indexPath.row == StateReportTableViewRowIndex) {
+        UIActionSheet *imageSourceSelectorSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                                              delegate:self
+                                                                     cancelButtonTitle:nil
+                                                                destructiveButtonTitle:nil
+                                                                     otherButtonTitles:nil];
+        for (NSString *state in self.report.type.reportState) {
+            [imageSourceSelectorSheet addButtonWithTitle:state];
         }
+        [imageSourceSelectorSheet addButtonWithTitle:@"Cancel"];
+        imageSourceSelectorSheet.cancelButtonIndex = imageSourceSelectorSheet.numberOfButtons - 1;
+        [imageSourceSelectorSheet showInView:self.view];
     }
-    return labelHeight + 2*CELL_HEIGHT_PADDING;
 }
 
-- (void)viewDidUnload
-{
-    [self setReportImageView:nil];
-    [self setReportCategoryLabel:nil];
-    [self setReportLocationLabel:nil];
-    [self setReportDescriptionLabel:nil];
-    [self setImageCell:nil];
-    [super viewDidUnload];
-}
+#pragma mark - UIActionSheetDelegate
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    
+    if (buttonIndex == actionSheet.cancelButtonIndex) {
+        return;
+    }
+    
+    self.report.state = [NSNumber numberWithInteger:buttonIndex];
+    [self.tableView reloadData];
 }
-
 @end

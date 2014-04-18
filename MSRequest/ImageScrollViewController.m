@@ -43,10 +43,16 @@
     
     [[DataHelper instance] loadImageByID:self.report.imageId
                                OnSuccess:^(UIImage *image){
-                                   _reportImageView.image = image;
+                                   _mainScrollView.zoomScale = 4.0;
+                                   UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+                                   _mainScrollView.contentSize = image.size;
+                                   imageView.image = image;
+                                   imageView.frame = CGRectMake(0, 0, image.size.width, image.size.height);
+                                   [_mainScrollView addSubview:imageView];
+                                   //_reportImageView.frame = CGRectMake(0, 0, _mainScrollView.contentSize.width, _mainScrollView.contentSize.height);
                                }onFailure:nil];
     
-    _reportImageView.center = CGPointMake(_reportImageView.center.x, _reportImageView.center.y - _mainScrollView.frame.origin.y/2);
+    
     
     UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapGestureHandler:)];
     doubleTap.numberOfTapsRequired = 2;
@@ -99,12 +105,12 @@
     // if nav bar is hidden, unhide it before animation, since alpha is already 0
     if (navBarHidden) {
         [self.navigationController setNavigationBarHidden:NO animated:NO];
-        _mainScrollView.frame = CGRectOffset(_mainScrollView.frame, 0, -10);
+
     }
     
     [UIView animateWithDuration:0.5 
                      animations:^{
-                         float alpha = self.navigationController.navigationBar.alpha;
+                         
                      }
                      completion:^(BOOL finished) {
                          // if nav bar is hidden, unhide it before animation, since alpha is already 0

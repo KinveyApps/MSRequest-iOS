@@ -25,10 +25,4 @@
 
 @property (strong, nonatomic) Report *report;
 
-@property (weak, nonatomic) IBOutlet UIImageView *reportImageView;
-@property (weak, nonatomic) IBOutlet UITableViewCell *imageCell;
-@property (weak, nonatomic) IBOutlet UILabel *reportCategoryLabel;
-@property (weak, nonatomic) IBOutlet UILabel *reportLocationLabel;
-@property (weak, nonatomic) IBOutlet UILabel *reportDescriptionLabel;
-
 @end
