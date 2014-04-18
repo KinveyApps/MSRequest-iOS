@@ -66,7 +66,7 @@
                            
                            if (error == nil) {
                                KCSFile* file = downloadedResources[0];
-                               if ([kinveyID isEqualToString:file.fileId]) {
+                               if ([self.kinveyID isEqualToString:file.fileId]) {
                                    NSURL* fileURL = file.localURL;
                                    UIImage* image = [UIImage imageWithContentsOfFile:[fileURL path]];
                                    
