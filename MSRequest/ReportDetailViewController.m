@@ -23,6 +23,7 @@
 #import "DataHelper.h"
 #import "PhotoTableViewCell.h"
 #import "LabelTableViewCell.h"
+#import "DejalActivityView.h"
 
 typedef enum {
     PhotoReportTableViewRowIndex = 0,
@@ -42,8 +43,10 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
 
 @interface ReportDetailViewController () <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
 
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic) BOOL statusWasChanged;
-
+@property (nonatomic) NSInteger currentServerState;
+@property (nonatomic, strong) UIBarButtonItem *defaultBackBarItem;
 @end
 
 @implementation ReportDetailViewController
@@ -64,6 +67,8 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
 - (void)viewDidLoad{
     [super viewDidLoad];
     self.navigationItem.title = [self.report.type.name capitalizedString];
+    self.currentServerState = [self.report.state integerValue];
+    self.defaultBackBarItem = self.navigationItem.leftBarButtonItem;
 }
 
 - (void)viewDidUnload{
@@ -92,14 +97,19 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    if (self.report.type) {
-        
-        return FirstAdditionalAttributeReportTableViewRowIndex + self.report.type.additionalAttributes.count;
-        
-    }else{
-        
-        return 2;
+    if (section == MainReportTableViewSectionIndex) {
+        if (self.report.type) {
+            
+            return FirstAdditionalAttributeReportTableViewRowIndex + self.report.type.additionalAttributes.count;
+            
+        }else{
+            
+            return 2;
+        }
+    }else if (section == ChangeStatusReportTableViewSectionIndex){
+        return 1;
     }
+    return 0;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -112,60 +122,74 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
 #pragma mark - Delegate
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-
-    switch (indexPath.row) {
-            
-        case PhotoReportTableViewRowIndex:{
-            PhotoTableViewCell *cell = [self photoCellForTableView:tableView];
+    
+    if (indexPath.section == MainReportTableViewSectionIndex) {
         
-            return cell;
-        }break;
-            
-        case TypeReportTableViewRowIndex:{
-            LabelTableViewCell *cell = [self labelCellForTableView:tableView
-                                                  withCurrentLabel:self.report.type.name
-                                                    orDefaultLabel:@"Selecte type"];
-            [cell setAccessoryType:UITableViewCellAccessoryNone];
-            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-            return cell;
-        }break;
-            
-        case StateReportTableViewRowIndex:{
-            LabelTableViewCell *cell = [self labelCellForTableView:tableView
-                                                  withCurrentLabel:self.report.type.reportState[[self.report.state integerValue]]
-                                                    orDefaultLabel: @"Selecte state"];
-            return cell;
-        }break;
-            
-        case LocationReportTableViewRowIndex:{
-            LabelTableViewCell *cell = [self labelCellForTableView:tableView
-                                                  withCurrentLabel:self.report.locationString
-                                                    orDefaultLabel:@"Selecte locations"];
-            [cell setAccessoryType:UITableViewCellAccessoryNone];
-            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-            return cell;
-        }break;
-            
-        case DescriptionReportTableViewRowIndex:{
-            LabelTableViewCell *cell = [self labelCellForTableView:tableView
-                                                  withCurrentLabel:self.report.descriptionOfReport
-                                                    orDefaultLabel:@"Tap to add description"];
-            [cell setAccessoryType:UITableViewCellAccessoryNone];
-            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-            return cell;
-        }break;
-            
-        default:{
-            NSInteger additionalAttributeIndex = indexPath.row - FirstAdditionalAttributeReportTableViewRowIndex;
-            LabelTableViewCell *cell = [self labelCellForTableView:tableView
-                                                  withCurrentLabel:self.report.valuesAdditionalAttributes[additionalAttributeIndex]
-                                                    orDefaultLabel:[NSString stringWithFormat:@"Selecte %@", self.report.type.additionalAttributes[additionalAttributeIndex]]];
-            [cell setAccessoryType:UITableViewCellAccessoryNone];
-            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-            return cell;
-            
-        }break;
+        switch (indexPath.row) {
+                
+            case PhotoReportTableViewRowIndex:{
+                PhotoTableViewCell *cell = [self photoCellForTableView:tableView];
+                
+                return cell;
+            }break;
+                
+            case TypeReportTableViewRowIndex:{
+                LabelTableViewCell *cell = [self labelCellForTableView:tableView
+                                                      withCurrentLabel:self.report.type.name
+                                                        orDefaultLabel:@"No type"];
+                [cell setAccessoryType:UITableViewCellAccessoryNone];
+                [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+                return cell;
+            }break;
+                
+            case StateReportTableViewRowIndex:{
+                LabelTableViewCell *cell = [self labelCellForTableView:tableView
+                                                      withCurrentLabel:self.report.type.reportState[[self.report.state integerValue]]
+                                                        orDefaultLabel: @"No state"];
+                return cell;
+            }break;
+                
+            case LocationReportTableViewRowIndex:{
+                LabelTableViewCell *cell = [self labelCellForTableView:tableView
+                                                      withCurrentLabel:self.report.locationString
+                                                        orDefaultLabel:@"No locations"];
+                [cell setAccessoryType:UITableViewCellAccessoryNone];
+                [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+                return cell;
+            }break;
+                
+            case DescriptionReportTableViewRowIndex:{
+                LabelTableViewCell *cell = [self labelCellForTableView:tableView
+                                                      withCurrentLabel:self.report.descriptionOfReport
+                                                        orDefaultLabel:@"No description"];
+                [cell setAccessoryType:UITableViewCellAccessoryNone];
+                [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+                return cell;
+            }break;
+                
+            default:{
+                NSInteger additionalAttributeIndex = indexPath.row - FirstAdditionalAttributeReportTableViewRowIndex;
+                LabelTableViewCell *cell = [self labelCellForTableView:tableView
+                                                      withCurrentLabel:self.report.valuesAdditionalAttributes[additionalAttributeIndex]
+                                                        orDefaultLabel:[NSString stringWithFormat:@"No %@", self.report.type.additionalAttributes[additionalAttributeIndex]]];
+                [cell setAccessoryType:UITableViewCellAccessoryNone];
+                [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+                return cell;
+                
+            }break;
+        }
+
+    }else if (indexPath.section == ChangeStatusReportTableViewSectionIndex){
+        NSString *updateStatusCellID = @"kCellIdentifierUpdateStatus";
+        
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:updateStatusCellID];
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:updateStatusCellID];
+        }
+        
+        return cell;
     }
+
     
     return [[UITableViewCell alloc] init];
 }
@@ -218,40 +242,115 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == PhotoReportTableViewRowIndex) {
-        return 320;
-    }else{
+    if (indexPath.section == MainReportTableViewSectionIndex) {
+        if (indexPath.row == PhotoReportTableViewRowIndex) {
+            return 320;
+        }else{
+            return 44;
+        }
+    }else if (indexPath.row == ChangeStatusReportTableViewSectionIndex){
         return 44;
     }
     return 44;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    if (indexPath.row == StateReportTableViewRowIndex) {
-        UIActionSheet *imageSourceSelectorSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                                              delegate:self
-                                                                     cancelButtonTitle:nil
-                                                                destructiveButtonTitle:nil
-                                                                     otherButtonTitles:nil];
-        for (NSString *state in self.report.type.reportState) {
-            [imageSourceSelectorSheet addButtonWithTitle:state];
+    if (indexPath.section == MainReportTableViewSectionIndex) {
+        if (indexPath.row == StateReportTableViewRowIndex) {
+            UIActionSheet *imageSourceSelectorSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                                                  delegate:self
+                                                                         cancelButtonTitle:nil
+                                                                    destructiveButtonTitle:nil
+                                                                         otherButtonTitles:nil];
+            for (NSString *state in self.report.type.reportState) {
+                [imageSourceSelectorSheet addButtonWithTitle:state];
+            }
+            [imageSourceSelectorSheet addButtonWithTitle:@"Cancel"];
+            imageSourceSelectorSheet.cancelButtonIndex = imageSourceSelectorSheet.numberOfButtons - 1;
+            [imageSourceSelectorSheet showInView:self.view];
         }
-        [imageSourceSelectorSheet addButtonWithTitle:@"Cancel"];
-        imageSourceSelectorSheet.cancelButtonIndex = imageSourceSelectorSheet.numberOfButtons - 1;
-        [imageSourceSelectorSheet showInView:self.view];
+    }else if (indexPath.section == ChangeStatusReportTableViewSectionIndex){
+        [DejalBezelActivityView activityViewForView:self.view.window withLabel:@"Update Status"];
+
+        [[DataHelper instance] saveReport:self.report
+                                OnSuccess:^(NSArray *reports){
+                                    
+                                    [DejalBezelActivityView removeView];
+                                    [self.navigationController popViewControllerAnimated:YES];
+                                    self.statusWasChanged = NO;
+                                    
+                                }onFailure:^(NSError *error){
+                                    [DejalBezelActivityView removeView];
+                                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                                        message:error.localizedDescription
+                                                                                       delegate:nil
+                                                                              cancelButtonTitle:@"Cancel"
+                                                                              otherButtonTitles:nil];
+                                    [alertView show];
+                                }];
     }
+    
+    
 }
 
 #pragma mark - UIActionSheetDelegate
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
     
+    [self.tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:StateReportTableViewRowIndex
+                                                              inSection:MainReportTableViewSectionIndex]
+                                  animated:YES];
+    
     if (buttonIndex == actionSheet.cancelButtonIndex) {
         return;
     }
     
-    self.report.state = [NSNumber numberWithInteger:buttonIndex];
-    [self.tableView reloadData];
+    if (self.currentServerState != buttonIndex) {
+        self.statusWasChanged = YES;
+        self.report.state = [NSNumber numberWithInteger:buttonIndex];
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+                                                                                 style:UIBarButtonItemStylePlain
+                                                                                target:self
+                                                                                action:@selector(resetStatus)];
+        
+        [self.tableView beginUpdates];
+        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:StateReportTableViewRowIndex
+                                                                    inSection:MainReportTableViewSectionIndex]]
+                              withRowAnimation:UITableViewRowAnimationAutomatic];
+        if (self.tableView.numberOfSections == 1) {
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:1]
+                          withRowAnimation:UITableViewRowAnimationAutomatic];
+        }else if (self.tableView.numberOfSections == 2){
+            [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0
+                                                                        inSection:ChangeStatusReportTableViewSectionIndex]]
+                                  withRowAnimation:UITableViewRowAnimationAutomatic];
+        }
+        [self.tableView endUpdates];
+        
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0
+                                                                  inSection:ChangeStatusReportTableViewSectionIndex]
+                              atScrollPosition:UITableViewScrollPositionBottom
+                                      animated:YES];
+    }else{
+        
+        [self resetStatus];
+    }
+}
+
+- (void)resetStatus{
+    
+    self.statusWasChanged = NO;
+    self.report.state = [NSNumber numberWithInteger:self.currentServerState];
+    self.navigationItem.leftBarButtonItem = self.defaultBackBarItem;
+    
+    [self.tableView beginUpdates];
+    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:StateReportTableViewRowIndex
+                                                                inSection:MainReportTableViewSectionIndex]]
+                          withRowAnimation:UITableViewRowAnimationAutomatic];
+    if (self.tableView.numberOfSections == 2) {
+        [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:1]
+                      withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+    [self.tableView endUpdates];
 }
 @end
