@@ -21,7 +21,6 @@
 #import <MapKit/MapKit.h>
 #import "CustomReportTableViewCell.h"
 #import "ReportsFilterViewController.h"
-#import "PullToRefreshView.h"
 #import "Report.h"
 
 @class ReportModel;
