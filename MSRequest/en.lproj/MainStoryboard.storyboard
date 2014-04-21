@@ -274,7 +274,6 @@
                     </view>
                     <navigationItem key="navigationItem" title="Report Location" id="Tyx-fQ-8dl">
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="p18-as-Yhe">
-                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                             <connections>
                                 <action selector="doneButtonPressed:" destination="Fdj-y3-q0c" id="9UE-co-Tep"/>
                             </connections>
@@ -517,7 +516,6 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Report Description" id="mi5-6g-QDl">
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="w6f-Re-sTD">
-                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                             <connections>
                                 <action selector="doneButtonPressed:" destination="Ncg-3S-WVY" id="fSk-zK-Qai"/>
                             </connections>
@@ -530,7 +528,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xts-Ip-TgD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="854" y="-405"/>
+            <point key="canvasLocation" x="742" y="-405"/>
         </scene>
         <!--Report Detail View Controller-->
         <scene sceneID="DmC-Qn-6Of">
@@ -929,7 +927,7 @@
         <image name="large_x_button.png" width="73" height="72"/>
         <image name="photo_icon.png" width="46" height="46"/>
     </resources>
-    <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

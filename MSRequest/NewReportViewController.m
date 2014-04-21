@@ -333,6 +333,9 @@ typedef enum {
                                                               [self.report.metadata setGloballyReadable:YES];
                                                               [self.report.metadata setGloballyWritable:YES];
                                                               self.report.valuesAdditionalAttributes = self.additionalAttributedValues;
+                                                              if (!self.report.state) {
+                                                                  self.report.state = @0;
+                                                              }
                                                               
                                                               [[DataHelper instance] saveReport:self.report
                                                                                       OnSuccess:^(NSArray *reports){
