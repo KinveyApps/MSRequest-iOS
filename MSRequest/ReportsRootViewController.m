@@ -187,6 +187,10 @@
 
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
 #pragma mark - ReportsFilterViewControllerDelegate
 
 - (void)reportFilterEditingFinishedWithOptions:(NSDictionary *)options {
