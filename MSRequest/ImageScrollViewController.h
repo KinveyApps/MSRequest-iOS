@@ -23,7 +23,6 @@
 @interface ImageScrollViewController : UIViewController <UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *mainScrollView;
-@property (weak, nonatomic) IBOutlet UIImageView *reportImageView;
-@property (strong, nonatomic) Report *report;
+@property (strong, nonatomic) NSString *kinveyImageId;
 
 @end

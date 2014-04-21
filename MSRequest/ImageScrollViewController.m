@@ -20,11 +20,17 @@
 #import "ImageScrollViewController.h"
 #import "DataHelper.h"
 
+@interface ImageScrollViewController ()
+
+@property (nonatomic, strong) UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
+
+@end
+
 @implementation ImageScrollViewController
 
 - (void)viewWillAppear:(BOOL)animated {
     self.navigationController.navigationBarHidden = NO;
-    [self.navigationController.navigationBar setBarStyle:UIBarStyleBlackTranslucent];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -35,21 +41,25 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    _mainScrollView.contentSize = _reportImageView.frame.size;
-    _mainScrollView.maximumZoomScale = 4.0;
-	_mainScrollView.minimumZoomScale = 1.0;
+    _mainScrollView.maximumZoomScale = 1.0;
+	_mainScrollView.minimumZoomScale = 0.1;
 	_mainScrollView.clipsToBounds = YES;
 	_mainScrollView.delegate = self;
+    [self.spinner startAnimating];
     
-    [[DataHelper instance] loadImageByID:self.report.imageId
+    [[DataHelper instance] loadImageByID:self.kinveyImageId
                                OnSuccess:^(UIImage *image){
-                                   _mainScrollView.zoomScale = 4.0;
-                                   UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+                                   [self.spinner stopAnimating];
+                                   self.imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
                                    _mainScrollView.contentSize = image.size;
-                                   imageView.image = image;
-                                   imageView.frame = CGRectMake(0, 0, image.size.width, image.size.height);
-                                   [_mainScrollView addSubview:imageView];
-                                   //_reportImageView.frame = CGRectMake(0, 0, _mainScrollView.contentSize.width, _mainScrollView.contentSize.height);
+                                   self.imageView.image = image;
+                                   self.imageView.frame = CGRectMake(0, 0, image.size.width, image.size.height);
+                                   float aspectHeight = self.mainScrollView.bounds.size.height / self.imageView.image.size.height;
+                                   float aspectWidth = self.mainScrollView.bounds.size.width / self.imageView.image.size.width;
+                                   self.mainScrollView.minimumZoomScale = MIN(aspectHeight, aspectWidth);
+                                   [_mainScrollView setZoomScale:MAX(aspectHeight, aspectWidth)
+                                                        animated:YES];
+                                   [_mainScrollView addSubview:self.imageView];
                                }onFailure:nil];
     
     
@@ -66,13 +76,13 @@
 - (void)viewDidUnload
 {
     [self setMainScrollView:nil];
-    [self setReportImageView:nil];
+
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
-    return _reportImageView;
+    return self.imageView;
 }
 
 - (CGRect)zoomRectForScale:(float)scale atCenter:(CGPoint)center {
@@ -99,33 +109,26 @@
 }
 
 - (void)tapGestureHandler:(UITapGestureRecognizer *)recognizer {
-    [[UIApplication sharedApplication] setStatusBarHidden:![[UIApplication sharedApplication] isStatusBarHidden] withAnimation:UIStatusBarAnimationFade];
     
     BOOL navBarHidden = self.navigationController.navigationBarHidden;
     // if nav bar is hidden, unhide it before animation, since alpha is already 0
     if (navBarHidden) {
-        [self.navigationController setNavigationBarHidden:NO animated:NO];
-
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+    }else{
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
     }
-    
-    [UIView animateWithDuration:0.5 
-                     animations:^{
-                         
-                     }
-                     completion:^(BOOL finished) {
-                         // if nav bar is hidden, unhide it before animation, since alpha is already 0
-                         if (!navBarHidden) {
-                             [self.navigationController setNavigationBarHidden:YES animated:NO];
-                             _mainScrollView.frame = CGRectOffset(_mainScrollView.frame, 0, 10);
-                         }
-                     }
-     ];
+    [self setNeedsStatusBarAppearanceUpdate];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait ||
             UIInterfaceOrientationIsLandscape(interfaceOrientation));
+}
+
+- (BOOL)prefersStatusBarHidden
+{
+    return self.navigationController.navigationBarHidden;
 }
 
 @end

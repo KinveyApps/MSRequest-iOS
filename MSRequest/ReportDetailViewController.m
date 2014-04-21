@@ -86,7 +86,7 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:kSegueIdentifierPushImageViewer]) {
         ImageScrollViewController *dest = segue.destinationViewController;
-        dest.report = self.report;
+        dest.kinveyImageId = self.report.imageId;
         dest.navigationItem.title = self.navigationItem.title;
     }
 }
@@ -256,6 +256,10 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == MainReportTableViewSectionIndex) {
+        if (indexPath.row == PhotoReportTableViewRowIndex) {
+            [self performSegueWithIdentifier:kSegueIdentifierPushImageViewer
+                                      sender:self];
+        }
         if (indexPath.row == StateReportTableViewRowIndex) {
             UIActionSheet *imageSourceSelectorSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                                                   delegate:self
