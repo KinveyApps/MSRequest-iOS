@@ -18,19 +18,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DataHelper.h"
 
-typedef enum : NSUInteger { 
-    FilterOptionAll = 0,
-    FilterOptionMine
-} FilterOption;
-
-typedef enum : NSUInteger {
-    SortOptionRecent = 0,
-    SortOptionDistance
-} SortOption;
-
-extern NSString *const kFilterOptionKey;
-extern NSString *const kSortOptionKey;
 
 @protocol ReportsFilterViewControllerDelegate
 
@@ -41,12 +30,6 @@ extern NSString *const kSortOptionKey;
 
 @interface ReportsFilterViewController : UITableViewController
 
-@property FilterOption selectedFilterOption;
-@property SortOption selectedSortOption;
 @property (weak, nonatomic) id <ReportsFilterViewControllerDelegate> delegate;
-@property (weak, nonatomic) IBOutlet UITableViewCell *allReportsCell;
-@property (weak, nonatomic) IBOutlet UITableViewCell *myReportsCell;
-@property (weak, nonatomic) IBOutlet UITableViewCell *datePostedCell;
-@property (weak, nonatomic) IBOutlet UITableViewCell *distanceCell;
 
 @end
