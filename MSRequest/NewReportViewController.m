@@ -336,6 +336,7 @@ typedef enum {
                                                               if (!self.report.state) {
                                                                   self.report.state = @0;
                                                               }
+                                                              self.report.originator = [KCSUser activeUser];
                                                               
                                                               [[DataHelper instance] saveReport:self.report
                                                                                       OnSuccess:^(NSArray *reports){
