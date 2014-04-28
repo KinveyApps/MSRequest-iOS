@@ -20,7 +20,7 @@
 
 @property (nonatomic, strong) KCSLinkedAppdataStore *typesOfReportLinkedAppdataStore;
 @property (nonatomic, strong) KCSLinkedAppdataStore *reportsLinkedAppdataStore;
-
+@property (nonatomic, strong) KCSQuery *currentQuery;
 @end
 
 @implementation DataHelper
@@ -56,6 +56,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
 
 	}
     
+    self.currentQuery = [KCSQuery query];
+    
 	return self;
 }
 
@@ -71,6 +73,61 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
     }
     
     return _formatter;
+}
+
+- (void)setFilterOptions:(NSDictionary *)filterOptions{
+    self.currentQuery = [KCSQuery query];
+    TypeOfReport *currentType;
+    _filterOptions = filterOptions;
+    if (filterOptions[ORIGINATOR_FILTER_KEY]) {
+//        self.currentQuery = [KCSQuery queryOnField:@"originator._id"
+//                            withExactMatchForValue:filterOptions[ORIGINATOR_FILTER_KEY]];
+        [self.currentQuery addQueryForJoiningOperator:kKCSAnd
+                                            onQueries:[KCSQuery queryOnField:@"originator._id"
+                                                      withExactMatchForValue:filterOptions[ORIGINATOR_FILTER_KEY]], nil];
+    }
+    if (filterOptions[TYPE_FILTER_KEY]) {
+        for (TypeOfReport *type in self.typesOfReport) {
+            if ([type.entityId isEqualToString:filterOptions[TYPE_FILTER_KEY]]) {
+                currentType = type;
+                break;
+            }
+        }
+        [self.currentQuery addQueryForJoiningOperator:kKCSAnd
+                                            onQueries:[KCSQuery queryOnField:@"type._id"
+                                                      withExactMatchForValue:filterOptions[TYPE_FILTER_KEY]], nil];
+    }
+    if (filterOptions[STATE_FILTER_KEY]) {
+        [self.currentQuery addQueryForJoiningOperator:kKCSAnd
+                                            onQueries:[KCSQuery queryOnField:@"state"
+                                                      withExactMatchForValue:filterOptions[STATE_FILTER_KEY]], nil];
+    }
+    if (filterOptions[LOCATION_RADIUS_FILTER_KEY]) {
+        [self.currentQuery addQueryForJoiningOperator:kKCSAnd
+                                            onQueries:[KCSQuery queryOnField:KCSEntityKeyGeolocation
+                                                  usingConditionalsForValues:kKCSMaxDistance, filterOptions[LOCATION_RADIUS_FILTER_KEY], nil], nil];
+    }
+    if (filterOptions[DESCRIPTION_FILTER_KEY]) {
+        [self.currentQuery addQueryForJoiningOperator:kKCSAnd
+                                            onQueries:[KCSQuery queryOnField:@"descriptionOfReport"
+                                                                   withRegex:[self regexForContaintSubstring:filterOptions[DESCRIPTION_FILTER_KEY]]], nil];
+    }
+    if (currentType) {
+        for (NSInteger i = 0; i < currentType.additionalAttributes.count; i++) {
+            NSString *attribute = currentType.additionalAttributes[i];
+            if (filterOptions[attribute]) {
+                if ([currentType.additionalAttributesValidValues[i] isKindOfClass:[NSArray class]]) {
+                    [self.currentQuery addQueryForJoiningOperator:kKCSAnd
+                                                        onQueries:[KCSQuery queryOnField:[NSString stringWithFormat:@"valuesAdditionalAttributes.%d", i]
+                                                                  withExactMatchForValue:filterOptions[attribute]], nil];
+                }else{
+                    [self.currentQuery addQueryForJoiningOperator:kKCSAnd
+                                                        onQueries:[KCSQuery queryOnField:[NSString stringWithFormat:@"valuesAdditionalAttributes.%d", i]
+                                                                               withRegex:[self regexForContaintSubstring:filterOptions[attribute]]], nil];
+                }
+            }
+        }
+    }
 }
 
 
@@ -142,7 +199,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
 - (void)loadReportUseCache:(BOOL)useCache withQuery:(KCSQuery *)query OnSuccess:(void (^)(NSArray *))reportSuccess onFailure:(void (^)(NSError *))reportFailure{
     
     //Kinvey: Load entity from Quote collection which correspond query
-	[self.reportsLinkedAppdataStore queryWithQuery:(query ? query : [KCSQuery query])
+	[self.reportsLinkedAppdataStore queryWithQuery:(query ? query : self.currentQuery)
                                withCompletionBlock:^(NSArray *objectsOrNil, NSError *errorOrNil) {
                                    
                                    //Return to main thread for update UI
@@ -330,6 +387,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
 //             USER_INFO_KEY_EMAIL_CONFIRMATION_ENABLE,
 //             USER_INFO_KEY_EMAIL];
     return @[];
+}
+
+- (NSArray *)mainFilterKey{
+    return @[ORIGINATOR_FILTER_KEY,
+             TYPE_FILTER_KEY,
+             STATE_FILTER_KEY,
+             LOCATION_RADIUS_FILTER_KEY,
+             DESCRIPTION_FILTER_KEY];
 }
 
 @end
