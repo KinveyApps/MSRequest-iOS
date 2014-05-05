@@ -20,10 +20,6 @@
 #import "AuthenticationHelper.h"
 #import "DataHelper.h"
 
-@interface ActivityViewController ()
-
-@end
-
 @implementation ActivityViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -62,10 +58,12 @@
 
 - (void)preloadDataAndOpenReportRootView{
     
+    //Kinvey: update user info from server
     [[KCSUser activeUser] refreshFromServer:^(NSArray *objectsOrNil, NSError *errorOrNil){
         
         if (!errorOrNil) {
             
+            //Prelaod data from collections
             [[DataHelper instance] loadTypesOfReportUseCache:NO
                                                    OnSuccess:^(NSArray *typesOfReport){
                                                        
@@ -103,12 +101,6 @@
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
     [alertView show];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

@@ -29,17 +29,19 @@
 #define MILES_PER_METER     0.000621371192
 
 @interface ReportsRootViewController () <CLLocationManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
+
 @property (nonatomic, retain) CLLocationManager* locationManager;
 @property (strong, nonatomic) NSArray *reportsData;
 @property (strong, nonatomic) KCSQuery *query;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 
-- (void) setThumbnailForCell:(CustomReportTableViewCell *)cell withImage:(UIImage *)image;
-
 @end
 
 @implementation ReportsRootViewController
+
+
+#pragma mark - Setters and Getters
 
 - (KCSQuery *)query{
     if (!_query) {
@@ -48,11 +50,12 @@
     return _query;
 }
 
+
 #pragma mark - Collection View
 #pragma mark - Data Source
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return self.reportsData.count;
+    return self.reportsData.count ? self.reportsData.count : 1;
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
@@ -60,30 +63,58 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    NSString *cellID = @"kRootCollectionViewCell";
     
-    RootCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellID
-                                                                             forIndexPath:indexPath];
-    if (!cell) {
-        cell = [[RootCollectionViewCell alloc] init];
-    }
-    Report *report = (Report *)self.reportsData[indexPath.row];
-    if (report) {
-        cell.typeLabel.text = report.type.name;
-        cell.statusLabel.text = [NSString stringWithFormat:@"State: %@", report.type.reportState[[report.state integerValue]]];
-        cell.descriptionLabel.text = report.descriptionOfReport;
-        cell.locationsLabel.text = report.locationString;
-        cell.kinveyImageView.kinveyID = report.thumbnailId;
-        cell.distanceLabel.text = [NSString stringWithFormat:@"distance: %.3f km", [self reportDistanceFromCurrentLocation:report]/1000.0];
+    if (self.reportsData.count) {
+        NSString *cellID = @"kRootCollectionViewCell";
+        
+        RootCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellID
+                                                                                 forIndexPath:indexPath];
+        if (!cell) {
+            cell = [[RootCollectionViewCell alloc] init];
+        }
+        Report *report = (Report *)self.reportsData[indexPath.row];
+        if (report) {
+            cell.typeLabel.text = report.type.name;
+            cell.statusLabel.text = [NSString stringWithFormat:@"State: %@", report.type.reportState[[report.state integerValue]]];
+            cell.descriptionLabel.text = report.descriptionOfReport;
+            cell.locationsLabel.text = report.locationString;
+            cell.kinveyImageView.kinveyID = report.thumbnailId;
+            cell.distanceLabel.text = [NSString stringWithFormat:@"distance: %.3f km", [self reportDistanceFromCurrentLocation:report]/1000.0];
+        }
+        
+        return cell;
+        
+    }else{
+        
+        NSString *cellID = @"kDefaultCollectionViewCell";
+        
+        UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellID
+                                                                                 forIndexPath:indexPath];
+        if (!cell) {
+            cell = [[UICollectionViewCell alloc] init];
+        }
+        
+        return cell;
+        
     }
     
-    return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     [self showDetailViewForReport:self.reportsData[indexPath.row]];
 }
 
+
+#pragma mark - Utils
+
+- (void)showDetailViewForReport:(Report *)report
+{
+    if (self.navigationController.topViewController != self) {
+        
+        [self.navigationController popToViewController:self animated:NO];
+    }
+    [self performSegueWithIdentifier:@"kSegueIdentifierPushReportDetails" sender:report];
+}
 
 - (float)reportDistanceFromCurrentLocation:(Report *)report
 {
@@ -106,26 +137,22 @@
 
 - (void)dataLoadUseCache:(BOOL)cache{
 
+    //Load data from kinvey
     [[DataHelper instance] loadReportUseCache:cache
                                     withQuery:nil
                                     OnSuccess:^(NSArray *reports){
+                                        
                                         self.reportsData = reports;
                                         [self.collectionView reloadData];
                                         if ([self.refreshControl isRefreshing]) {
                                             [self.refreshControl endRefreshing];
                                         }
+                                        
                                     }onFailure:nil];
 }
 
-- (void)showDetailViewForReport:(Report *)report
-{
-    if (self.navigationController.topViewController != self) {
-        //if the there is a subview showing, go back to the beginning, in order to preserve the stack behavior
-        //if this is called via deplinking, 
-        [self.navigationController popToViewController:self animated:NO];
-    }
-    [self performSegueWithIdentifier:@"kSegueIdentifierPushReportDetails" sender:report];
-}
+
+#pragma mark - Actions
 
 - (IBAction)logout:(id)sender
 {
@@ -134,6 +161,9 @@
 
 }
 
+
+#pragma mark - Segue
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"kSegueIdentifierPushReportDetails"]) {
@@ -141,10 +171,8 @@
             ((ReportDetailViewController *)segue.destinationViewController).report = sender;
         }
     }
-    else if ([segue.identifier isEqualToString:@"kSegueIdentifierReportFilter"]) {
-        ((ReportsFilterViewController *)segue.destinationViewController).delegate = self;
-    }
 }
+
 
 #pragma mark - View lifecycle
 
@@ -174,6 +202,16 @@
     
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    // Return YES for supported orientations
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
 - (void)refresh{
     [self dataLoadUseCache:NO];
 }
@@ -186,46 +224,6 @@
 
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
-
-#pragma mark - ReportsFilterViewControllerDelegate
-
-- (void)reportFilterEditingFinishedWithOptions:(NSDictionary *)options {
-//    currentFilterOption = [[options objectForKey:kFilterOptionKey] intValue];
-//    currentTableSortOption = [[options objectForKey:kSortOptionKey] intValue];
-//    [self dataLoad];
-//    [self.reportsTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationBottom];
-}
-
-- (void)reportFilterEditingFinishedWithFilterOption:(NSInteger)filterRow sortOption:(NSInteger)sortRow {
-//    currentFilterOption = filterRow;
-//    currentTableSortOption = sortRow;
-//    [self dataLoad];
-//    [self.reportsTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationBottom];
-}
-
-
-- (void) setThumbnailForCell:(CustomReportTableViewCell *)cell withImage:(UIImage *)image
-{
-    // load the image on a background thread and update the screen on the main thread.
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_async(queue, ^{
-        UIImage *imageBlock = image;
-        imageBlock = [imageBlock thumbnailImage:100 transparentBorder:0 cornerRadius:7 interpolationQuality:kCGInterpolationDefault];
-        dispatch_queue_t mainThreadQueue = dispatch_get_main_queue();
-        dispatch_async(mainThreadQueue, ^{
-            cell.reportImage.image = imageBlock;
-        });
-    });
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    Report *selectedReport = [self.reportsData objectAtIndex:indexPath.row];
-    [self showDetailViewForReport:selectedReport];
-}
 
 #pragma mark - Location Delegate
 
@@ -233,24 +231,7 @@
 {
     //reload the data to update locations
     [self.collectionView reloadData];
-    
 }
 
-
-- (IBAction)calloutButtonPressed:(UIButton *)sender {
-    MKAnnotationView *view = (MKAnnotationView *)sender.superview/*callout view*/.superview/*annotation view*/;
-    [self showDetailViewForReport:((MapAnnotation *)view.annotation).reportModel];
-}
-
-- (void)viewDidUnload{
-
-    [super viewDidUnload];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
 
 @end

@@ -22,18 +22,18 @@
 @interface ImageScrollViewController ()
 
 @property (nonatomic, strong) UIImageView *imageView;
+
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
 @end
 
 @implementation ImageScrollViewController
 
+
+#pragma mark - View Life Cycle
+
 - (void)viewWillAppear:(BOOL)animated {
     self.navigationController.navigationBarHidden = NO;
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-
 }
 
 - (void)viewDidLoad
@@ -44,11 +44,15 @@
 	_mainScrollView.minimumZoomScale = 0.1;
 	_mainScrollView.clipsToBounds = YES;
 	_mainScrollView.delegate = self;
+    
     [self.spinner startAnimating];
     
+    //Load image by id
     [[DataHelper instance] loadImageByID:self.kinveyImageId
                                OnSuccess:^(UIImage *image){
+                                   
                                    [self.spinner stopAnimating];
+                                   
                                    self.imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
                                    _mainScrollView.contentSize = image.size;
                                    self.imageView.image = image;
@@ -56,44 +60,55 @@
                                    float aspectHeight = self.mainScrollView.bounds.size.height / self.imageView.image.size.height;
                                    float aspectWidth = self.mainScrollView.bounds.size.width / self.imageView.image.size.width;
                                    self.mainScrollView.minimumZoomScale = MIN(aspectHeight, aspectWidth);
+                                   
                                    [_mainScrollView setZoomScale:MAX(aspectHeight, aspectWidth)
                                                         animated:YES];
                                    [_mainScrollView addSubview:self.imageView];
-                               }onFailure:nil];
+                                   
+                               }onFailure:^(NSError *error){
+                                   
+                                   [self.spinner stopAnimating];
+                                   
+                                   UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                                       message:error.localizedDescription
+                                                                                      delegate:nil
+                                                                             cancelButtonTitle:@"Cancel"
+                                                                             otherButtonTitles:nil];
+                                   [alertView show];
+                               }];
     
     
-    
+    //Add double tap gesture for srollView
     UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapGestureHandler:)];
     doubleTap.numberOfTapsRequired = 2;
     [_mainScrollView addGestureRecognizer:doubleTap];
     
+    //Add single tap gesture for scrollView
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureHandler:)];
     [tap requireGestureRecognizerToFail:doubleTap];
     [_mainScrollView addGestureRecognizer:tap];
 }
 
-- (void)viewDidUnload
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    [self setMainScrollView:nil];
-
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
+    return (interfaceOrientation == UIInterfaceOrientationPortrait ||
+            UIInterfaceOrientationIsLandscape(interfaceOrientation));
 }
+
+- (BOOL)prefersStatusBarHidden
+{
+    return self.navigationController.navigationBarHidden;
+}
+
+
+#pragma mark - Sroll View Delegate
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
     return self.imageView;
 }
 
-- (CGRect)zoomRectForScale:(float)scale atCenter:(CGPoint)center {
-    CGRect baseRect = _mainScrollView.frame;
-    baseRect.size.width /= scale;
-    baseRect.size.height /= scale;
-    baseRect.origin.x = center.x - baseRect.size.width/2;
-    baseRect.origin.y = center.y - baseRect.size.height/2;
-    return baseRect;
-}
 
-#pragma mark - gesture handlers
+#pragma mark - Gesture Handlers
 
 - (void)doubleTapGestureHandler:(UITapGestureRecognizer *)recognizer {
     // tap to zoom
@@ -119,15 +134,17 @@
     [self setNeedsStatusBarAppearanceUpdate];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait ||
-            UIInterfaceOrientationIsLandscape(interfaceOrientation));
+
+#pragma mark - Utils
+
+- (CGRect)zoomRectForScale:(float)scale atCenter:(CGPoint)center {
+    CGRect baseRect = _mainScrollView.frame;
+    baseRect.size.width /= scale;
+    baseRect.size.height /= scale;
+    baseRect.origin.x = center.x - baseRect.size.width/2;
+    baseRect.origin.y = center.y - baseRect.size.height/2;
+    return baseRect;
 }
 
-- (BOOL)prefersStatusBarHidden
-{
-    return self.navigationController.navigationBarHidden;
-}
 
 @end

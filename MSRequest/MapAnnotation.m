@@ -39,9 +39,7 @@
         _reportModel = report;
         _coordinate = report.geoCoord.coordinate;
         _title = report.type.name;
-        //identifier = aReport.identifier;
-        // MB create image from imagePath
-        //image = [aReport.image copy];
+
         [[DataHelper instance] loadImageByID:report.imageId
                                    OnSuccess:^(UIImage *image){
                                        
@@ -79,9 +77,7 @@
                                   self.streetNumber = placemark.subThoroughfare;
                                   self.streetName = placemark.thoroughfare;
                                   self.city = placemark.locality;
-                                  
-                                  
-                                  
+
                                   NSMutableString *locationString = [NSMutableString string];
                                   if (self.streetNumber) {
                                       [locationString appendString:self.streetNumber];

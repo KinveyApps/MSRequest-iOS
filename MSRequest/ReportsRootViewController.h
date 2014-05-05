@@ -24,9 +24,10 @@
 
 @class ReportModel;
 
-@interface ReportsRootViewController : UIViewController <ReportsFilterViewControllerDelegate>
+@interface ReportsRootViewController : UIViewController
 
 - (void)showDetailViewForReport:(Report *)report;
 
 - (IBAction)logout:(id)sender;
+
 @end

@@ -22,6 +22,9 @@
 
 - (NSDictionary *)hostToKinveyPropertyMapping{
     
+    //Kinvey: Mapping Function
+    //      client property                 : backend column
+    //      --------------------------------:---------------------------------------
     return @{@"entityId"                    : KCSEntityKeyId,
              @"metadata"                    : KCSEntityKeyMetadata,
              @"type"                        : @"type",
@@ -37,12 +40,16 @@
 
 + (NSDictionary *)kinveyPropertyToCollectionMapping{
     
+    //    backend field name:collection name
+    //----------------------:---------------------------
     return @{@"type"        : @"TypesOfReport",
              @"originator"  : KCSUserCollectionName};
 }
 
 + (NSDictionary *)kinveyObjectBuilderOptions{
     
+    //   Maps properties to object:     property: class
+    //------------------------------------------:-------------------
     return @{KCS_REFERENCE_MAP_KEY: @{@"type"   : [TypeOfReport class]}};
 }
 

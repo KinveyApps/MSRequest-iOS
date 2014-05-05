@@ -25,8 +25,10 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *pickerTableView;
 @property (strong, nonatomic) NSArray *cellTitles;
-@property (weak, nonatomic) id <PickerTableViewControllerDelegate> delegate;
+
 @property NSInteger selectedRow;
+
+@property (weak, nonatomic) id <PickerTableViewControllerDelegate> delegate;
 
 @end
 

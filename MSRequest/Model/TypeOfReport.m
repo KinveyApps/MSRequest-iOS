@@ -22,6 +22,9 @@
 
 - (NSDictionary *)hostToKinveyPropertyMapping{
     
+    //Kinvey: Mapping Function
+    //      client property                     : backend column
+    //      ------------------------------------:---------------------------------------
     return @{@"entityId"                        : KCSEntityKeyId,
              @"metadata"                        : KCSEntityKeyMetadata,
              @"name"                            : @"name",

@@ -21,9 +21,6 @@
 #define KINVEY_APP_KEY				@"kid_TVoDehwwo9"
 #define KINVEY_APP_SECRET			@"93ee4b80d6024bffa4dc901dd6ef127f"
 
-
-
-
 @interface AuthenticationHelper : NSObject
 
 + (AuthenticationHelper *)instance;

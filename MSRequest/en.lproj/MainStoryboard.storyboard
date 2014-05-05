@@ -733,6 +733,45 @@
                                             <outlet property="typeLabel" destination="Ceg-fb-0Eh" id="QGB-6k-v2y"/>
                                         </connections>
                                     </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="kDefaultCollectionViewCell" id="WJ5-hT-u4B">
+                                        <rect key="frame" x="0.0" y="389" width="320" height="320"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P3P-ap-h4d">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <subviews>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No avalible reports" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ube-BL-BKV">
+                                                            <rect key="frame" x="88" y="149" width="144" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="21" id="kVq-Sf-GeP"/>
+                                                                <constraint firstAttribute="width" constant="144" id="vPq-uW-vkb"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="centerX" secondItem="Ube-BL-BKV" secondAttribute="centerX" id="Rx2-mr-itV"/>
+                                                        <constraint firstAttribute="centerY" secondItem="Ube-BL-BKV" secondAttribute="centerY" id="aL2-BV-UlM"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="P3P-ap-h4d" firstAttribute="top" secondItem="WJ5-hT-u4B" secondAttribute="top" id="BZD-Hg-ydN"/>
+                                            <constraint firstAttribute="trailing" secondItem="P3P-ap-h4d" secondAttribute="trailing" id="HYv-VQ-1gL"/>
+                                            <constraint firstAttribute="bottom" secondItem="P3P-ap-h4d" secondAttribute="bottom" id="XFN-U9-ESA"/>
+                                            <constraint firstItem="P3P-ap-h4d" firstAttribute="leading" secondItem="WJ5-hT-u4B" secondAttribute="leading" id="ee6-tI-BHv"/>
+                                        </constraints>
+                                    </collectionViewCell>
                                 </cells>
                                 <connections>
                                     <outlet property="dataSource" destination="iWa-pP-Plf" id="prj-C8-5vM"/>

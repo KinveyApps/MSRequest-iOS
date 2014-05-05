@@ -43,12 +43,16 @@ typedef enum {
     SubmitNewReportTableViewSectionIndex
 } NewReportTableViewSectionIndex;
 
+#define DEFAULT_ROW_HEIGHT 44;
+#define PHOTO_ROW_HEIGHT 320;
+
 @interface NewReportViewController() <CLLocationManagerDelegate, UITableViewDataSource, UITableViewDelegate, TextFieldTableViewCellDelegate>
 
 @property (strong, nonatomic) MapAnnotation *reportAnnotation;
 @property (strong, nonatomic) UIImage *image;
 @property (strong, nonatomic) UIImage *thumbnail;
 @property (nonatomic, strong) CLLocationManager* locationManager;
+
 @property (strong, nonatomic) NSArray *typeOfReportNames;
 @property (nonatomic, strong) NSMutableArray *additionalAttributedValues;
 @property (nonatomic, strong) NSArray *arrayForPicker;
@@ -71,6 +75,7 @@ typedef enum {
     
     if ([DataHelper instance].typesOfReport) {
         
+        //Create array of type name
         if (!_typeOfReportNames.count) {
             NSMutableArray *typeNames = [NSMutableArray arrayWithCapacity:[DataHelper instance].typesOfReport.count];
             
@@ -96,6 +101,7 @@ typedef enum {
     
     return _imagePickerController;
 }
+
 
 #pragma mark - Table View
 #pragma mark - Data Source
@@ -126,6 +132,7 @@ typedef enum {
         return 1;
     }
 }
+
 
 #pragma mark - Delegate
 
@@ -267,15 +274,15 @@ typedef enum {
     if (indexPath.section == MainNewReportTableViewSectionIndex) {
         
         if (indexPath.row == PhotoNewReportTableViewRowIndex) {
-            return 320;
+            return PHOTO_ROW_HEIGHT;
         }else{
-            return 44;
+            return DEFAULT_ROW_HEIGHT;
         }
         
     }else if (indexPath.section == SubmitNewReportTableViewSectionIndex){
-        return 44;
+        return DEFAULT_ROW_HEIGHT;
     }
-    return 44;
+    return DEFAULT_ROW_HEIGHT;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -316,11 +323,13 @@ typedef enum {
     }else if (indexPath.section == SubmitNewReportTableViewSectionIndex){
         [DejalBezelActivityView activityViewForView:self.view.window withLabel:@"Upload Image"];
         
+        //save full image in kinvey
         [[DataHelper instance] saveImage:self.image
                                OnSuccess:^(NSString *imageID){
                                    
                                    self.report.imageId = imageID;
                                    
+                                   //save thumbnail image in kinvey
                                    [[DataHelper instance] saveImage:self.thumbnail
                                                           OnSuccess:^(NSString *thumbnailID){
                                                               self.report.thumbnailId = thumbnailID;
@@ -337,6 +346,7 @@ typedef enum {
                                                               }
                                                               self.report.originator = [KCSUser activeUser];
                                                               
+                                                              //add new report in kinvey
                                                               [[DataHelper instance] saveReport:self.report
                                                                                       OnSuccess:^(NSArray *reports){
                                                                                           
@@ -455,19 +465,6 @@ typedef enum {
 
 #pragma mark - View lifecycle
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
-    self.navigationController.toolbarHidden = YES;
-    self.navigationItem.hidesBackButton = YES;
-    [self.tableView reloadData];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [self.locationManager stopMonitoringSignificantLocationChanges];
-    [super viewWillDisappear:animated];
-}
-
 - (void)viewDidLoad{
     
     [super viewDidLoad];
@@ -486,8 +483,23 @@ typedef enum {
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     self.locationManager.delegate = self;
     [self.locationManager startUpdatingLocation];
-
+    
 }
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+    self.navigationController.toolbarHidden = YES;
+    self.navigationItem.hidesBackButton = YES;
+    [self.tableView reloadData];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [self.locationManager stopMonitoringSignificantLocationChanges];
+    [super viewWillDisappear:animated];
+}
+
+
 
 - (void)viewDidUnload
 {
@@ -586,7 +598,7 @@ typedef enum {
     if (annotation.subtitle.length) {
         self.report.locationString = annotation.subtitle;
     }else{
-        self.report.locationString = [NSString stringWithFormat:@"%f°, %f°", annotation.coordinate.longitude, annotation.coordinate.latitude];
+        self.report.locationString = [NSString stringWithFormat:@"%.4f°, %.4f°", annotation.coordinate.longitude, annotation.coordinate.latitude];
     }
     self.report.geoCoord = [CLLocation locationFromKinveyValue:CLLocationCoordinate2DToKCS(annotation.coordinate)];
 
@@ -630,6 +642,7 @@ typedef enum {
 
 
 #pragma mark - Location
+
 - (void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     CLLocation* location = [locations lastObject];
@@ -648,7 +661,7 @@ typedef enum {
     if (annotation.subtitle.length) {
         self.report.locationString = annotation.subtitle;
     }else{
-        self.report.locationString = [NSString stringWithFormat:@"%f°, %f°", annotation.coordinate.longitude, annotation.coordinate.latitude];
+        self.report.locationString = [NSString stringWithFormat:@"%.4f°, %.4f°", annotation.coordinate.longitude, annotation.coordinate.latitude];
     }
     self.report.geoCoord = [CLLocation locationFromKinveyValue:CLLocationCoordinate2DToKCS(annotation.coordinate)];
     

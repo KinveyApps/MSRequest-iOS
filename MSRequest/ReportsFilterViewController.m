@@ -65,6 +65,13 @@ typedef enum {
     }
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    // Return YES for supported orientations
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -335,6 +342,9 @@ typedef enum {
     [self.tableView reloadData];
 }
 
+
+#pragma mark - Action
+
 - (IBAction)doneButtonPressed:(id)sender {
     [DataHelper instance].filterOptions = self.filterOptions;
     [self.navigationController popViewControllerAnimated:YES];
@@ -346,17 +356,5 @@ typedef enum {
     [self.tableView reloadData];
 }
 
-- (void)viewDidUnload
-{
-
-    [super viewDidUnload];
-
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
 
 @end

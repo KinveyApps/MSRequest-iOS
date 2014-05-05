@@ -38,6 +38,9 @@ typedef enum {
     ChangeStatusReportTableViewSectionIndex
 } ReportTableViewSectionIndex;
 
+#define DEFAULT_ROW_HEIGHT 44;
+#define PHOTO_ROW_HEIGHT 320;
+
 NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageViewer";
 
 @interface ReportDetailViewController () <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
@@ -50,18 +53,8 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
 
 @implementation ReportDetailViewController
 
+
 #pragma mark - View lifecycle
-
-// in viewWillAppear/Disappear, toggle nav bar hidden for smooth transition with parent vc
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
-    self.navigationController.toolbarHidden = YES;
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-}
 
 - (void)viewDidLoad{
     [super viewDidLoad];
@@ -70,15 +63,18 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
     self.defaultBackBarItem = self.navigationItem.leftBarButtonItem;
 }
 
-- (void)viewDidUnload{
-
-    [super viewDidUnload];
+// in viewWillAppear/Disappear, toggle nav bar hidden for smooth transition with parent vc
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+    self.navigationController.toolbarHidden = YES;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
+
 
 #pragma mark - segue methods
 
@@ -206,11 +202,15 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
     cell.label.text = @"";
     if (self.report.thumbnailId) {
         
+        //Download image by kinveyFileID
         [[DataHelper instance] loadImageByID:self.report.thumbnailId
                                    OnSuccess:^(UIImage *image){
+                                       
                                        cell.imageView.image = image;
                                        [cell setNeedsDisplay];
+                                       
                                    }onFailure:^(NSError *error){
+                                       
                                        cell.label.text = error.localizedDescription;
                                    }];
         
@@ -243,17 +243,18 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == MainReportTableViewSectionIndex) {
         if (indexPath.row == PhotoReportTableViewRowIndex) {
-            return 320;
+            return PHOTO_ROW_HEIGHT;
         }else{
-            return 44;
+            return DEFAULT_ROW_HEIGHT;
         }
     }else if (indexPath.row == ChangeStatusReportTableViewSectionIndex){
-        return 44;
+        return DEFAULT_ROW_HEIGHT;
     }
-    return 44;
+    return DEFAULT_ROW_HEIGHT;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     if (indexPath.section == MainReportTableViewSectionIndex) {
         if (indexPath.row == PhotoReportTableViewRowIndex) {
             [self performSegueWithIdentifier:kSegueIdentifierPushImageViewer
@@ -272,9 +273,11 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
             imageSourceSelectorSheet.cancelButtonIndex = imageSourceSelectorSheet.numberOfButtons - 1;
             [imageSourceSelectorSheet showInView:self.view];
         }
+        
     }else if (indexPath.section == ChangeStatusReportTableViewSectionIndex){
         [DejalBezelActivityView activityViewForView:self.view.window withLabel:@"Update Status"];
 
+        //Update entity in kinvey
         [[DataHelper instance] saveReport:self.report
                                 OnSuccess:^(NSArray *reports){
                                     
@@ -283,6 +286,7 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
                                     self.statusWasChanged = NO;
                                     
                                 }onFailure:^(NSError *error){
+                                    
                                     [DejalBezelActivityView removeView];
                                     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
                                                                                         message:error.localizedDescription

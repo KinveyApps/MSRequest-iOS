@@ -52,14 +52,6 @@
     [_delegate pickerTableViewController:self selectedRow:indexPath.row];
 }
 
-- (void)viewDidUnload
-{
-    [self setPickerTableView:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations

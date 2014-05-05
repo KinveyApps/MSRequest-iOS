@@ -40,11 +40,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
     
 	if (self) {
         
-//        //Kinvey: Here we initialize KCSClient instance
-//		(void)[[KCSClient sharedClient] initializeKinveyServiceForAppKey:KINVEY_APP_KEY
-//														   withAppSecret:KINVEY_APP_SECRET
-//															usingOptions:nil];
-        
         //Kinvey: Here we define our collection to use
         KCSCollection *collectionTypesOfReport = [KCSCollection collectionFromString:TYPES_OF_REPORT_KINVEY_COLLECTIONS_NAME
                                                                              ofClass:[TypeOfReport class]];
@@ -78,12 +73,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
 }
 
 - (void)setFilterOptions:(NSDictionary *)filterOptions{
+    
     self.currentQuery = [KCSQuery query];
     TypeOfReport *currentType;
+    
     _filterOptions = filterOptions;
+    
+    //Kinvey: create query with filter options
     if (filterOptions[ORIGINATOR_FILTER_KEY]) {
-//        self.currentQuery = [KCSQuery queryOnField:@"originator._id"
-//                            withExactMatchForValue:filterOptions[ORIGINATOR_FILTER_KEY]];
         [self.currentQuery addQueryForJoiningOperator:kKCSAnd
                                             onQueries:[KCSQuery queryOnField:@"originator._id"
                                                       withExactMatchForValue:filterOptions[ORIGINATOR_FILTER_KEY]], nil];
@@ -139,31 +136,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
     
     //Return string of regex format for search substring
     return [[@"^.{0,}" stringByAppendingString:substring] stringByAppendingString:@".{0,}"];
-}
-
-- (KCSQuery *)queryForOriginatorEqualsActiveUser{
-    
-    //Kinvey: Built a query for filter entity with field originator is equal avctive Kinvey user
-    return [KCSQuery queryOnField:@"originator._id"
-           withExactMatchForValue:[KCSUser activeUser].userId];
-}
-
-- (KCSQuery *)queryForSearchSubstring:(NSString *)substring inFields:(NSArray *)textFields{
-    
-    //Kinvey: Built complex query for filter entity which contains string field with substing
-    KCSQuery *query = [KCSQuery query];
-    
-    query = [KCSQuery queryOnField:[textFields firstObject]
-                         withRegex:[self regexForContaintSubstring:substring]];
-    
-    for (NSInteger i = 1; i < textFields.count; i ++) {
-        KCSQuery *fieldQuery = [KCSQuery queryOnField:textFields[i]
-                                            withRegex:[self regexForContaintSubstring:substring]];
-        query = [query queryByJoiningQuery:fieldQuery
-                             usingOperator:kKCSOr];
-    }
-    
-    return query;
 }
 
 
