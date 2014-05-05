@@ -17,8 +17,6 @@
 		1B76CBC018F42120004713E1 /* KinveyKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B76CBBF18F42120004713E1 /* KinveyKit.framework */; };
 		1B76CBD218F43896004713E1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CBD118F43896004713E1 /* AppDelegate.m */; };
 		1B76CBD518F43920004713E1 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B76CBD318F43920004713E1 /* MainStoryboard.storyboard */; };
-		1B76CBD818F43947004713E1 /* CityWatchNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CBD718F43947004713E1 /* CityWatchNavigationBar.m */; };
-		1B76CBDB18F4395A004713E1 /* CityWatchToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CBDA18F4395A004713E1 /* CityWatchToolbar.m */; };
 		1B76CBE118F4398D004713E1 /* ActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CBE018F4398D004713E1 /* ActivityViewController.m */; };
 		1B76CBE518F439A1004713E1 /* CustomReportTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CBE318F439A1004713E1 /* CustomReportTableViewCell.m */; };
 		1B76CBE618F439A1004713E1 /* CustomReportTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B76CBE418F439A1004713E1 /* CustomReportTableViewCell.xib */; };
@@ -114,10 +112,6 @@
 		1B76CBD018F43896004713E1 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = MSRequest/AppDelegate.h; sourceTree = SOURCE_ROOT; };
 		1B76CBD118F43896004713E1 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = MSRequest/AppDelegate.m; sourceTree = SOURCE_ROOT; };
 		1B76CBD418F43920004713E1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = MSRequest/en.lproj/MainStoryboard.storyboard; sourceTree = SOURCE_ROOT; };
-		1B76CBD618F43947004713E1 /* CityWatchNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CityWatchNavigationBar.h; path = MSRequest/CityWatchNavigationBar.h; sourceTree = SOURCE_ROOT; };
-		1B76CBD718F43947004713E1 /* CityWatchNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CityWatchNavigationBar.m; path = MSRequest/CityWatchNavigationBar.m; sourceTree = SOURCE_ROOT; };
-		1B76CBD918F4395A004713E1 /* CityWatchToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CityWatchToolbar.h; path = MSRequest/CityWatchToolbar.h; sourceTree = SOURCE_ROOT; };
-		1B76CBDA18F4395A004713E1 /* CityWatchToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CityWatchToolbar.m; path = MSRequest/CityWatchToolbar.m; sourceTree = SOURCE_ROOT; };
 		1B76CBDF18F4398D004713E1 /* ActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActivityViewController.h; path = MSRequest/ActivityViewController.h; sourceTree = SOURCE_ROOT; };
 		1B76CBE018F4398D004713E1 /* ActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActivityViewController.m; path = MSRequest/ActivityViewController.m; sourceTree = SOURCE_ROOT; };
 		1B76CBE218F439A1004713E1 /* CustomReportTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomReportTableViewCell.h; path = MSRequest/CustomReportTableViewCell.h; sourceTree = SOURCE_ROOT; };
@@ -469,10 +463,6 @@
 		5EE6632215912A3F00E0C9F9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				1B76CBD618F43947004713E1 /* CityWatchNavigationBar.h */,
-				1B76CBD718F43947004713E1 /* CityWatchNavigationBar.m */,
-				1B76CBD918F4395A004713E1 /* CityWatchToolbar.h */,
-				1B76CBDA18F4395A004713E1 /* CityWatchToolbar.m */,
 				1BEAAEDD18FD39E7003AE701 /* KinveyImageView.h */,
 				1BEAAEDE18FD39E7003AE701 /* KinveyImageView.m */,
 				1BEAAEDF18FD39E7003AE701 /* KinveyImageView.xib */,
@@ -593,7 +583,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B3743F018F599A400C32AD6 /* DataHelper.m in Sources */,
-				1B76CBD818F43947004713E1 /* CityWatchNavigationBar.m in Sources */,
 				1B76CBF218F439E3004713E1 /* NewReportViewController.m in Sources */,
 				1B3743F718F7FF1000C32AD6 /* PhotoTableViewCell.m in Sources */,
 				1B76CBE918F439B0004713E1 /* DescriptionEditorViewController.m in Sources */,
@@ -614,7 +603,6 @@
 				1B76CBFE18F43A14004713E1 /* ReportsRootViewController.m in Sources */,
 				1B76CC5818F44039004713E1 /* SignInViewController.m in Sources */,
 				1B76CBD218F43896004713E1 /* AppDelegate.m in Sources */,
-				1B76CBDB18F4395A004713E1 /* CityWatchToolbar.m in Sources */,
 				1B76CBE118F4398D004713E1 /* ActivityViewController.m in Sources */,
 				1B76CC1518F43A74004713E1 /* UIImage+Resize.m in Sources */,
 				1B3743EF18F599A400C32AD6 /* AuthenticationHelper.m in Sources */,
