@@ -1,6 +1,5 @@
 //
 //  KinveyImageView.h
-//  QuoteApp
 //
 //  Created by Pavel Vilbik on 4.3.14.
 /**
@@ -13,6 +12,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License. *
  */
+
 #import <UIKit/UIKit.h>
 
 @interface KinveyImageView : UIView

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B2825A31917CC7400EC09A4 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1B2825A21917CC7400EC09A4 /* LICENSE.txt */; };
 		1B3743EA18F5997F00C32AD6 /* TypeOfReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3743E918F5997F00C32AD6 /* TypeOfReport.m */; };
 		1B3743EF18F599A400C32AD6 /* AuthenticationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3743EC18F599A400C32AD6 /* AuthenticationHelper.m */; };
 		1B3743F018F599A400C32AD6 /* DataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3743EE18F599A400C32AD6 /* DataHelper.m */; };
@@ -93,6 +94,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1B2825A21917CC7400EC09A4 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = SOURCE_ROOT; };
 		1B3743E818F5997F00C32AD6 /* TypeOfReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TypeOfReport.h; path = MSRequest/Model/TypeOfReport.h; sourceTree = SOURCE_ROOT; };
 		1B3743E918F5997F00C32AD6 /* TypeOfReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TypeOfReport.m; path = MSRequest/Model/TypeOfReport.m; sourceTree = SOURCE_ROOT; };
 		1B3743EB18F599A400C32AD6 /* AuthenticationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AuthenticationHelper.h; path = MSRequest/Helpers/AuthenticationHelper.h; sourceTree = SOURCE_ROOT; };
@@ -304,6 +306,7 @@
 			isa = PBXGroup;
 			children = (
 				1B76CBC518F424F9004713E1 /* Externals */,
+				5EE6632315912A8900E0C9F9 /* Categories */,
 				1B76CBD018F43896004713E1 /* AppDelegate.h */,
 				1B76CBD118F43896004713E1 /* AppDelegate.m */,
 				1B76CBD318F43920004713E1 /* MainStoryboard.storyboard */,
@@ -313,7 +316,6 @@
 				5E2C87A614C5BE1E0062229A /* View Controllers */,
 				5E2C87A514C5BE0D0062229A /* Models */,
 				1B76CBC118F4220C004713E1 /* Helpers */,
-				5EE6632315912A8900E0C9F9 /* Categories */,
 			);
 			name = MSRequest;
 			path = CityWatch;
@@ -370,6 +372,7 @@
 				1B76CC1718F43A8B004713E1 /* MSRequest-Info.plist */,
 				1B76CC1918F43A8F004713E1 /* MSRequest-Prefix.pch */,
 				1B76CC1A18F43AA8004713E1 /* main.m */,
+				1B2825A21917CC7400EC09A4 /* LICENSE.txt */,
 				1B76CC1C18F43AC8004713E1 /* InfoPlist.strings */,
 				5EBEF22414C9CE5E00ADA1AE /* Images */,
 			);
@@ -569,6 +572,7 @@
 				1B76CC4018F43B49004713E1 /* earth.jpg in Resources */,
 				1B76CC3C18F43B49004713E1 /* blue_bottom_bar.png in Resources */,
 				1B76CC5218F43B49004713E1 /* where_icon.png in Resources */,
+				1B2825A31917CC7400EC09A4 /* LICENSE.txt in Resources */,
 				1B76CC3918F43B49004713E1 /* add_report_blue_top_bar.png in Resources */,
 				1B76CC1E18F43AC8004713E1 /* InfoPlist.strings in Resources */,
 				27CF826D17D6783500B5B0CB /* Default-568h@2x.png in Resources */,

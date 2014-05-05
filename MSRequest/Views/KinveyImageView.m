@@ -1,6 +1,5 @@
 //
 //  KinveyImageView.m
-//  QuoteApp
 //
 //  Created by Pavel Vilbik on 4.3.14.
 /**
@@ -15,7 +14,6 @@
  */
 
 #import "KinveyImageView.h"
-#import "UIImage+Resize.h"
 
 @interface KinveyImageView ()
 

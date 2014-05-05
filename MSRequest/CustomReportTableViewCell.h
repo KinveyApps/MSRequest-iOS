@@ -1,6 +1,5 @@
 //
 //  CustomReportTableViewCell.h
-//  CityWatch
 //
 //  Copyright 2012 Intrepid Pursuits & Kinvey, Inc
 //

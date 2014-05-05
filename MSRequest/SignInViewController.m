@@ -1,6 +1,6 @@
 //
 //  SignInViewController.m
-//  ContentBox
+//  MSRequest
 //
 //  Created by Igor Sapyanik on 22.01.14.
 /**
