@@ -224,6 +224,8 @@
 
 }
 
+- (IBAction)settingButtonPress:(UIBarButtonItem *)sender {
+}
 
 #pragma mark - Location Delegate
 

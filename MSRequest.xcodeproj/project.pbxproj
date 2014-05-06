@@ -67,6 +67,7 @@
 		1BC67EF219192B4E009E0617 /* UIImage+AHKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC67EED19192B4E009E0617 /* UIImage+AHKAdditions.m */; };
 		1BC67EF319192B4E009E0617 /* UIWindow+AHKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC67EEF19192B4E009E0617 /* UIWindow+AHKAdditions.m */; };
 		1BC67EF619192CC6009E0617 /* KinveyKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BC67EF519192CC6009E0617 /* KinveyKit.framework */; };
+		1BC67EFA191931F5009E0617 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BC67EF9191931F5009E0617 /* Images.xcassets */; };
 		1BEAAEDC18FD280E003AE701 /* RootCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BEAAEDB18FD280E003AE701 /* RootCollectionViewCell.m */; };
 		1BEAAEE018FD39E7003AE701 /* KinveyImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BEAAEDE18FD39E7003AE701 /* KinveyImageView.m */; };
 		1BEAAEE118FD39E7003AE701 /* KinveyImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1BEAAEDF18FD39E7003AE701 /* KinveyImageView.xib */; };
@@ -189,6 +190,7 @@
 		1BC67EEE19192B4E009E0617 /* UIWindow+AHKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+AHKAdditions.h"; sourceTree = "<group>"; };
 		1BC67EEF19192B4E009E0617 /* UIWindow+AHKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+AHKAdditions.m"; sourceTree = "<group>"; };
 		1BC67EF519192CC6009E0617 /* KinveyKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KinveyKit.framework; sourceTree = "<group>"; };
+		1BC67EF9191931F5009E0617 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = MSRequest/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		1BEAAEDA18FD280E003AE701 /* RootCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootCollectionViewCell.h; path = MSRequest/CollectionViewCells/RootCollectionViewCell.h; sourceTree = SOURCE_ROOT; };
 		1BEAAEDB18FD280E003AE701 /* RootCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootCollectionViewCell.m; path = MSRequest/CollectionViewCells/RootCollectionViewCell.m; sourceTree = SOURCE_ROOT; };
 		1BEAAEDD18FD39E7003AE701 /* KinveyImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KinveyImageView.h; path = MSRequest/Views/KinveyImageView.h; sourceTree = SOURCE_ROOT; };
@@ -344,6 +346,7 @@
 				5E2C87A614C5BE1E0062229A /* View Controllers */,
 				5E2C87A514C5BE0D0062229A /* Models */,
 				1B76CBC118F4220C004713E1 /* Helpers */,
+				1BC67EF9191931F5009E0617 /* Images.xcassets */,
 			);
 			name = MSRequest;
 			path = CityWatch;
@@ -574,6 +577,7 @@
 				1B76CC4618F43B49004713E1 /* light_grey_photo_upload_box.png in Resources */,
 				276C539616308E5800959D74 /* Icon@2x.png in Resources */,
 				1B76CC4818F43B49004713E1 /* list_icon.png in Resources */,
+				1BC67EFA191931F5009E0617 /* Images.xcassets in Resources */,
 				1B76CC3D18F43B49004713E1 /* blue_top_bar_no_tab.png in Resources */,
 				1B76CC3A18F43B49004713E1 /* arrow.png in Resources */,
 				1B76CC5118F43B49004713E1 /* what_icon.png in Resources */,
@@ -742,6 +746,8 @@
 		5E2C879714C5BA880062229A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -765,6 +771,8 @@
 		5E2C879814C5BA880062229A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

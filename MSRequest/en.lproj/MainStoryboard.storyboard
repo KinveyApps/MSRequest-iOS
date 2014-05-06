@@ -8,7 +8,7 @@
         <!--Navigation Controller-->
         <scene sceneID="f2N-io-0Yr">
             <objects>
-                <navigationController definesPresentationContext="YES" toolbarHidden="NO" id="qza-v7-L5F" sceneMemberID="viewController">
+                <navigationController definesPresentationContext="YES" id="qza-v7-L5F" sceneMemberID="viewController">
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
@@ -23,12 +23,6 @@
                             <color key="textColor" red="1" green="0.72941178080000002" blue="0.14901961389999999" alpha="1" colorSpace="deviceRGB"/>
                         </textAttributes>
                     </navigationBar>
-                    <toolbar key="toolbar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" barStyle="black" id="fJC-Jj-7GA">
-                        <rect key="frame" x="0.0" y="524" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="barTintColor" red="0.82745105029999999" green="0.32549020649999999" blue="0.1411764771" alpha="0.69999999999999996" colorSpace="deviceRGB"/>
-                    </toolbar>
                     <connections>
                         <segue destination="2XM-r5-UTd" kind="relationship" relationship="rootViewController" id="dJV-yi-0Iz"/>
                     </connections>
@@ -803,6 +797,11 @@
                         </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Reports" id="gJg-gQ-hcl">
+                        <barButtonItem key="leftBarButtonItem" image="SettingButton" id="oeQ-nE-rha">
+                            <connections>
+                                <action selector="settingButtonPress:" destination="iWa-pP-Plf" id="fga-4c-b0R"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="bem-cr-pVu">
                             <connections>
                                 <action selector="newReportButtonPressed:" destination="iWa-pP-Plf" id="tRo-qi-LkY"/>
@@ -839,7 +838,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
                         </subviews>
-                        <color key="backgroundColor" red="0.82745105029999999" green="0.32549020649999999" blue="0.1411764771" alpha="1" colorSpace="deviceRGB"/>
+                        <color key="backgroundColor" red="0.80784320831298828" green="0.35686275362968445" blue="0.24705883860588074" alpha="1" colorSpace="deviceRGB"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="CKU-hP-Wdq" secondAttribute="centerX" id="Hkn-d2-beL"/>
                             <constraint firstAttribute="centerY" secondItem="CKU-hP-Wdq" secondAttribute="centerY" id="ICh-32-elw"/>
@@ -882,6 +881,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o0g-2q-uGS">
                                 <rect key="frame" x="20" y="156" width="280" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="Sign In">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -892,6 +892,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q1a-7W-csg">
                                 <rect key="frame" x="133" y="194" width="55" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="Sign Up">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -901,6 +902,7 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.82745105029999999" green="0.32549020649999999" blue="0.1411764771" alpha="1" colorSpace="deviceRGB"/>
+                        <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="loginButton" destination="o0g-2q-uGS" id="Dbi-bP-ye6"/>
@@ -915,6 +917,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="SettingButton" width="25" height="25"/>
         <image name="photo_icon.png" width="46" height="46"/>
     </resources>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
