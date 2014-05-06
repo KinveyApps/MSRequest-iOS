@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1B2825A31917CC7400EC09A4 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1B2825A21917CC7400EC09A4 /* LICENSE.txt */; };
 		1B3743EA18F5997F00C32AD6 /* TypeOfReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3743E918F5997F00C32AD6 /* TypeOfReport.m */; };
 		1B3743EF18F599A400C32AD6 /* AuthenticationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3743EC18F599A400C32AD6 /* AuthenticationHelper.m */; };
 		1B3743F018F599A400C32AD6 /* DataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3743EE18F599A400C32AD6 /* DataHelper.m */; };
@@ -33,7 +32,6 @@
 		1B76CC1418F43A74004713E1 /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CC0F18F43A74004713E1 /* UIImage+Alpha.m */; };
 		1B76CC1518F43A74004713E1 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CC1118F43A74004713E1 /* UIImage+Resize.m */; };
 		1B76CC1618F43A74004713E1 /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CC1318F43A74004713E1 /* UIImage+RoundedCorner.m */; };
-		1B76CC1818F43A8B004713E1 /* MSRequest-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1B76CC1718F43A8B004713E1 /* MSRequest-Info.plist */; };
 		1B76CC1B18F43AA8004713E1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CC1A18F43AA8004713E1 /* main.m */; };
 		1B76CC1E18F43AC8004713E1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1B76CC1C18F43AC8004713E1 /* InfoPlist.strings */; };
 		1B76CC3918F43B49004713E1 /* add_report_blue_top_bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B76CC1F18F43B49004713E1 /* add_report_blue_top_bar.png */; };
@@ -64,6 +62,7 @@
 		1B76CC5218F43B49004713E1 /* where_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B76CC3818F43B49004713E1 /* where_icon.png */; };
 		1B76CC5818F44039004713E1 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CC5718F44039004713E1 /* SignInViewController.m */; };
 		1B76CC5C18F441FB004713E1 /* DejalActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CC5B18F441FB004713E1 /* DejalActivityView.m */; };
+		1BC67EE5191929E9009E0617 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1B2825A21917CC7400EC09A4 /* LICENSE.txt */; };
 		1BEAAEDC18FD280E003AE701 /* RootCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BEAAEDB18FD280E003AE701 /* RootCollectionViewCell.m */; };
 		1BEAAEE018FD39E7003AE701 /* KinveyImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BEAAEDE18FD39E7003AE701 /* KinveyImageView.m */; };
 		1BEAAEE118FD39E7003AE701 /* KinveyImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1BEAAEDF18FD39E7003AE701 /* KinveyImageView.xib */; };
@@ -564,7 +563,6 @@
 				1B76CBD518F43920004713E1 /* MainStoryboard.storyboard in Resources */,
 				1B76CC5018F43B49004713E1 /* submit_button.png in Resources */,
 				1B76CC4E18F43B49004713E1 /* settings_icon.png in Resources */,
-				1B76CC1818F43A8B004713E1 /* MSRequest-Info.plist in Resources */,
 				1B76CC4D18F43B49004713E1 /* photo_icon.png in Resources */,
 				1B76CC3B18F43B49004713E1 /* arrow@2x.png in Resources */,
 				1B76CC3E18F43B49004713E1 /* blue_top_bar.png in Resources */,
@@ -572,7 +570,7 @@
 				1B76CC4018F43B49004713E1 /* earth.jpg in Resources */,
 				1B76CC3C18F43B49004713E1 /* blue_bottom_bar.png in Resources */,
 				1B76CC5218F43B49004713E1 /* where_icon.png in Resources */,
-				1B2825A31917CC7400EC09A4 /* LICENSE.txt in Resources */,
+				1BC67EE5191929E9009E0617 /* LICENSE.txt in Resources */,
 				1B76CC3918F43B49004713E1 /* add_report_blue_top_bar.png in Resources */,
 				1B76CC1E18F43AC8004713E1 /* InfoPlist.strings in Resources */,
 				27CF826D17D6783500B5B0CB /* Default-568h@2x.png in Resources */,
