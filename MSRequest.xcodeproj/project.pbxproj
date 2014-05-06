@@ -63,6 +63,10 @@
 		1B76CC5818F44039004713E1 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CC5718F44039004713E1 /* SignInViewController.m */; };
 		1B76CC5C18F441FB004713E1 /* DejalActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CC5B18F441FB004713E1 /* DejalActivityView.m */; };
 		1BC67EE5191929E9009E0617 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1B2825A21917CC7400EC09A4 /* LICENSE.txt */; };
+		1BC67EF019192B4E009E0617 /* AHKActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC67EE919192B4E009E0617 /* AHKActionSheet.m */; };
+		1BC67EF119192B4E009E0617 /* AHKActionSheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC67EEB19192B4E009E0617 /* AHKActionSheetViewController.m */; };
+		1BC67EF219192B4E009E0617 /* UIImage+AHKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC67EED19192B4E009E0617 /* UIImage+AHKAdditions.m */; };
+		1BC67EF319192B4E009E0617 /* UIWindow+AHKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC67EEF19192B4E009E0617 /* UIWindow+AHKAdditions.m */; };
 		1BEAAEDC18FD280E003AE701 /* RootCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BEAAEDB18FD280E003AE701 /* RootCollectionViewCell.m */; };
 		1BEAAEE018FD39E7003AE701 /* KinveyImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BEAAEDE18FD39E7003AE701 /* KinveyImageView.m */; };
 		1BEAAEE118FD39E7003AE701 /* KinveyImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1BEAAEDF18FD39E7003AE701 /* KinveyImageView.xib */; };
@@ -177,6 +181,14 @@
 		1B76CC5A18F441FB004713E1 /* DejalActivityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DejalActivityView.h; sourceTree = "<group>"; };
 		1B76CC5B18F441FB004713E1 /* DejalActivityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DejalActivityView.m; sourceTree = "<group>"; };
 		1B76CC5D18F442A5004713E1 /* STBlocks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = STBlocks.h; path = Externals/STBlocks.h; sourceTree = SOURCE_ROOT; };
+		1BC67EE819192B4E009E0617 /* AHKActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AHKActionSheet.h; sourceTree = "<group>"; };
+		1BC67EE919192B4E009E0617 /* AHKActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AHKActionSheet.m; sourceTree = "<group>"; };
+		1BC67EEA19192B4E009E0617 /* AHKActionSheetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AHKActionSheetViewController.h; sourceTree = "<group>"; };
+		1BC67EEB19192B4E009E0617 /* AHKActionSheetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AHKActionSheetViewController.m; sourceTree = "<group>"; };
+		1BC67EEC19192B4E009E0617 /* UIImage+AHKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+AHKAdditions.h"; sourceTree = "<group>"; };
+		1BC67EED19192B4E009E0617 /* UIImage+AHKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+AHKAdditions.m"; sourceTree = "<group>"; };
+		1BC67EEE19192B4E009E0617 /* UIWindow+AHKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+AHKAdditions.h"; sourceTree = "<group>"; };
+		1BC67EEF19192B4E009E0617 /* UIWindow+AHKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+AHKAdditions.m"; sourceTree = "<group>"; };
 		1BEAAEDA18FD280E003AE701 /* RootCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootCollectionViewCell.h; path = MSRequest/CollectionViewCells/RootCollectionViewCell.h; sourceTree = SOURCE_ROOT; };
 		1BEAAEDB18FD280E003AE701 /* RootCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootCollectionViewCell.m; path = MSRequest/CollectionViewCells/RootCollectionViewCell.m; sourceTree = SOURCE_ROOT; };
 		1BEAAEDD18FD39E7003AE701 /* KinveyImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KinveyImageView.h; path = MSRequest/Views/KinveyImageView.h; sourceTree = SOURCE_ROOT; };
@@ -275,6 +287,7 @@
 		1B76CBC518F424F9004713E1 /* Externals */ = {
 			isa = PBXGroup;
 			children = (
+				1BC67EE719192B4E009E0617 /* AHKActionSheet */,
 				1B76CC5918F441FB004713E1 /* DejalActivityView */,
 				1B76CBC618F425AC004713E1 /* SynthesizeSingleton.h */,
 				1B76CC5D18F442A5004713E1 /* STBlocks.h */,
@@ -290,6 +303,22 @@
 			);
 			name = DejalActivityView;
 			path = Externals/DejalActivityView;
+			sourceTree = SOURCE_ROOT;
+		};
+		1BC67EE719192B4E009E0617 /* AHKActionSheet */ = {
+			isa = PBXGroup;
+			children = (
+				1BC67EE819192B4E009E0617 /* AHKActionSheet.h */,
+				1BC67EE919192B4E009E0617 /* AHKActionSheet.m */,
+				1BC67EEA19192B4E009E0617 /* AHKActionSheetViewController.h */,
+				1BC67EEB19192B4E009E0617 /* AHKActionSheetViewController.m */,
+				1BC67EEC19192B4E009E0617 /* UIImage+AHKAdditions.h */,
+				1BC67EED19192B4E009E0617 /* UIImage+AHKAdditions.m */,
+				1BC67EEE19192B4E009E0617 /* UIWindow+AHKAdditions.h */,
+				1BC67EEF19192B4E009E0617 /* UIWindow+AHKAdditions.m */,
+			);
+			name = AHKActionSheet;
+			path = Externals/AHKActionSheet;
 			sourceTree = SOURCE_ROOT;
 		};
 		1BEAAED918FD27A9003AE701 /* CollectionsViewCells */ = {
@@ -513,7 +542,7 @@
 		5E2C876F14C5BA880062229A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Intrepid Pursuits";
 			};
 			buildConfigurationList = 5E2C877214C5BA880062229A /* Build configuration list for PBXProject "MSRequest" */;
@@ -586,9 +615,11 @@
 			files = (
 				1B3743F018F599A400C32AD6 /* DataHelper.m in Sources */,
 				1B76CBF218F439E3004713E1 /* NewReportViewController.m in Sources */,
+				1BC67EF019192B4E009E0617 /* AHKActionSheet.m in Sources */,
 				1B3743F718F7FF1000C32AD6 /* PhotoTableViewCell.m in Sources */,
 				1B76CBE918F439B0004713E1 /* DescriptionEditorViewController.m in Sources */,
 				1B76CC0118F43A22004713E1 /* MapAnnotation.m in Sources */,
+				1BC67EF119192B4E009E0617 /* AHKActionSheetViewController.m in Sources */,
 				1BEAAEDC18FD280E003AE701 /* RootCollectionViewCell.m in Sources */,
 				1B76CC1618F43A74004713E1 /* UIImage+RoundedCorner.m in Sources */,
 				1B3743FD18F800F600C32AD6 /* TextFieldTableViewCell.m in Sources */,
@@ -600,6 +631,8 @@
 				1B76CBF518F439EF004713E1 /* PickerTableViewController.m in Sources */,
 				1BEAAEE018FD39E7003AE701 /* KinveyImageView.m in Sources */,
 				1B76CBF818F439FD004713E1 /* ReportDetailViewController.m in Sources */,
+				1BC67EF319192B4E009E0617 /* UIWindow+AHKAdditions.m in Sources */,
+				1BC67EF219192B4E009E0617 /* UIImage+AHKAdditions.m in Sources */,
 				1B3743F318F683DF00C32AD6 /* Report.m in Sources */,
 				1B3743EA18F5997F00C32AD6 /* TypeOfReport.m in Sources */,
 				1B76CBFE18F43A14004713E1 /* ReportsRootViewController.m in Sources */,
@@ -640,9 +673,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -658,11 +692,15 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
@@ -673,9 +711,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -684,9 +723,12 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
@@ -700,6 +742,7 @@
 		5E2C879714C5BA880062229A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
@@ -722,6 +765,7 @@
 		5E2C879814C5BA880062229A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
