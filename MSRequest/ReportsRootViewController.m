@@ -25,6 +25,7 @@
 #import <KinveyKit/KinveyKit.h>
 #import "RootCollectionViewCell.h"
 #import "AppDelegate.h"
+#import "AHKActionSheet.h"
 
 #define MILES_PER_METER     0.000621371192
 
@@ -156,8 +157,7 @@
 
 - (IBAction)logout:(id)sender
 {
-    [[KCSUser activeUser] logout];
-    [self.navigationController popViewControllerAnimated:YES];
+
 
 }
 
@@ -195,7 +195,6 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navigationController.toolbarHidden = NO;
     self.navigationController.navigationBarHidden = NO;
     self.navigationItem.hidesBackButton = YES;
     [self dataLoadUseCache:YES];
@@ -225,6 +224,25 @@
 }
 
 - (IBAction)settingButtonPress:(UIBarButtonItem *)sender {
+    AHKActionSheet *actionSheet = [[AHKActionSheet alloc] initWithTitle:@"Settings"];
+    
+    [actionSheet addButtonWithTitle:@"Edit Home Screen"
+                              image:[UIImage imageNamed:@"EditHomeButtonImage"]
+                               type:AHKActionSheetButtonTypeDefault
+                            handler:^(AHKActionSheet *actionSheet){
+                                [self performSegueWithIdentifier:@"kSegueIdentifierReportFilter"
+                                                          sender:self];
+                            }];
+    [actionSheet addButtonWithTitle:@"Sing out"
+                              image:[UIImage imageNamed:@"SingOutButtonImage"]
+                               type:AHKActionSheetButtonTypeDestructive
+                            handler:^(AHKActionSheet *actionSheet){
+                                [[KCSUser activeUser] logout];
+                                [self.navigationController popViewControllerAnimated:YES];
+                            }];
+    
+    [actionSheet show];
+    
 }
 
 #pragma mark - Location Delegate

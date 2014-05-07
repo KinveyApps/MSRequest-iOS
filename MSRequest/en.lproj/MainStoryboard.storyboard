@@ -780,22 +780,7 @@
                             <constraint firstAttribute="trailing" secondItem="MXm-af-Bkb" secondAttribute="trailing" id="pFl-Gz-pz9"/>
                         </constraints>
                     </view>
-                    <toolbarItems>
-                        <barButtonItem title="Filter" id="M9G-aQ-qOo">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="tableViewFilterButtonPressed:" destination="iWa-pP-Plf" id="TLi-YM-Yoe"/>
-                                <segue destination="rsE-79-Yps" kind="push" identifier="kSegueIdentifierReportFilter" id="TJ3-NY-at4"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem systemItem="flexibleSpace" id="yNK-3x-OaD"/>
-                        <barButtonItem title="Logout" id="erh-pX-r5g">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="logout:" destination="iWa-pP-Plf" id="B72-6h-f2s"/>
-                            </connections>
-                        </barButtonItem>
-                    </toolbarItems>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" title="Reports" id="gJg-gQ-hcl">
                         <barButtonItem key="leftBarButtonItem" image="SettingButton" id="oeQ-nE-rha">
                             <connections>
@@ -808,13 +793,17 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <size key="freeformSize" width="320" height="568"/>
                     <connections>
                         <outlet property="collectionView" destination="MXm-af-Bkb" id="z4q-Ll-ujH"/>
                         <segue destination="vBw-b4-vpb" kind="push" identifier="kSegueIdentifierPushReportDetails" id="O7u-ec-PAI"/>
                         <segue destination="2" kind="push" identifier="kSegueIdentifierNewReport" id="QmS-aA-WQe"/>
+                        <segue destination="rsE-79-Yps" kind="push" identifier="kSegueIdentifierReportFilter" id="T56-4V-Nqa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RT8-Lo-gIi" userLabel="First Responder" sceneMemberID="firstResponder"/>
