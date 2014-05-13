@@ -18,6 +18,8 @@
 
 #import "DataHelper.h"
 
+#define FILTER_OPTIONS_USER_DEFAULTS_KEY @"FilterOptions"
+
 @interface DataHelper ()
 
 @property (nonatomic, strong) KCSLinkedAppdataStore *typesOfReportLinkedAppdataStore;
@@ -28,6 +30,7 @@
 @implementation DataHelper
 
 @synthesize formatter = _formatter;
+@synthesize filterOptions = _filterOptions;
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
 
@@ -55,6 +58,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
     
     self.currentQuery = [KCSQuery query];
     
+    NSArray *options = (NSArray *)[[NSUserDefaults standardUserDefaults] objectForKey:FILTER_OPTIONS_USER_DEFAULTS_KEY];
+    
+    if (options){
+        self.filterOptions = options;
+    }
+    
 	return self;
 }
 
@@ -72,65 +81,125 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
     return _formatter;
 }
 
-- (void)setFilterOptions:(NSDictionary *)filterOptions{
+- (NSArray *)filterOptions{
+    if (!_filterOptions){
+        _filterOptions = [NSArray array];
+    }
+    return _filterOptions;
+}
+
+- (void)setFilterOptions:(NSArray *)filterOptions{
     
-    self.currentQuery = [KCSQuery query];
-    TypeOfReport *currentType;
+    self.currentQuery = nil;
     
     _filterOptions = filterOptions;
     
-    //Kinvey: create query with filter options
-    if (filterOptions[ORIGINATOR_FILTER_KEY]) {
-        [self.currentQuery addQueryForJoiningOperator:kKCSAnd
-                                            onQueries:[KCSQuery queryOnField:@"originator._id"
-                                                      withExactMatchForValue:filterOptions[ORIGINATOR_FILTER_KEY]], nil];
+    self.currentQuery = [self getQueryFromFilterOptions:filterOptions];
+
+    if (filterOptions.count){
+        [[NSUserDefaults standardUserDefaults] setObject:filterOptions forKey:FILTER_OPTIONS_USER_DEFAULTS_KEY];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }else{
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:FILTER_OPTIONS_USER_DEFAULTS_KEY];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
-    if (filterOptions[TYPE_FILTER_KEY]) {
-        for (TypeOfReport *type in self.typesOfReport) {
-            if ([type.entityId isEqualToString:filterOptions[TYPE_FILTER_KEY]]) {
-                currentType = type;
-                break;
-            }
-        }
-        [self.currentQuery addQueryForJoiningOperator:kKCSAnd
-                                            onQueries:[KCSQuery queryOnField:@"type._id"
-                                                      withExactMatchForValue:filterOptions[TYPE_FILTER_KEY]], nil];
-    }
-    if (filterOptions[STATE_FILTER_KEY]) {
-        [self.currentQuery addQueryForJoiningOperator:kKCSAnd
-                                            onQueries:[KCSQuery queryOnField:@"state"
-                                                      withExactMatchForValue:filterOptions[STATE_FILTER_KEY]], nil];
-    }
-    if (filterOptions[LOCATION_RADIUS_FILTER_KEY]) {
-        [self.currentQuery addQueryForJoiningOperator:kKCSAnd
-                                            onQueries:[KCSQuery queryOnField:KCSEntityKeyGeolocation
-                                                  usingConditionalsForValues:kKCSMaxDistance, filterOptions[LOCATION_RADIUS_FILTER_KEY], nil], nil];
-    }
-    if (filterOptions[DESCRIPTION_FILTER_KEY]) {
-        [self.currentQuery addQueryForJoiningOperator:kKCSAnd
-                                            onQueries:[KCSQuery queryOnField:@"descriptionOfReport"
-                                                                   withRegex:[self regexForContaintSubstring:filterOptions[DESCRIPTION_FILTER_KEY]]], nil];
-    }
-    if (currentType) {
-        for (NSInteger i = 0; i < currentType.additionalAttributes.count; i++) {
-            NSString *attribute = currentType.additionalAttributes[i];
-            if (filterOptions[attribute]) {
-                if ([currentType.additionalAttributesValidValues[i] isKindOfClass:[NSArray class]]) {
-                    [self.currentQuery addQueryForJoiningOperator:kKCSAnd
-                                                        onQueries:[KCSQuery queryOnField:[NSString stringWithFormat:@"valuesAdditionalAttributes.%d", i]
-                                                                  withExactMatchForValue:filterOptions[attribute]], nil];
-                }else{
-                    [self.currentQuery addQueryForJoiningOperator:kKCSAnd
-                                                        onQueries:[KCSQuery queryOnField:[NSString stringWithFormat:@"valuesAdditionalAttributes.%d", i]
-                                                                               withRegex:[self regexForContaintSubstring:filterOptions[attribute]]], nil];
-                }
-            }
-        }
+}
+
+- (void)setCurrentLocation:(CLLocation *)currentLocation{
+    _currentLocation = currentLocation;
+    
+    if (currentLocation) {
+        self.currentQuery = [self getQueryFromFilterOptions:self.filterOptions];
     }
 }
 
 
 #pragma mark - Utils
+
+- (KCSQuery *)getQueryFromFilterOptions:(NSArray *)filterOptions{
+    
+    //Kinvey: create query with filter options
+    KCSQuery *resultQuery = nil;
+    TypeOfReport *currentType = nil;
+    
+    if (!self.typesOfReport.count) {
+        return [KCSQuery query];
+    }
+    
+    for (NSDictionary *filterType in filterOptions){
+        
+        KCSQuery *queryForCurrentType = [KCSQuery query];
+        
+        if (filterType[TYPE_FILTER_KEY]) {
+            for (TypeOfReport *type in self.typesOfReport) {
+                if ([type.entityId isEqualToString:filterType[TYPE_FILTER_KEY]]) {
+                    currentType = type;
+                    break;
+                }
+            }
+            queryForCurrentType = [KCSQuery queryOnField:@"type._id"
+                                  withExactMatchForValue:filterType[TYPE_FILTER_KEY]];
+        }
+        
+        if (filterType[ORIGINATOR_FILTER_KEY]) {
+            KCSQuery *originatorQuery = [KCSQuery queryOnField:@"originator._id"
+                                        withExactMatchForValue:filterType[ORIGINATOR_FILTER_KEY]];
+            queryForCurrentType = [queryForCurrentType queryByJoiningQuery:originatorQuery
+                                                             usingOperator:kKCSAnd];
+        }
+        
+        
+        if (filterType[STATE_FILTER_KEY]) {
+            KCSQuery *stateQuery = [KCSQuery queryOnField:@"state"
+                                   withExactMatchForValue:filterType[STATE_FILTER_KEY]];
+            queryForCurrentType = [KCSQuery queryForJoiningOperator:kKCSAnd
+                                                          onQueries:stateQuery, queryForCurrentType, nil];
+        }
+        if (filterType[LOCATION_RADIUS_FILTER_KEY] && self.currentLocation) {
+
+//            float radius = [(NSNumber *)filterType[LOCATION_RADIUS_FILTER_KEY] floatValue];
+//            NSArray *point1 = @[@(self.currentLocation.coordinate.longitude - radius / 2),@(self.currentLocation.coordinate.latitude - radius / 2)];
+//            NSArray *point2 = @[@(self.currentLocation.coordinate.longitude + radius / 2),@(self.currentLocation.coordinate.latitude - radius / 2)];
+//            KCSQuery *geoQuery = [KCSQuery queryOnField:KCSEntityKeyGeolocation
+//                                       usingConditional:kKCSWithinBox
+//                                               forValue:@[point1, point2]];
+//            queryForCurrentType = [KCSQuery queryForJoiningOperator:kKCSAnd
+//                                                          onQueries:geoQuery, queryForCurrentType, nil];
+        }
+        if (filterType[DESCRIPTION_FILTER_KEY]) {
+            KCSQuery *decriptionQuery = [KCSQuery queryOnField:@"descriptionOfReport"
+                                              withRegex:[self regexForContaintSubstring:filterType[DESCRIPTION_FILTER_KEY]]];
+            queryForCurrentType = [KCSQuery queryForJoiningOperator:kKCSAnd
+                                                          onQueries:decriptionQuery, queryForCurrentType, nil];
+        }
+        if (currentType) {
+            for (NSInteger i = 0; i < currentType.additionalAttributes.count; i++) {
+                NSString *attribute = currentType.additionalAttributes[i];
+                if (filterType[attribute]) {
+                    if ([currentType.additionalAttributesValidValues[i] isKindOfClass:[NSArray class]]) {
+                        KCSQuery *query = [KCSQuery queryOnField:[NSString stringWithFormat:@"valuesAdditionalAttributes.%ld", (long)i]
+                                                    withExactMatchForValue:filterType[attribute]];
+                        queryForCurrentType = [KCSQuery queryForJoiningOperator:kKCSAnd
+                                                                      onQueries:query, queryForCurrentType, nil];
+                    }else{
+                        KCSQuery *query = [KCSQuery queryOnField:[NSString stringWithFormat:@"valuesAdditionalAttributes.%ld", (long)i]
+                                                       withRegex:[self regexForContaintSubstring:filterType[attribute]]];
+                        queryForCurrentType = [KCSQuery queryForJoiningOperator:kKCSAnd
+                                                                      onQueries:query, queryForCurrentType, nil];
+                    }
+                }
+            }
+        }
+        if (resultQuery){
+            resultQuery = [resultQuery queryByJoiningQuery:queryForCurrentType
+                                             usingOperator:kKCSOr];
+        }else{
+            resultQuery = queryForCurrentType;
+        }
+    }
+    
+    return resultQuery ? resultQuery : [KCSQuery query];
+}
 
 - (NSString *)regexForContaintSubstring:(NSString *)substring{
     
@@ -153,7 +222,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
                                          //Return to main thread for update UI
                                          dispatch_async(dispatch_get_main_queue(), ^{
                                              if (!errorOrNil) {
-                                                 self.typesOfReport = objectsOrNil;
+                                                 if (self.typesOfReport.count != objectsOrNil.count) {
+                                                     self.typesOfReport = objectsOrNil;
+                                                     self.currentQuery = [self getQueryFromFilterOptions:self.filterOptions];
+                                                 }
                                                  if (reportSuccess) reportSuccess(objectsOrNil);
                                              }else{
                                                  if (reportFailure) reportFailure(errorOrNil);

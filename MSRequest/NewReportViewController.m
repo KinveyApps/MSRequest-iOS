@@ -647,6 +647,8 @@ typedef enum {
 {
     CLLocation* location = [locations lastObject];
     
+    [DataHelper instance].currentLocation = location;
+    
     self.reportAnnotation = [[MapAnnotation alloc] initWithCoordinate:location.coordinate
                                                                 title:@"Report Location"];
     self.reportAnnotation.delegate = self;

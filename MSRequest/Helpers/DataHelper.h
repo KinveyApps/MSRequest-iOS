@@ -20,11 +20,11 @@
 #import "TypeOfReport.h"
 #import "Report.h"
 
-#define TYPE_FILTER_KEY             @"type"
-#define STATE_FILTER_KEY            @"state"
-#define LOCATION_RADIUS_FILTER_KEY  @"geoCoord"
-#define DESCRIPTION_FILTER_KEY      @"descriptionOfReport"
-#define ORIGINATOR_FILTER_KEY       @"originator"
+#define TYPE_FILTER_KEY                 @"type"
+#define STATE_FILTER_KEY                @"state"
+#define LOCATION_RADIUS_FILTER_KEY      @"geoCoord"
+#define DESCRIPTION_FILTER_KEY          @"descriptionOfReport"
+#define ORIGINATOR_FILTER_KEY           @"originator"
 
 //Define date format
 #define FORMAT_DATE                             @"dd/MM/yyyy"
@@ -36,7 +36,8 @@
 
 @property (strong, nonatomic) NSDateFormatter *formatter;
 @property (strong, nonatomic) NSArray *typesOfReport;
-@property (strong, nonatomic) NSDictionary *filterOptions;
+@property (strong, nonatomic) NSArray *filterOptions;
+@property (strong, nonatomic) CLLocation *currentLocation;
 
 - (void)loadTypesOfReportUseCache:(BOOL)useCache OnSuccess:(void (^)(NSArray *))reportSuccess onFailure:(void (^)(NSError *))reportFailure;
 

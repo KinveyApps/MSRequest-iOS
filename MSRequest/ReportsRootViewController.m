@@ -149,7 +149,17 @@
                                             [self.refreshControl endRefreshing];
                                         }
                                         
-                                    }onFailure:nil];
+                                    }onFailure:^(NSError *error){
+                                        if ([self.refreshControl isRefreshing]) {
+                                            [self.refreshControl endRefreshing];
+                                        }
+                                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                                            message:error.localizedDescription
+                                                                                           delegate:nil
+                                                                                  cancelButtonTitle:@"Cancel"
+                                                                                  otherButtonTitles:nil];
+                                        [alertView show];
+                                    }];
 }
 
 
@@ -249,6 +259,9 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
+    
+    [DataHelper instance].currentLocation = [locations lastObject];
+    [self dataLoadUseCache:YES];
     //reload the data to update locations
     [self.collectionView reloadData];
 }

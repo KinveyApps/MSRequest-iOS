@@ -284,6 +284,106 @@
             </objects>
             <point key="canvasLocation" x="1144" y="-650"/>
         </scene>
+        <!--Edit Home Sreen Table View Controller - Edit Home Screen-->
+        <scene sceneID="rS8-j6-dV1">
+            <objects>
+                <tableViewController id="OGP-p0-HJb" customClass="EditHomeSreenTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="3mq-Wh-0zl">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="kCellIdentifierTitleSubtitleWithButton" id="0E6-dA-M4Y" customClass="SubtitleWithButtonTableViewCell">
+                                <rect key="frame" x="0.0" y="119" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0E6-dA-M4Y" id="qP3-6J-o9N">
+                                    <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RJO-0X-CWG">
+                                            <rect key="frame" x="242" y="0.0" width="45" height="43"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="45" id="6Fk-BU-rib"/>
+                                            </constraints>
+                                            <color key="tintColor" red="0.82745105029999999" green="0.32549020649999999" blue="0.1411764771" alpha="1" colorSpace="deviceRGB"/>
+                                            <state key="normal" image="TrashButtonImage">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="rigthButtonPress:" destination="0E6-dA-M4Y" eventType="touchUpInside" id="pmd-vt-0LH"/>
+                                            </connections>
+                                        </button>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0vL-Sd-WA0">
+                                            <rect key="frame" x="20" y="5" width="214" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2tn-k6-w33">
+                                            <rect key="frame" x="20" y="25" width="214" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="2tn-k6-w33" secondAttribute="bottom" constant="2" id="5xl-PI-I4E"/>
+                                        <constraint firstAttribute="bottom" secondItem="RJO-0X-CWG" secondAttribute="bottom" id="79F-4c-425"/>
+                                        <constraint firstItem="0vL-Sd-WA0" firstAttribute="leading" secondItem="qP3-6J-o9N" secondAttribute="leading" constant="20" id="8UW-ei-GTt"/>
+                                        <constraint firstItem="2tn-k6-w33" firstAttribute="leading" secondItem="qP3-6J-o9N" secondAttribute="leading" constant="20" id="Elo-Fe-tEg"/>
+                                        <constraint firstItem="RJO-0X-CWG" firstAttribute="top" secondItem="qP3-6J-o9N" secondAttribute="top" id="KPS-VH-QHf"/>
+                                        <constraint firstItem="RJO-0X-CWG" firstAttribute="leading" secondItem="0vL-Sd-WA0" secondAttribute="trailing" constant="8" id="YD1-nu-McV"/>
+                                        <constraint firstItem="0vL-Sd-WA0" firstAttribute="width" secondItem="2tn-k6-w33" secondAttribute="width" id="sXq-km-URC"/>
+                                        <constraint firstItem="0vL-Sd-WA0" firstAttribute="top" secondItem="qP3-6J-o9N" secondAttribute="top" constant="5" id="sq2-0V-c9N"/>
+                                        <constraint firstAttribute="trailing" secondItem="RJO-0X-CWG" secondAttribute="trailing" id="ua2-SC-Jm4"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="rigthButton" destination="RJO-0X-CWG" id="F2q-Nw-Sjh"/>
+                                    <outlet property="subtitle" destination="2tn-k6-w33" id="Odb-KG-FyG"/>
+                                    <outlet property="title" destination="0vL-Sd-WA0" id="z7I-Is-hM3"/>
+                                    <segue destination="rsE-79-Yps" kind="push" identifier="kSegueIdentifierEditFilterOption" id="MmR-ld-qE8"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="OGP-p0-HJb" id="pQD-Ir-QjX"/>
+                            <outlet property="delegate" destination="OGP-p0-HJb" id="gmx-Ml-apk"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems>
+                        <barButtonItem title="Cancel" id="XYK-pa-heM">
+                            <connections>
+                                <action selector="cancelButtonPress:" destination="OGP-p0-HJb" id="2Wo-rB-Qio"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="iKD-A6-cJg"/>
+                        <barButtonItem title="Save" id="smn-Yh-D8D">
+                            <connections>
+                                <action selector="saveButtonPress:" destination="OGP-p0-HJb" id="lwC-ds-Kq5"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="Edit Home Screen" id="hrn-1G-SoQ">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="FV8-hJ-S6A">
+                            <connections>
+                                <segue destination="rsE-79-Yps" kind="push" identifier="kSegueIdentifierAddFilterOption" id="RNA-j5-WfE"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="g26-dc-US3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="698" y="953"/>
+        </scene>
         <!--Reports Filter View Controller - Options-->
         <scene sceneID="d7U-Xv-kIw">
             <objects>
@@ -375,7 +475,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BrC-XF-CVu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="225" y="949"/>
+            <point key="canvasLocation" x="1144" y="953"/>
         </scene>
         <!--Image Scroll View Controller-->
         <scene sceneID="bMG-aO-6EA">
@@ -803,7 +903,7 @@
                         <outlet property="collectionView" destination="MXm-af-Bkb" id="z4q-Ll-ujH"/>
                         <segue destination="vBw-b4-vpb" kind="push" identifier="kSegueIdentifierPushReportDetails" id="O7u-ec-PAI"/>
                         <segue destination="2" kind="push" identifier="kSegueIdentifierNewReport" id="QmS-aA-WQe"/>
-                        <segue destination="rsE-79-Yps" kind="push" identifier="kSegueIdentifierReportFilter" id="T56-4V-Nqa"/>
+                        <segue destination="6R6-Ge-YWO" kind="modal" identifier="kSegueIdentifierReportFilter" id="iUK-r0-8r2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RT8-Lo-gIi" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -904,9 +1004,43 @@
             </objects>
             <point key="canvasLocation" x="-296" y="976"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="yt6-83-I4V">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="6R6-Ge-YWO" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="slM-oK-ec0">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.82745105029999999" green="0.32549020649999999" blue="0.1411764771" alpha="0.69999999999999996" colorSpace="deviceRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="1" green="0.72941178080000002" blue="0.14901961389999999" alpha="1" colorSpace="deviceRGB"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="black" id="AkP-aQ-AwV">
+                        <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.82745105029999999" green="0.32549020649999999" blue="0.1411764771" alpha="0.69999999999999996" colorSpace="deviceRGB"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="OGP-p0-HJb" kind="relationship" relationship="rootViewController" id="zbn-li-prY"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tmX-fL-l0p" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="225" y="953"/>
+        </scene>
     </scenes>
     <resources>
         <image name="SettingButton" width="25" height="25"/>
+        <image name="TrashButtonImage" width="24" height="24"/>
         <image name="photo_icon.png" width="46" height="46"/>
     </resources>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -915,4 +1049,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="MmR-ld-qE8"/>
+    </inferredMetricsTieBreakers>
 </document>

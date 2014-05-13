@@ -30,5 +30,6 @@
 @interface ReportsFilterViewController : UITableViewController
 
 @property (weak, nonatomic) id <ReportsFilterViewControllerDelegate> delegate;
+@property (nonatomic) NSUInteger indexOfFilter;
 
 @end

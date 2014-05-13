@@ -54,7 +54,9 @@ typedef enum {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.filterOptions = [[DataHelper instance].filterOptions mutableCopy];
+    if ([DataHelper instance].filterOptions.count > self.indexOfFilter){
+        self.filterOptions = [((NSDictionary *)[[DataHelper instance].filterOptions objectAtIndex:self.indexOfFilter]) mutableCopy];
+    }
     if (self.filterOptions[TYPE_FILTER_KEY]) {
         for (TypeOfReport *type in [DataHelper instance].typesOfReport) {
             if ([type.entityId isEqualToString:self.filterOptions[TYPE_FILTER_KEY]]) {
@@ -152,7 +154,7 @@ typedef enum {
         case LocationTableViewSectionIndex:{
             float currentRadiusDistance = [(NSNumber *)self.filterOptions[LOCATION_RADIUS_FILTER_KEY] floatValue];
             return [self textFieldCellForTableView:tableView
-                                   withCurrentText:currentRadiusDistance ? [NSString stringWithFormat:@"%.000f", currentRadiusDistance] : @""
+                                   withCurrentText:currentRadiusDistance ? [NSString stringWithFormat:@"%.4f", currentRadiusDistance] : @""
                                     andPlaceholder:LOCATION_RADIUS_PLACEHOLDER];
         }break;
             
@@ -315,7 +317,7 @@ typedef enum {
     NSIndexPath *indexPathEndEditingCell = [self.tableView indexPathForCell:sender];
     switch (indexPathEndEditingCell.section) {
         case LocationTableViewSectionIndex:{
-            if (sender.textField.text.length) {
+            if (!sender.textField.text.length) {
                 [self.filterOptions removeObjectForKey:LOCATION_RADIUS_FILTER_KEY];
             }else{
                 self.filterOptions[LOCATION_RADIUS_FILTER_KEY] = [NSNumber numberWithFloat:[sender.textField.text floatValue]];
@@ -323,7 +325,7 @@ typedef enum {
         }break;
             
         case DescriptionTableViewSectionIndex:{
-            if (sender.textField.text.length) {
+            if (!sender.textField.text.length) {
                 [self.filterOptions removeObjectForKey:DESCRIPTION_FILTER_KEY];
             }else{
                 self.filterOptions[DESCRIPTION_FILTER_KEY] = sender.textField.text;
@@ -332,7 +334,7 @@ typedef enum {
             
         default:{
             NSString *additionalAttributeName = self.type.additionalAttributes[indexPathEndEditingCell.section - FirstAdditionalAttributeTableViewSectionIndex];
-            if (sender.textField.text.length) {
+            if (!sender.textField.text.length) {
                 [self.filterOptions removeObjectForKey:additionalAttributeName];
             }else{
                 self.filterOptions[additionalAttributeName] = sender.textField.text;
@@ -346,7 +348,13 @@ typedef enum {
 #pragma mark - Action
 
 - (IBAction)doneButtonPressed:(id)sender {
-    [DataHelper instance].filterOptions = self.filterOptions;
+    NSMutableArray *filterOprionsArray = [[DataHelper instance].filterOptions mutableCopy];
+    if (filterOprionsArray.count > self.indexOfFilter) {
+        filterOprionsArray[self.indexOfFilter] = self.filterOptions;
+    }else{
+        [filterOprionsArray addObject:self.filterOptions];
+    }
+    [DataHelper instance].filterOptions = [filterOprionsArray copy];
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)resetButtonPressed:(UIBarButtonItem *)sender {

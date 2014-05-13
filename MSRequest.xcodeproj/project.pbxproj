@@ -68,6 +68,8 @@
 		1BC67EF319192B4E009E0617 /* UIWindow+AHKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC67EEF19192B4E009E0617 /* UIWindow+AHKAdditions.m */; };
 		1BC67EF619192CC6009E0617 /* KinveyKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BC67EF519192CC6009E0617 /* KinveyKit.framework */; };
 		1BC67EFA191931F5009E0617 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BC67EF9191931F5009E0617 /* Images.xcassets */; };
+		1BC67F061920A4AA009E0617 /* SubtitleWithButtonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC67F051920A4AA009E0617 /* SubtitleWithButtonTableViewCell.m */; };
+		1BC67F0C1920AA74009E0617 /* EditHomeSreenTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC67F0B1920AA74009E0617 /* EditHomeSreenTableViewController.m */; };
 		1BEAAEDC18FD280E003AE701 /* RootCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BEAAEDB18FD280E003AE701 /* RootCollectionViewCell.m */; };
 		1BEAAEE018FD39E7003AE701 /* KinveyImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BEAAEDE18FD39E7003AE701 /* KinveyImageView.m */; };
 		1BEAAEE118FD39E7003AE701 /* KinveyImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1BEAAEDF18FD39E7003AE701 /* KinveyImageView.xib */; };
@@ -191,6 +193,10 @@
 		1BC67EEF19192B4E009E0617 /* UIWindow+AHKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+AHKAdditions.m"; sourceTree = "<group>"; };
 		1BC67EF519192CC6009E0617 /* KinveyKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KinveyKit.framework; sourceTree = "<group>"; };
 		1BC67EF9191931F5009E0617 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = MSRequest/Images.xcassets; sourceTree = SOURCE_ROOT; };
+		1BC67F041920A4AA009E0617 /* SubtitleWithButtonTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SubtitleWithButtonTableViewCell.h; path = MSRequest/TableViewCells/SubtitleWithButtonTableViewCell.h; sourceTree = SOURCE_ROOT; };
+		1BC67F051920A4AA009E0617 /* SubtitleWithButtonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SubtitleWithButtonTableViewCell.m; path = MSRequest/TableViewCells/SubtitleWithButtonTableViewCell.m; sourceTree = SOURCE_ROOT; };
+		1BC67F0A1920AA74009E0617 /* EditHomeSreenTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EditHomeSreenTableViewController.h; path = MSRequest/EditHomeSreenTableViewController.h; sourceTree = SOURCE_ROOT; };
+		1BC67F0B1920AA74009E0617 /* EditHomeSreenTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EditHomeSreenTableViewController.m; path = MSRequest/EditHomeSreenTableViewController.m; sourceTree = SOURCE_ROOT; };
 		1BEAAEDA18FD280E003AE701 /* RootCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootCollectionViewCell.h; path = MSRequest/CollectionViewCells/RootCollectionViewCell.h; sourceTree = SOURCE_ROOT; };
 		1BEAAEDB18FD280E003AE701 /* RootCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootCollectionViewCell.m; path = MSRequest/CollectionViewCells/RootCollectionViewCell.m; sourceTree = SOURCE_ROOT; };
 		1BEAAEDD18FD39E7003AE701 /* KinveyImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KinveyImageView.h; path = MSRequest/Views/KinveyImageView.h; sourceTree = SOURCE_ROOT; };
@@ -263,6 +269,8 @@
 				1B3743F918F7FFE500C32AD6 /* LabelTableViewCell.m */,
 				1B3743FB18F800F600C32AD6 /* TextFieldTableViewCell.h */,
 				1B3743FC18F800F600C32AD6 /* TextFieldTableViewCell.m */,
+				1BC67F041920A4AA009E0617 /* SubtitleWithButtonTableViewCell.h */,
+				1BC67F051920A4AA009E0617 /* SubtitleWithButtonTableViewCell.m */,
 			);
 			name = TableViewCells;
 			sourceTree = "<group>";
@@ -451,6 +459,8 @@
 				1B76CBFA18F43A0B004713E1 /* ReportsFilterViewController.m */,
 				1B76CBFC18F43A14004713E1 /* ReportsRootViewController.h */,
 				1B76CBFD18F43A14004713E1 /* ReportsRootViewController.m */,
+				1BC67F0A1920AA74009E0617 /* EditHomeSreenTableViewController.h */,
+				1BC67F0B1920AA74009E0617 /* EditHomeSreenTableViewController.m */,
 			);
 			name = "View Controllers";
 			path = ../Potholes;
@@ -626,6 +636,7 @@
 				1BC67EF119192B4E009E0617 /* AHKActionSheetViewController.m in Sources */,
 				1BEAAEDC18FD280E003AE701 /* RootCollectionViewCell.m in Sources */,
 				1B76CC1618F43A74004713E1 /* UIImage+RoundedCorner.m in Sources */,
+				1BC67F061920A4AA009E0617 /* SubtitleWithButtonTableViewCell.m in Sources */,
 				1B3743FD18F800F600C32AD6 /* TextFieldTableViewCell.m in Sources */,
 				1B76CBEF18F439CC004713E1 /* MapViewController.m in Sources */,
 				1B76CC5C18F441FB004713E1 /* DejalActivityView.m in Sources */,
@@ -647,6 +658,7 @@
 				1B3743EF18F599A400C32AD6 /* AuthenticationHelper.m in Sources */,
 				1B3743FA18F7FFE500C32AD6 /* LabelTableViewCell.m in Sources */,
 				1B76CC1B18F43AA8004713E1 /* main.m in Sources */,
+				1BC67F0C1920AA74009E0617 /* EditHomeSreenTableViewController.m in Sources */,
 				1B76CBEC18F439BA004713E1 /* ImageScrollViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
