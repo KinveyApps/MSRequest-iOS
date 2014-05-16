@@ -70,6 +70,7 @@
 		1BC67EFA191931F5009E0617 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BC67EF9191931F5009E0617 /* Images.xcassets */; };
 		1BC67F061920A4AA009E0617 /* SubtitleWithButtonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC67F051920A4AA009E0617 /* SubtitleWithButtonTableViewCell.m */; };
 		1BC67F0C1920AA74009E0617 /* EditHomeSreenTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC67F0B1920AA74009E0617 /* EditHomeSreenTableViewController.m */; };
+		1BCA1D0C1925F1E900FE7353 /* NotificationSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BCA1D0B1925F1E900FE7353 /* NotificationSettingsTableViewController.m */; };
 		1BEAAEDC18FD280E003AE701 /* RootCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BEAAEDB18FD280E003AE701 /* RootCollectionViewCell.m */; };
 		1BEAAEE018FD39E7003AE701 /* KinveyImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BEAAEDE18FD39E7003AE701 /* KinveyImageView.m */; };
 		1BEAAEE118FD39E7003AE701 /* KinveyImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1BEAAEDF18FD39E7003AE701 /* KinveyImageView.xib */; };
@@ -197,6 +198,8 @@
 		1BC67F051920A4AA009E0617 /* SubtitleWithButtonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SubtitleWithButtonTableViewCell.m; path = MSRequest/TableViewCells/SubtitleWithButtonTableViewCell.m; sourceTree = SOURCE_ROOT; };
 		1BC67F0A1920AA74009E0617 /* EditHomeSreenTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EditHomeSreenTableViewController.h; path = MSRequest/EditHomeSreenTableViewController.h; sourceTree = SOURCE_ROOT; };
 		1BC67F0B1920AA74009E0617 /* EditHomeSreenTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EditHomeSreenTableViewController.m; path = MSRequest/EditHomeSreenTableViewController.m; sourceTree = SOURCE_ROOT; };
+		1BCA1D0A1925F1E900FE7353 /* NotificationSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationSettingsTableViewController.h; path = MSRequest/NotificationSettingsTableViewController.h; sourceTree = SOURCE_ROOT; };
+		1BCA1D0B1925F1E900FE7353 /* NotificationSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationSettingsTableViewController.m; path = MSRequest/NotificationSettingsTableViewController.m; sourceTree = SOURCE_ROOT; };
 		1BEAAEDA18FD280E003AE701 /* RootCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootCollectionViewCell.h; path = MSRequest/CollectionViewCells/RootCollectionViewCell.h; sourceTree = SOURCE_ROOT; };
 		1BEAAEDB18FD280E003AE701 /* RootCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootCollectionViewCell.m; path = MSRequest/CollectionViewCells/RootCollectionViewCell.m; sourceTree = SOURCE_ROOT; };
 		1BEAAEDD18FD39E7003AE701 /* KinveyImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KinveyImageView.h; path = MSRequest/Views/KinveyImageView.h; sourceTree = SOURCE_ROOT; };
@@ -461,6 +464,8 @@
 				1B76CBFD18F43A14004713E1 /* ReportsRootViewController.m */,
 				1BC67F0A1920AA74009E0617 /* EditHomeSreenTableViewController.h */,
 				1BC67F0B1920AA74009E0617 /* EditHomeSreenTableViewController.m */,
+				1BCA1D0A1925F1E900FE7353 /* NotificationSettingsTableViewController.h */,
+				1BCA1D0B1925F1E900FE7353 /* NotificationSettingsTableViewController.m */,
 			);
 			name = "View Controllers";
 			path = ../Potholes;
@@ -656,6 +661,7 @@
 				1B76CBE118F4398D004713E1 /* ActivityViewController.m in Sources */,
 				1B76CC1518F43A74004713E1 /* UIImage+Resize.m in Sources */,
 				1B3743EF18F599A400C32AD6 /* AuthenticationHelper.m in Sources */,
+				1BCA1D0C1925F1E900FE7353 /* NotificationSettingsTableViewController.m in Sources */,
 				1B3743FA18F7FFE500C32AD6 /* LabelTableViewCell.m in Sources */,
 				1B76CC1B18F43AA8004713E1 /* main.m in Sources */,
 				1BC67F0C1920AA74009E0617 /* EditHomeSreenTableViewController.m in Sources */,

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="qza-v7-L5F">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="qza-v7-L5F">
     <dependencies>
         <deployment version="1536" defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
@@ -904,6 +904,7 @@
                         <segue destination="vBw-b4-vpb" kind="push" identifier="kSegueIdentifierPushReportDetails" id="O7u-ec-PAI"/>
                         <segue destination="2" kind="push" identifier="kSegueIdentifierNewReport" id="QmS-aA-WQe"/>
                         <segue destination="6R6-Ge-YWO" kind="modal" identifier="kSegueIdentifierReportFilter" id="iUK-r0-8r2"/>
+                        <segue destination="xuU-Eo-nyl" kind="modal" identifier="kSegueIdentifierNotificationSettings" id="Chn-57-8UX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RT8-Lo-gIi" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1003,6 +1004,75 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Z5-9p-Ukm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-296" y="976"/>
+        </scene>
+        <!--Notification Settings Table View Controller - Notification Settings-->
+        <scene sceneID="w5O-7B-u6e">
+            <objects>
+                <tableViewController id="2Z9-vN-OeU" customClass="NotificationSettingsTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="yZz-hm-mvm">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="kCellIdentifierBasic" textLabel="ga9-lb-7NR" style="IBUITableViewCellStyleDefault" id="3T8-Nf-2Mh">
+                                <rect key="frame" x="0.0" y="119" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3T8-Nf-2Mh" id="VEg-s3-bdz">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ga9-lb-7NR">
+                                            <rect key="frame" x="15" y="0.0" width="290" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="2Z9-vN-OeU" id="SWL-fN-Yqc"/>
+                            <outlet property="delegate" destination="2Z9-vN-OeU" id="eBF-Sn-1oz"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Notification Settings" id="HNE-1z-bVG">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="kFQ-nk-RcK">
+                            <connections>
+                                <action selector="cancelPress:" destination="2Z9-vN-OeU" id="Hea-I1-HMw"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="mxI-Rm-aVd">
+                            <connections>
+                                <action selector="savePress:" destination="2Z9-vN-OeU" id="AS7-kV-fIE"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yi1-UM-1nt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="698" y="1657"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Lz2-zO-gdQ">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="xuU-Eo-nyl" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="F9p-Mh-HSm">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.82745105029999999" green="0.32549020649999999" blue="0.1411764771" alpha="0.69999999999999996" colorSpace="deviceRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="1" green="0.72941178080000002" blue="0.14901961389999999" alpha="1" colorSpace="deviceRGB"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="2Z9-vN-OeU" kind="relationship" relationship="rootViewController" id="IUU-eq-62w"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7wZ-iA-LC3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="225" y="1657"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="yt6-83-I4V">

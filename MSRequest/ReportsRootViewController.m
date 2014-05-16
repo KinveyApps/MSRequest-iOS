@@ -243,6 +243,13 @@
                                 [self performSegueWithIdentifier:@"kSegueIdentifierReportFilter"
                                                           sender:self];
                             }];
+    [actionSheet addButtonWithTitle:@"Notification Settings"
+                              image:[UIImage imageNamed:@"NotificationButtonImage"]
+                               type:AHKActionSheetButtonTypeDefault
+                            handler:^(AHKActionSheet *actionSheet){
+                                [self performSegueWithIdentifier:@"kSegueIdentifierNotificationSettings"
+                                                          sender:self];
+                            }];
     [actionSheet addButtonWithTitle:@"Sing Out"
                               image:[UIImage imageNamed:@"SingOutButtonImage"]
                                type:AHKActionSheetButtonTypeDestructive
