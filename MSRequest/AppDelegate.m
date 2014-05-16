@@ -45,4 +45,35 @@
     return YES;
 }
 
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
+    
+    //Kinvey: Rigstration on push service
+    [[KCSPush sharedPush] application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken completionBlock:^(BOOL success, NSError *error) {
+    }];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
+    
+    //Kinvey: Get remote notification
+    [[KCSPush sharedPush] application:application didReceiveRemoteNotification:userInfo];
+}
+
+- (void) application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
+    
+    //Kinvey: Fail to register for remote notification
+    [[KCSPush sharedPush] application:application didFailToRegisterForRemoteNotificationsWithError:error];
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application{
+    
+    //Kinvey: register for remote notification
+    [[KCSPush sharedPush] registerForRemoteNotifications];
+}
+
+- (void)applicationWillTerminate:(UIApplication *)application{
+    
+    //Kinvey: Clean-up Push Service
+    [[KCSPush sharedPush] onUnloadHelper];
+}
+
 @end
