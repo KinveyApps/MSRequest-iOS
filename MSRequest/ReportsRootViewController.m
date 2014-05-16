@@ -243,7 +243,7 @@
                                 [self performSegueWithIdentifier:@"kSegueIdentifierReportFilter"
                                                           sender:self];
                             }];
-    [actionSheet addButtonWithTitle:@"Sing out"
+    [actionSheet addButtonWithTitle:@"Sing Out"
                               image:[UIImage imageNamed:@"SingOutButtonImage"]
                                type:AHKActionSheetButtonTypeDestructive
                             handler:^(AHKActionSheet *actionSheet){
