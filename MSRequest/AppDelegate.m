@@ -42,6 +42,8 @@
     
     _rvc = (ReportsRootViewController*)[(UINavigationController*)self.window.rootViewController topViewController];
 
+    [self startListening];
+
     return YES;
 }
 
@@ -74,6 +76,31 @@
     
     //Kinvey: Clean-up Push Service
     [[KCSPush sharedPush] onUnloadHelper];
+}
+
+- (void)startListening{
+    
+    //Kinvey: Listen notification about kinvey network activity
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(show)
+                                                 name:KCSNetworkConnectionDidStart
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(hide)
+                                                 name:KCSNetworkConnectionDidEnd
+                                               object:nil];
+}
+
+- (void) show{
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+}
+
+- (void) hide{
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+}
+
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end
