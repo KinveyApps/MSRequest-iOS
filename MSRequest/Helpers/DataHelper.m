@@ -424,15 +424,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
 
 - (NSArray *)allUserInfoKey{
     
-//    //Return attribute user key which use in app
-//    return @[USER_INFO_KEY_CONTACT,
-//             USER_INFO_KEY_COMPANY,
-//             USER_INFO_KEY_ACCOUNT_NUMBER,
-//             USER_INFO_KEY_PHONE,
-//             USER_INFO_KEY_PUSH_NOTIFICATION_ENABLE,
-//             USER_INFO_KEY_EMAIL_CONFIRMATION_ENABLE,
-//             USER_INFO_KEY_EMAIL];
-    return @[];
+    //Return attribute user key which use in app
+    return @[REPORT_TYPE_IDS_FOR_NOTIFICATION];
+    
 }
 
 - (NSArray *)mainFilterKey{

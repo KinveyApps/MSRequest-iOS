@@ -20,11 +20,15 @@
 #import "TypeOfReport.h"
 #import "Report.h"
 
+//Main Filter Options Key
 #define TYPE_FILTER_KEY                 @"type"
 #define STATE_FILTER_KEY                @"state"
 #define LOCATION_RADIUS_FILTER_KEY      @"geoCoord"
 #define DESCRIPTION_FILTER_KEY          @"descriptionOfReport"
 #define ORIGINATOR_FILTER_KEY           @"originator"
+
+//User Info User Key
+#define REPORT_TYPE_IDS_FOR_NOTIFICATION    @"ArrayIDforPushNotification"
 
 //Define date format
 #define FORMAT_DATE                             @"dd/MM/yyyy"
@@ -46,6 +50,9 @@
 
 - (void)loadImageByID:(NSString *)imageID OnSuccess:(void (^)(UIImage *))reportSuccess onFailure:(void(^)(NSError *))reportFailure;
 - (void)saveImage:(UIImage *)image OnSuccess:(void (^)(NSString *))reportSuccess onFailure:(void(^)(NSError *))reportFailure;
+
+- (void)saveUserWithInfo:(NSDictionary *)userInfo OnSuccess:(void (^)(NSArray *))reportSuccess onFailure:(void (^)(NSError *))reportFailure;
+- (void)loadUserOnSuccess:(void (^)(NSArray *))reportSuccess onFailure:(void (^)(NSError *))reportFailure;
 
 - (NSArray *)mainFilterKey;
 
