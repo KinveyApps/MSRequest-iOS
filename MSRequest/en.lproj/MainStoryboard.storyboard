@@ -923,15 +923,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BackgroundClearImage" translatesAutoresizingMaskIntoConstraints="NO" id="sfw-fF-B9H">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="CKU-hP-Wdq">
                                 <rect key="frame" x="142" y="266" width="37" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
                         </subviews>
-                        <color key="backgroundColor" red="0.80784320831298828" green="0.35686275362968445" blue="0.24705883860588074" alpha="1" colorSpace="deviceRGB"/>
+                        <color key="backgroundColor" red="0.76470588235294112" green="0.38431372549019605" blue="0.26666666666666666" alpha="1" colorSpace="deviceRGB"/>
                         <constraints>
+                            <constraint firstItem="sfw-fF-B9H" firstAttribute="leading" secondItem="dna-ZY-a8H" secondAttribute="leading" id="1f4-0a-EZb"/>
+                            <constraint firstItem="sfw-fF-B9H" firstAttribute="top" secondItem="dna-ZY-a8H" secondAttribute="top" id="9K7-ZO-jh3"/>
                             <constraint firstAttribute="centerX" secondItem="CKU-hP-Wdq" secondAttribute="centerX" id="Hkn-d2-beL"/>
                             <constraint firstAttribute="centerY" secondItem="CKU-hP-Wdq" secondAttribute="centerY" id="ICh-32-elw"/>
+                            <constraint firstItem="mN3-od-EZS" firstAttribute="top" secondItem="sfw-fF-B9H" secondAttribute="bottom" id="Jm6-bq-alo"/>
+                            <constraint firstAttribute="trailing" secondItem="sfw-fF-B9H" secondAttribute="trailing" id="vSB-mW-XDR"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="id0-Q4-4oU"/>
@@ -956,6 +964,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BackgroundClearImage" translatesAutoresizingMaskIntoConstraints="NO" id="OhV-oa-H2f">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="user name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qEL-lX-Cc4">
                                 <rect key="frame" x="20" y="70" width="280" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -991,8 +1003,14 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.82745105029999999" green="0.32549020649999999" blue="0.1411764771" alpha="1" colorSpace="deviceRGB"/>
+                        <color key="backgroundColor" red="0.82745105029999999" green="0.32549020649999999" blue="0.1411764771" alpha="0.69999999999999996" colorSpace="deviceRGB"/>
                         <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="OhV-oa-H2f" firstAttribute="top" secondItem="csY-z5-TIv" secondAttribute="top" id="U9k-Tw-FJq"/>
+                            <constraint firstItem="UvA-mg-Glx" firstAttribute="top" secondItem="OhV-oa-H2f" secondAttribute="bottom" id="UvC-tT-fD1"/>
+                            <constraint firstAttribute="trailing" secondItem="OhV-oa-H2f" secondAttribute="trailing" id="swh-EJ-LLx"/>
+                            <constraint firstItem="OhV-oa-H2f" firstAttribute="leading" secondItem="csY-z5-TIv" secondAttribute="leading" id="yCh-8s-QAK"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="loginButton" destination="o0g-2q-uGS" id="Dbi-bP-ye6"/>
@@ -1109,6 +1127,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="BackgroundClearImage" width="320" height="568"/>
         <image name="SettingButton" width="25" height="25"/>
         <image name="TrashButtonImage" width="24" height="24"/>
         <image name="photo_icon.png" width="46" height="46"/>
