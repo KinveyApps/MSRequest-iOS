@@ -320,7 +320,7 @@ typedef enum {
             if (!sender.textField.text.length) {
                 [self.filterOptions removeObjectForKey:LOCATION_RADIUS_FILTER_KEY];
             }else{
-                self.filterOptions[LOCATION_RADIUS_FILTER_KEY] = [NSNumber numberWithFloat:[sender.textField.text floatValue]];
+                self.filterOptions[LOCATION_RADIUS_FILTER_KEY] = [NSNumber numberWithDouble:[sender.textField.text doubleValue]];
             }
         }break;
             
@@ -348,6 +348,9 @@ typedef enum {
 #pragma mark - Action
 
 - (IBAction)doneButtonPressed:(id)sender {
+    if ([self.currentEditingTextFieldCell.textField isFirstResponder]) {
+        [self.currentEditingTextFieldCell.textField resignFirstResponder];
+    }
     NSMutableArray *filterOprionsArray = [[DataHelper instance].filterOptions mutableCopy];
     if (filterOprionsArray.count > self.indexOfFilter) {
         filterOprionsArray[self.indexOfFilter] = self.filterOptions;
