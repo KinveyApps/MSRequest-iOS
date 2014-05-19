@@ -157,14 +157,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
         }
         if (filterType[LOCATION_RADIUS_FILTER_KEY] && self.currentLocation) {
 
-//            float radius = [(NSNumber *)filterType[LOCATION_RADIUS_FILTER_KEY] floatValue];
-//            NSArray *point1 = @[@(self.currentLocation.coordinate.longitude - radius / 2),@(self.currentLocation.coordinate.latitude - radius / 2)];
-//            NSArray *point2 = @[@(self.currentLocation.coordinate.longitude + radius / 2),@(self.currentLocation.coordinate.latitude - radius / 2)];
-//            KCSQuery *geoQuery = [KCSQuery queryOnField:KCSEntityKeyGeolocation
-//                                       usingConditional:kKCSWithinBox
-//                                               forValue:@[point1, point2]];
-//            queryForCurrentType = [KCSQuery queryForJoiningOperator:kKCSAnd
-//                                                          onQueries:geoQuery, queryForCurrentType, nil];
+            NSNumber *longitude = [NSNumber numberWithDouble:self.currentLocation.coordinate.longitude];
+            NSNumber *latitude = [NSNumber numberWithDouble:self.currentLocation.coordinate.latitude];
+            KCSQuery *geoQuery = [KCSQuery queryOnField:KCSEntityKeyGeolocation
+                       usingConditionalsForValues:
+                            kKCSNearSphere, @[longitude, latitude],
+                            kKCSMaxDistance, filterType[LOCATION_RADIUS_FILTER_KEY], nil];
+            queryForCurrentType = [KCSQuery queryForJoiningOperator:kKCSAnd
+                                                          onQueries:geoQuery, queryForCurrentType, nil];
         }
         if (filterType[DESCRIPTION_FILTER_KEY]) {
             KCSQuery *decriptionQuery = [KCSQuery queryOnField:@"descriptionOfReport"
