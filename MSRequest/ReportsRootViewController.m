@@ -26,6 +26,7 @@
 #import "RootCollectionViewCell.h"
 #import "AppDelegate.h"
 #import "AHKActionSheet.h"
+#import "DejalActivityView.h"
 
 #define MILES_PER_METER     0.000621371192
 
@@ -254,8 +255,27 @@
                               image:[UIImage imageNamed:@"SingOutButtonImage"]
                                type:AHKActionSheetButtonTypeDestructive
                             handler:^(AHKActionSheet *actionSheet){
-                                [[KCSUser activeUser] logout];
-                                [self.navigationController popViewControllerAnimated:YES];
+                                
+                                [DejalBezelActivityView activityViewForView:self.view];
+                                
+                                //Kinvey: remove device token from user info
+                                [[KCSPush sharedPush] unRegisterDeviceToken:^(BOOL success, NSError* error){
+                                    
+                                    //Return to main thread for update UI
+                                    dispatch_async(dispatch_get_main_queue(), ^{
+                                        [DejalBezelActivityView removeView];
+                                        if (!error) {
+                                            [[KCSUser activeUser] logout];
+                                            [self.navigationController popViewControllerAnimated:YES];
+                                        }else{
+                                            [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                                        message:error.localizedDescription
+                                                                       delegate:nil
+                                                              cancelButtonTitle:@"Cancel"
+                                                              otherButtonTitles:nil] show];
+                                        }
+                                    });
+                                }];
                             }];
     
     [actionSheet show];

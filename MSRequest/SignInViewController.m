@@ -59,6 +59,9 @@
 												  [DejalActivityView removeView];
                                                   
                                                   [self dismissViewControllerAnimated:YES completion:nil];
+                                                  
+                                                  //Start push service
+                                                  [KCSPush registerForPush];
 
 											  }
 											  onFailure:^(NSError *error) {
@@ -86,6 +89,9 @@
 												 [DejalActivityView removeView];
                                                  
                                                  [self dismissViewControllerAnimated:YES completion:nil];
+                                                 
+                                                 //Start push service
+                                                 [KCSPush registerForPush];
                                                  
 											 }
 											 onFailure:^(NSError *error) {
