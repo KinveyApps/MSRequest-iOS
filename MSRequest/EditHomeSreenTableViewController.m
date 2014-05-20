@@ -120,7 +120,7 @@
         if (result.length){
             [result appendString:@", "];
         }
-        [result appendString:[NSString stringWithFormat:@"near %.4fkm", [(NSNumber *)options[LOCATION_RADIUS_FILTER_KEY] floatValue]]];
+        [result appendString:[NSString stringWithFormat:@"near %.2fkm", [(NSNumber *)options[LOCATION_RADIUS_FILTER_KEY] floatValue]]];
     }
     if (currentType) {
         for (NSInteger i = 0; i < currentType.additionalAttributes.count; i++) {

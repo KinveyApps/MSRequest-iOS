@@ -154,7 +154,7 @@ typedef enum {
         case LocationTableViewSectionIndex:{
             float currentRadiusDistance = [(NSNumber *)self.filterOptions[LOCATION_RADIUS_FILTER_KEY] floatValue];
             return [self textFieldCellForTableView:tableView
-                                   withCurrentText:currentRadiusDistance ? [NSString stringWithFormat:@"%.4f", currentRadiusDistance] : @""
+                                   withCurrentText:currentRadiusDistance ? [NSString stringWithFormat:@"%.2f", currentRadiusDistance] : @""
                                     andPlaceholder:LOCATION_RADIUS_PLACEHOLDER];
         }break;
             
