@@ -251,8 +251,8 @@
                                 [self performSegueWithIdentifier:@"kSegueIdentifierNotificationSettings"
                                                           sender:self];
                             }];
-    [actionSheet addButtonWithTitle:@"Sing Out"
-                              image:[UIImage imageNamed:@"SingOutButtonImage"]
+    [actionSheet addButtonWithTitle:@"Sign Out"
+                              image:[UIImage imageNamed:@"SignOutButtonImage"]
                                type:AHKActionSheetButtonTypeDestructive
                             handler:^(AHKActionSheet *actionSheet){
                                 

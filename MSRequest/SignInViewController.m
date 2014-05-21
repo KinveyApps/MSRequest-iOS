@@ -51,7 +51,7 @@
     
 	[DejalBezelActivityView activityViewForView:self.view.window];
     
-    //Sing up new Kinvey user 
+    //Sign up new Kinvey user 
 	[[AuthenticationHelper instance] signUpWithUsername:self.usernameField.text
                                                password:self.passwordField.text
 											  onSuccess:^{
