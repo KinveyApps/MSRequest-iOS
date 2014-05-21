@@ -159,10 +159,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
 
             NSNumber *longitude = [NSNumber numberWithDouble:self.currentLocation.coordinate.longitude];
             NSNumber *latitude = [NSNumber numberWithDouble:self.currentLocation.coordinate.latitude];
+            NSNumber *distance = [NSNumber numberWithFloat:[(NSNumber *)filterType[LOCATION_RADIUS_FILTER_KEY] floatValue] * 0.00015719741];
             KCSQuery *geoQuery = [KCSQuery queryOnField:KCSEntityKeyGeolocation
                        usingConditionalsForValues:
                             kKCSNearSphere, @[longitude, latitude],
-                            kKCSMaxDistance, filterType[LOCATION_RADIUS_FILTER_KEY], nil];
+                            kKCSMaxDistance, distance, nil];
             queryForCurrentType = [KCSQuery queryForJoiningOperator:kKCSAnd
                                                           onQueries:geoQuery, queryForCurrentType, nil];
         }

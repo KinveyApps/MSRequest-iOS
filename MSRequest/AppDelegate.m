@@ -43,7 +43,10 @@
     _rvc = (ReportsRootViewController*)[(UINavigationController*)self.window.rootViewController topViewController];
 
     [self startListening];
-
+    
+    //Start push service
+    [KCSPush registerForPush];
+    
     return YES;
 }
 
