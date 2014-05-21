@@ -21,10 +21,20 @@
 #import "MapViewController.h"
 #import "DescriptionEditorViewController.h"
 
+@class NewReportViewController;
+
+@protocol NewReportViewControllerDelegate <NSObject>
+
+- (void)submitFinish:(NewReportViewController *)sender;
+
+@end
+
 @interface NewReportViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, 
 PickerTableViewControllerDelegate, MapViewControllerDelegate, DescriptionEditorViewControllerDelegate, 
 UITextFieldDelegate, MapAnnotationDelegate>
 
 @property (strong, nonatomic) Report *report;
+
+@property (nonatomic, weak) id<NewReportViewControllerDelegate> delegate;
 
 @end

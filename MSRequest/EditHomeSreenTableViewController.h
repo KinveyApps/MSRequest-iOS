@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class EditHomeSreenTableViewController;
+
+@protocol EditHomeSreenTableViewControllerDelegate <NSObject>
+
+- (void)savePress:(EditHomeSreenTableViewController *)sender;
+
+@end
+
 @interface EditHomeSreenTableViewController : UITableViewController
+
+@property (nonatomic, weak) id<EditHomeSreenTableViewControllerDelegate> delegate;
 
 @end

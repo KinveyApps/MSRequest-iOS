@@ -351,6 +351,7 @@ typedef enum {
                                                                                       OnSuccess:^(NSArray *reports){
                                                                                           
                                                                                           [DejalBezelActivityView removeView];
+                                                                                          [self.delegate submitFinish:self];
                                                                                           [self.navigationController popViewControllerAnimated:YES];
                                                                                           
                                                                                       }onFailure:^(NSError *error){

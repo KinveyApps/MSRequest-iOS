@@ -11,6 +11,7 @@
 #import "TypeOfReport.h"
 #import "SubtitleWithButtonTableViewCell.h"
 #import "ReportsFilterViewController.h"
+#import "ReportsRootViewController.h"
 
 @interface EditHomeSreenTableViewController ()<SubtitleWithButtonTableViewCellDelegate>
 
@@ -168,12 +169,12 @@
 - (IBAction)cancelButtonPress:(UIBarButtonItem *)sender {
     
     [DataHelper instance].filterOptions = self.oldFilterOptions;
-    
     [self dismissViewControllerAnimated:YES
                              completion:nil];
 }
 - (IBAction)saveButtonPress:(UIBarButtonItem *)sender {
     
+    [self.delegate savePress:self];
     [self dismissViewControllerAnimated:YES
                              completion:nil];
 }

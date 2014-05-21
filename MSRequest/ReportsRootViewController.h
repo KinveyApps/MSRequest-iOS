@@ -28,6 +28,6 @@
 
 - (void)showDetailViewForReport:(Report *)report;
 
-- (IBAction)logout:(id)sender;
+- (void)refresh;
 
 @end

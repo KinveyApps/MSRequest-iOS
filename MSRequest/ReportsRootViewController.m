@@ -27,10 +27,12 @@
 #import "AppDelegate.h"
 #import "AHKActionSheet.h"
 #import "DejalActivityView.h"
+#import "EditHomeSreenTableViewController.h"
+#import "NewReportViewController.h"
 
 #define MILES_PER_METER     0.000621371192
 
-@interface ReportsRootViewController () <CLLocationManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
+@interface ReportsRootViewController () <CLLocationManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, EditHomeSreenTableViewControllerDelegate, NewReportViewControllerDelegate>
 
 @property (nonatomic, retain) CLLocationManager* locationManager;
 @property (strong, nonatomic) NSArray *reportsData;
@@ -164,15 +166,6 @@
 }
 
 
-#pragma mark - Actions
-
-- (IBAction)logout:(id)sender
-{
-
-
-}
-
-
 #pragma mark - Segue
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -180,6 +173,12 @@
     if ([segue.identifier isEqualToString:@"kSegueIdentifierPushReportDetails"]) {
         if ([sender isKindOfClass:[Report class]]) {
             ((ReportDetailViewController *)segue.destinationViewController).report = sender;
+        }
+    }else if ([segue.identifier isEqualToString:@"kSegueIdentifierReportFilter"]){
+        if ([segue.destinationViewController isKindOfClass:[UINavigationController class]]) {
+            UINavigationController *nvc = (UINavigationController *)segue.destinationViewController;
+            EditHomeSreenTableViewController *vc = (EditHomeSreenTableViewController *)[nvc.viewControllers firstObject];
+            vc.delegate = self;
         }
     }
 }
@@ -202,6 +201,26 @@
                             action:@selector(refresh)
                   forControlEvents:UIControlEventValueChanged];
     [self.collectionView addSubview:self.refreshControl];
+    
+    
+//    KCSCollection *collectionReports = [KCSCollection collectionFromString:REPORT_KINVEY_COLLECTIONS_NAME
+//                                                                   ofClass:[Report class]];
+//    KCSLinkedAppdataStore *reportsLinkedAppdataStore = [KCSLinkedAppdataStore storeWithOptions:@{ KCSStoreKeyResource       : collectionReports,
+//                                                                                KCSStoreKeyCachePolicy    : @(KCSCachePolicyNetworkFirst)}];
+//    KCSQuery *q2 = [KCSQuery queryOnField:KCSEntityKeyGeolocation
+//               usingConditionalsForValues:
+//                    kKCSNearSphere, @[@27.48, @53.86],
+//                    kKCSMaxDistance, @0.1, nil];
+//                    
+//    [reportsLinkedAppdataStore queryWithQuery:q2
+//                               withCompletionBlock:^(NSArray *objectsOrNil, NSError *errorOrNil) {
+//                                   
+//                                   //Return to main thread for update UI
+//                                   NSLog(@"result %lu", (unsigned long)objectsOrNil.count);
+//                                   
+//                               }
+//                                 withProgressBlock:nil
+//                                       cachePolicy:KCSCachePolicyNetworkFirst];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -293,5 +312,17 @@
     [self.collectionView reloadData];
 }
 
+
+#pragma mark - Edit home screen view controller delegate
+
+- (void)savePress:(EditHomeSreenTableViewController *)sender{
+    [self refresh];
+}
+
+#pragma mark - New report view controller delegate
+
+- (void)submitFinish:(NewReportViewController *)sender{
+    [self refresh];
+}
 
 @end
