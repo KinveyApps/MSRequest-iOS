@@ -561,7 +561,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0510;
-				ORGANIZATIONNAME = "Intrepid Pursuits";
+				ORGANIZATIONNAME = "Kinvey, Inc.";
 			};
 			buildConfigurationList = 5E2C877214C5BA880062229A /* Build configuration list for PBXProject "MSRequest" */;
 			compatibilityVersion = "Xcode 3.2";
