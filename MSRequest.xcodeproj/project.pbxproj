@@ -17,8 +17,6 @@
 		1B76CBD218F43896004713E1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CBD118F43896004713E1 /* AppDelegate.m */; };
 		1B76CBD518F43920004713E1 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B76CBD318F43920004713E1 /* MainStoryboard.storyboard */; };
 		1B76CBE118F4398D004713E1 /* ActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CBE018F4398D004713E1 /* ActivityViewController.m */; };
-		1B76CBE518F439A1004713E1 /* CustomReportTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CBE318F439A1004713E1 /* CustomReportTableViewCell.m */; };
-		1B76CBE618F439A1004713E1 /* CustomReportTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B76CBE418F439A1004713E1 /* CustomReportTableViewCell.xib */; };
 		1B76CBE918F439B0004713E1 /* DescriptionEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CBE818F439B0004713E1 /* DescriptionEditorViewController.m */; };
 		1B76CBEC18F439BA004713E1 /* ImageScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CBEB18F439BA004713E1 /* ImageScrollViewController.m */; };
 		1B76CBEF18F439CC004713E1 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CBEE18F439CC004713E1 /* MapViewController.m */; };
@@ -122,9 +120,6 @@
 		1B76CBD418F43920004713E1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = MSRequest/en.lproj/MainStoryboard.storyboard; sourceTree = SOURCE_ROOT; };
 		1B76CBDF18F4398D004713E1 /* ActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActivityViewController.h; path = MSRequest/ActivityViewController.h; sourceTree = SOURCE_ROOT; };
 		1B76CBE018F4398D004713E1 /* ActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActivityViewController.m; path = MSRequest/ActivityViewController.m; sourceTree = SOURCE_ROOT; };
-		1B76CBE218F439A1004713E1 /* CustomReportTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomReportTableViewCell.h; path = MSRequest/CustomReportTableViewCell.h; sourceTree = SOURCE_ROOT; };
-		1B76CBE318F439A1004713E1 /* CustomReportTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomReportTableViewCell.m; path = MSRequest/CustomReportTableViewCell.m; sourceTree = SOURCE_ROOT; };
-		1B76CBE418F439A1004713E1 /* CustomReportTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CustomReportTableViewCell.xib; path = MSRequest/CustomReportTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		1B76CBE718F439B0004713E1 /* DescriptionEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DescriptionEditorViewController.h; path = MSRequest/DescriptionEditorViewController.h; sourceTree = SOURCE_ROOT; };
 		1B76CBE818F439B0004713E1 /* DescriptionEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DescriptionEditorViewController.m; path = MSRequest/DescriptionEditorViewController.m; sourceTree = SOURCE_ROOT; };
 		1B76CBEA18F439BA004713E1 /* ImageScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageScrollViewController.h; path = MSRequest/ImageScrollViewController.h; sourceTree = SOURCE_ROOT; };
@@ -443,9 +438,6 @@
 				1B76CBE018F4398D004713E1 /* ActivityViewController.m */,
 				1B76CC5618F44039004713E1 /* SignInViewController.h */,
 				1B76CC5718F44039004713E1 /* SignInViewController.m */,
-				1B76CBE218F439A1004713E1 /* CustomReportTableViewCell.h */,
-				1B76CBE318F439A1004713E1 /* CustomReportTableViewCell.m */,
-				1B76CBE418F439A1004713E1 /* CustomReportTableViewCell.xib */,
 				1B76CBE718F439B0004713E1 /* DescriptionEditorViewController.h */,
 				1B76CBE818F439B0004713E1 /* DescriptionEditorViewController.m */,
 				1B76CBEA18F439BA004713E1 /* ImageScrollViewController.h */,
@@ -602,7 +594,6 @@
 				1B76CC3A18F43B49004713E1 /* arrow.png in Resources */,
 				1B76CC5118F43B49004713E1 /* what_icon.png in Resources */,
 				1B76CC4418F43B49004713E1 /* large_plus_button.png in Resources */,
-				1B76CBE618F439A1004713E1 /* CustomReportTableViewCell.xib in Resources */,
 				1B76CC4F18F43B49004713E1 /* small_plus_icon.png in Resources */,
 				1B76CC4A18F43B49004713E1 /* loginBackgroundIPhonePortrait@2x.png in Resources */,
 				275EF728164D4C1600933278 /* Default.png in Resources */,
@@ -651,7 +642,6 @@
 				1B76CBEF18F439CC004713E1 /* MapViewController.m in Sources */,
 				1B76CC5C18F441FB004713E1 /* DejalActivityView.m in Sources */,
 				1B76CBFB18F43A0B004713E1 /* ReportsFilterViewController.m in Sources */,
-				1B76CBE518F439A1004713E1 /* CustomReportTableViewCell.m in Sources */,
 				1B76CC1418F43A74004713E1 /* UIImage+Alpha.m in Sources */,
 				1B76CBF518F439EF004713E1 /* PickerTableViewController.m in Sources */,
 				1BEAAEE018FD39E7003AE701 /* KinveyImageView.m in Sources */,

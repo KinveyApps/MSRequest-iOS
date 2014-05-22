@@ -4,16 +4,14 @@
 //
 //  Created by Pavel Vilbik on 15.4.14.
 /**
- * Copyright (c) 2014, Kinvey, Inc. All rights reserved. *
- * This software is licensed to you under the Kinvey terms of service located at
- * http://www.kinvey.com/terms-of-use. By downloading, accessing and/or using this
- * software, you hereby accept such terms of service (and any agreement referenced
- * therein) and agree that you have read, understand and agree to be bound by such
- * terms of service and are of legal age to agree to such terms with Kinvey. *
- * This software contains valuable confidential and proprietary information of
- * KINVEY, INC and is subject to applicable licensing agreements.
- * Unauthorized reproduction, transmission or distribution of this file and its
- * contents is a violation of applicable laws. *
+ * Copyright (c) 2014 Kinvey Inc. *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at *
+ * http://www.apache.org/licenses/LICENSE-2.0 *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License. *
  */
 
 #import "ReportsRootViewController.h"
@@ -201,26 +199,6 @@
                             action:@selector(refresh)
                   forControlEvents:UIControlEventValueChanged];
     [self.collectionView addSubview:self.refreshControl];
-    
-    
-//    KCSCollection *collectionReports = [KCSCollection collectionFromString:REPORT_KINVEY_COLLECTIONS_NAME
-//                                                                   ofClass:[Report class]];
-//    KCSLinkedAppdataStore *reportsLinkedAppdataStore = [KCSLinkedAppdataStore storeWithOptions:@{ KCSStoreKeyResource       : collectionReports,
-//                                                                                KCSStoreKeyCachePolicy    : @(KCSCachePolicyNetworkFirst)}];
-//    KCSQuery *q2 = [KCSQuery queryOnField:KCSEntityKeyGeolocation
-//               usingConditionalsForValues:
-//                    kKCSNearSphere, @[@27.48, @53.86],
-//                    kKCSMaxDistance, @0.1, nil];
-//                    
-//    [reportsLinkedAppdataStore queryWithQuery:q2
-//                               withCompletionBlock:^(NSArray *objectsOrNil, NSError *errorOrNil) {
-//                                   
-//                                   //Return to main thread for update UI
-//                                   NSLog(@"result %lu", (unsigned long)objectsOrNil.count);
-//                                   
-//                               }
-//                                 withProgressBlock:nil
-//                                       cachePolicy:KCSCachePolicyNetworkFirst];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
