@@ -35,7 +35,7 @@
 {
     [super viewDidLoad];
     if (![AuthenticationHelper instance].isSignedIn) {
-        [self performSegueWithIdentifier:@"kSegueIdentifierModalSingInView" sender:self];
+        [self performSegueWithIdentifier:@"kSegueIdentifierModalSignInView" sender:self];
     }
     
     self.navigationController.toolbarHidden = YES;
@@ -52,7 +52,7 @@
         
         [self preloadDataAndOpenReportRootView];
     }else{
-        [self performSegueWithIdentifier:@"kSegueIdentifierModalSingInView" sender:self];
+        [self performSegueWithIdentifier:@"kSegueIdentifierModalSignInView" sender:self];
     }
 }
 
@@ -77,23 +77,23 @@
                                                                                                
                                                                                            }onFailure:^(NSError *error){
                                                                                                
-                                                                                               [self showSingInViewAndAlertWithError:error];
+                                                                                               [self showSignInViewAndAlertWithError:error];
                                                                                            }];
                                                        }
                                                    }onFailure:^(NSError *error){
                                                        
-                                                       [self showSingInViewAndAlertWithError:error];
+                                                       [self showSignInViewAndAlertWithError:error];
                                                    }];
         }else{
             
-            [self showSingInViewAndAlertWithError:errorOrNil];
+            [self showSignInViewAndAlertWithError:errorOrNil];
         }
     }];
 }
 
-- (void)showSingInViewAndAlertWithError:(NSError *)error{
+- (void)showSignInViewAndAlertWithError:(NSError *)error{
     
-    [self performSegueWithIdentifier:@"kSegueIdentifierModalSingInView" sender:self];
+    [self performSegueWithIdentifier:@"kSegueIdentifierModalSignInView" sender:self];
     
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
                                                         message:error.localizedDescription
