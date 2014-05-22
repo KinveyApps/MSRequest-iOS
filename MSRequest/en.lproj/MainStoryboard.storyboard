@@ -944,7 +944,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="id0-Q4-4oU"/>
                     <connections>
-                        <segue destination="971-xN-6IV" kind="modal" identifier="kSegueIdentifierModalSingInView" id="wH4-Ax-DOv"/>
+                        <segue destination="971-xN-6IV" kind="modal" identifier="kSegueIdentifierModalSignInView" id="wH4-Ax-DOv"/>
                         <segue destination="iWa-pP-Plf" kind="push" identifier="kSegueIdentifierPushReportRootView" id="kuH-fE-AVm"/>
                     </connections>
                 </viewController>
