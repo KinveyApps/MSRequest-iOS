@@ -19,17 +19,8 @@
 #import <UIKit/UIKit.h>
 #import "DataHelper.h"
 
-
-@protocol ReportsFilterViewControllerDelegate
-
-- (void)reportFilterEditingFinishedWithOptions:(NSDictionary *)options;
-- (void)reportFilterEditingFinishedWithFilterOption:(NSInteger)filterRow sortOption:(NSInteger)sortRow;
-
-@end
-
 @interface ReportsFilterViewController : UITableViewController
 
-@property (weak, nonatomic) id <ReportsFilterViewControllerDelegate> delegate;
 @property (nonatomic) NSUInteger indexOfFilter;
 
 @end
