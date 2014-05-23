@@ -23,6 +23,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
+@property (weak, nonatomic) IBOutlet UIView *contentView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstaraint;
 
 @end
 
@@ -40,11 +42,64 @@
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    
+	[super viewWillAppear:animated];
+    
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter addObserver:self
+                           selector:@selector(keyboardWillShow:)
+                               name:UIKeyboardWillShowNotification
+                             object:nil];
+    [notificationCenter addObserver:self
+                           selector:@selector(keyboardWillHide:)
+                               name:UIKeyboardWillHideNotification
+                             object:nil];
+}
+
 - (void)viewWillDisappear:(BOOL)animated{
     
 	[super viewWillDisappear:animated];
 
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+-(void)keyboardWillShow:(NSNotification *)notification{
+
+    // get keyboard size and loctaion
+	NSNumber *duration = [notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSNumber *curve = [notification.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
+    UIViewAnimationCurve curveType = [curve integerValue];
+    UIViewAnimationOptions animationOptions = curveType << 16;
+    
+    [UIView animateWithDuration:[duration doubleValue]
+						  delay:0
+                        options:animationOptions
+                     animations:^{
+                         // set views with new info
+						 self.bottomConstaraint.constant = 94;
+                         [self.view layoutIfNeeded];
+                     }
+                     completion:nil];
+}
+
+-(void)keyboardWillHide:(NSNotification *)notification{
+    
+    // get keyboard size and loctaion
+	NSNumber *duration = [notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSNumber *curve = [notification.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
+    UIViewAnimationCurve curveType = [curve integerValue];
+    UIViewAnimationOptions animationOptions = curveType << 16;
+    
+    [UIView animateWithDuration:[duration doubleValue]
+						  delay:0
+                        options:animationOptions
+                     animations:^{
+                         // set views with new info
+						 self.bottomConstaraint.constant = 0;
+                         [self.view layoutIfNeeded];
+                     }
+                     completion:nil];
 }
 
 - (IBAction)pressedSignUp:(id)sender{
@@ -110,7 +165,7 @@
 
 - (IBAction)demoPress:(id)sender {
     
-    self.usernameField.text = @"demoSampleQuote";
+    self.usernameField.text = @"demoMSRequest";
     self.passwordField.text = @"123456";
     [self pressedLogin:sender];
     
