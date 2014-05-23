@@ -263,6 +263,7 @@
                                         [DejalBezelActivityView removeView];
                                         if (!error) {
                                             [[KCSUser activeUser] logout];
+                                            [DataHelper instance].filterOptions = nil;
                                             [self.navigationController popViewControllerAnimated:YES];
                                         }else{
                                             [[[UIAlertView alloc] initWithTitle:@"Error"
