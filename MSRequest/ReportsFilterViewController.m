@@ -24,7 +24,6 @@ typedef enum {
     OriginatorTableViewSectionIndex = 0,
     TypeTableViewSectionIndex,
     StateTableViewSectionIndex,
-    LocationTableViewSectionIndex,
     DescriptionTableViewSectionIndex,
     FirstAdditionalAttributeTableViewSectionIndex
 } TableViewSectionIndex;
@@ -96,10 +95,6 @@ typedef enum {
             return self.type.reportState.count;
         }break;
             
-        case LocationTableViewSectionIndex:{
-            return 1;
-        }break;
-            
         case DescriptionTableViewSectionIndex:{
             return 1;
         }
@@ -149,13 +144,6 @@ typedef enum {
                                        checked:self.filterOptions[STATE_FILTER_KEY] ? currentFilterState == indexPath.row : NO];
         }break;
             
-        case LocationTableViewSectionIndex:{
-            float currentRadiusDistance = [(NSNumber *)self.filterOptions[LOCATION_RADIUS_FILTER_KEY] floatValue];
-            return [self textFieldCellForTableView:tableView
-                                   withCurrentText:currentRadiusDistance ? [NSString stringWithFormat:@"%.2f", currentRadiusDistance] : @""
-                                    andPlaceholder:LOCATION_RADIUS_PLACEHOLDER];
-        }break;
-            
         case DescriptionTableViewSectionIndex:{
             return [self textFieldCellForTableView:tableView
                                    withCurrentText:self.filterOptions[DESCRIPTION_FILTER_KEY]
@@ -193,10 +181,6 @@ typedef enum {
             
         case StateTableViewSectionIndex:{
             return STATE_FILTER_KEY;
-        }break;
-            
-        case LocationTableViewSectionIndex:{
-            return LOCATION_RADIUS_FILTER_KEY;
         }break;
             
         case DescriptionTableViewSectionIndex:{
@@ -281,9 +265,6 @@ typedef enum {
             }
         }break;
             
-        case LocationTableViewSectionIndex:{
-        }break;
-            
         case DescriptionTableViewSectionIndex:{
         }
             
@@ -314,14 +295,7 @@ typedef enum {
     
     NSIndexPath *indexPathEndEditingCell = [self.tableView indexPathForCell:sender];
     switch (indexPathEndEditingCell.section) {
-        case LocationTableViewSectionIndex:{
-            if (!sender.textField.text.length) {
-                [self.filterOptions removeObjectForKey:LOCATION_RADIUS_FILTER_KEY];
-            }else{
-                self.filterOptions[LOCATION_RADIUS_FILTER_KEY] = [NSNumber numberWithDouble:[sender.textField.text doubleValue]];
-            }
-        }break;
-            
+
         case DescriptionTableViewSectionIndex:{
             if (!sender.textField.text.length) {
                 [self.filterOptions removeObjectForKey:DESCRIPTION_FILTER_KEY];

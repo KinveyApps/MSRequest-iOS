@@ -153,18 +153,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
             queryForCurrentType = [KCSQuery queryForJoiningOperator:kKCSAnd
                                                           onQueries:stateQuery, queryForCurrentType, nil];
         }
-        if (filterType[LOCATION_RADIUS_FILTER_KEY] && self.currentLocation) {
-
-            NSNumber *longitude = [NSNumber numberWithDouble:self.currentLocation.coordinate.longitude];
-            NSNumber *latitude = [NSNumber numberWithDouble:self.currentLocation.coordinate.latitude];
-            NSNumber *distance = [NSNumber numberWithFloat:[(NSNumber *)filterType[LOCATION_RADIUS_FILTER_KEY] floatValue] * 0.00015719741];
-            KCSQuery *geoQuery = [KCSQuery queryOnField:KCSEntityKeyGeolocation
-                       usingConditionalsForValues:
-                            kKCSNearSphere, @[longitude, latitude],
-                            kKCSMaxDistance, distance, nil];
-            queryForCurrentType = [KCSQuery queryForJoiningOperator:kKCSAnd
-                                                          onQueries:geoQuery, queryForCurrentType, nil];
-        }
         if (filterType[DESCRIPTION_FILTER_KEY]) {
             KCSQuery *decriptionQuery = [KCSQuery queryOnField:@"descriptionOfReport"
                                               withRegex:[self regexForContaintSubstring:filterType[DESCRIPTION_FILTER_KEY]]];
