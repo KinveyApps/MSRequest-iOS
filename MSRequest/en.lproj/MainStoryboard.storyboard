@@ -348,6 +348,50 @@
                                     <segue destination="rsE-79-Yps" kind="push" identifier="kSegueIdentifierEditFilterOption" id="MmR-ld-qE8"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="kCellIdentifierBasic" textLabel="dah-NH-MEW" style="IBUITableViewCellStyleDefault" id="t4l-oa-OPB" customClass="SubtitleWithButtonTableViewCell">
+                                <rect key="frame" x="0.0" y="163" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="t4l-oa-OPB" id="Zdd-rd-XgD">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dah-NH-MEW">
+                                            <rect key="frame" x="15" y="0.0" width="290" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="kCellIdentifierTextField" id="OVI-Q3-sFY" customClass="TextFieldTableViewCell">
+                                <rect key="frame" x="0.0" y="207" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OVI-Q3-sFY" id="PBk-JZ-z8F">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Attribute" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4NY-sv-Dnk">
+                                            <rect key="frame" x="20" y="7" width="280" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                    </subviews>
+                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstItem="4NY-sv-Dnk" firstAttribute="top" secondItem="PBk-JZ-z8F" secondAttribute="top" constant="7" id="4SX-HT-MpR"/>
+                                        <constraint firstItem="4NY-sv-Dnk" firstAttribute="leading" secondItem="PBk-JZ-z8F" secondAttribute="leading" constant="20" id="H2H-IP-9X1"/>
+                                        <constraint firstAttribute="bottom" secondItem="4NY-sv-Dnk" secondAttribute="bottom" constant="6" id="V2d-qV-Adl"/>
+                                        <constraint firstAttribute="trailing" secondItem="4NY-sv-Dnk" secondAttribute="trailing" constant="20" id="zao-UE-jAp"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="textField" destination="4NY-sv-Dnk" id="WSd-4J-kWr"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="OGP-p0-HJb" id="pQD-Ir-QjX"/>
@@ -1196,6 +1240,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="RNA-j5-WfE"/>
+        <segue reference="MmR-ld-qE8"/>
     </inferredMetricsTieBreakers>
 </document>

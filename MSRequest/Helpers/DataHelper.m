@@ -62,6 +62,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
         self.filterOptions = options;
     }
     
+    NSNumber *maxDictance = (NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:LOCATION_RADIUS_FILTER_KEY];
+    
+    if (maxDictance) {
+        self.locationMaxDistanceFilter = [maxDictance floatValue];
+    }
+    
 	return self;
 }
 
@@ -99,6 +105,21 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
         [[NSUserDefaults standardUserDefaults] synchronize];
     }else{
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:FILTER_OPTIONS_USER_DEFAULTS_KEY];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+}
+
+- (void)setLocationMaxDistanceFilter:(CGFloat)locationMaxDistanceFilter{
+    
+    _locationMaxDistanceFilter = locationMaxDistanceFilter;
+    
+    self.currentQuery = [self getQueryFromFilterOptions:self.filterOptions];
+    
+    if (_locationMaxDistanceFilter) {
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithFloat:_locationMaxDistanceFilter] forKey:LOCATION_RADIUS_FILTER_KEY];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }else{
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:LOCATION_RADIUS_FILTER_KEY];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
 }
@@ -183,6 +204,19 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
         }else{
             resultQuery = queryForCurrentType;
         }
+    }
+    
+    if (self.locationMaxDistanceFilter && self.currentLocation) {
+        
+        NSNumber *longitude = [NSNumber numberWithDouble:self.currentLocation.coordinate.longitude];
+        NSNumber *latitude = [NSNumber numberWithDouble:self.currentLocation.coordinate.latitude];
+        NSNumber *distance = [NSNumber numberWithFloat:self.locationMaxDistanceFilter * 0.00015719741];
+        KCSQuery *geoQuery = [KCSQuery queryOnField:KCSEntityKeyGeolocation
+                         usingConditionalsForValues:
+                              kKCSNearSphere, @[longitude, latitude],
+                              kKCSMaxDistance, distance, nil];
+        resultQuery = [KCSQuery queryForJoiningOperator:kKCSAnd
+                                              onQueries:geoQuery, resultQuery, nil];
     }
     
     return resultQuery ? resultQuery : [KCSQuery query];

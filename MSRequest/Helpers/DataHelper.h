@@ -40,6 +40,7 @@
 @property (strong, nonatomic) NSArray *typesOfReport;
 @property (strong, nonatomic) NSArray *filterOptions;
 @property (strong, nonatomic) CLLocation *currentLocation;
+@property (nonatomic) CGFloat locationMaxDistanceFilter;
 
 - (void)loadTypesOfReportUseCache:(BOOL)useCache OnSuccess:(void (^)(NSArray *))reportSuccess onFailure:(void (^)(NSError *))reportFailure;
 

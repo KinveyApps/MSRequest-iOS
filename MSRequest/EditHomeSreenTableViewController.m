@@ -20,11 +20,15 @@
 #import "SubtitleWithButtonTableViewCell.h"
 #import "ReportsFilterViewController.h"
 #import "ReportsRootViewController.h"
+#import "TextFieldTableViewCell.h"
 
-@interface EditHomeSreenTableViewController ()<SubtitleWithButtonTableViewCellDelegate>
+@interface EditHomeSreenTableViewController ()<SubtitleWithButtonTableViewCellDelegate, TextFieldTableViewCellDelegate>
 
 @property (nonatomic, strong) NSArray *filterOptions;
 @property (nonatomic, strong) NSArray *oldFilterOptions;
+@property (nonatomic) CGFloat maxDistance;
+@property (nonatomic) BOOL useLocationFilter;
+@property (nonatomic, weak) TextFieldTableViewCell *distanceCell;
 
 @end
 
@@ -44,6 +48,13 @@
     [super viewDidLoad];
     
     self.oldFilterOptions = [DataHelper instance].filterOptions;
+    self.filterOptions = [DataHelper instance].filterOptions;
+    self.maxDistance = [DataHelper instance].locationMaxDistanceFilter;
+    if (self.maxDistance) {
+        self.useLocationFilter = YES;
+    }else{
+        self.useLocationFilter = NO;
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -64,30 +75,115 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
+    switch (section) {
+        case 0:
+            return self.filterOptions.count;
+            break;
+        case 1:
+            return self.useLocationFilter ? 2 : 1;
+            break;
+            
+        default:
+            break;
+    }
     return self.filterOptions.count;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SubtitleWithButtonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"kCellIdentifierTitleSubtitleWithButton"
-                                                                            forIndexPath:indexPath];
     
-    if (!cell){
-        cell = [[SubtitleWithButtonTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                                      reuseIdentifier:@"kCellIdentifierTitleSubtitleWithButton"];
+    switch (indexPath.section) {
+        case 0:{
+            
+            SubtitleWithButtonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"kCellIdentifierTitleSubtitleWithButton"
+                                                                                    forIndexPath:indexPath];
+            
+            if (!cell){
+                cell = [[SubtitleWithButtonTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                              reuseIdentifier:@"kCellIdentifierTitleSubtitleWithButton"];
+            }
+            cell.title.text = [self titleWithOptions:self.filterOptions[indexPath.row]];
+            cell.subtitle.text = [self subtitleWithOptions:self.filterOptions[indexPath.row]];
+            cell.delegate = self;
+            
+            return cell;
+        }break;
+        case 1:{
+            
+            if (indexPath.row) {
+                TextFieldTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"kCellIdentifierTextField"];
+                
+                if (!cell) {
+                    cell = [[TextFieldTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                         reuseIdentifier:@"kCellIdentifierTextField"];
+                }
+                if (self.maxDistance > 0) {
+                    cell.textField.text = [NSString stringWithFormat:@"%.2f", self.maxDistance];
+                }else{
+                    cell.textField.text = nil;
+                }
+                cell.textField.placeholder = @"Max Distance";
+                cell.delegate = self;
+                cell.textField.delegate = cell;
+                self.distanceCell = cell;
+                
+                return cell;
+            }else{
+                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"kCellIdentifierBasic"];
+                if (!cell) {
+                    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                  reuseIdentifier:@"kCellIdentifierBasic"];
+                }
+                
+                cell.textLabel.text = @"Distance Filte";
+                if (self.useLocationFilter) {
+                    [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+                }else{
+                    [cell setAccessoryType:UITableViewCellAccessoryNone];
+                }
+                return cell;
+            }
+            
+        }break;
     }
-    cell.title.text = [self titleWithOptions:self.filterOptions[indexPath.row]];
-    cell.subtitle.text = [self subtitleWithOptions:self.filterOptions[indexPath.row]];
-    cell.delegate = self;
+    return nil;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    return cell;
+    if ((indexPath.section == 1) && (indexPath.row == 0)) {
+        self.useLocationFilter = !self.useLocationFilter;
+        if (!self.useLocationFilter) {
+            self.maxDistance = 0;
+        }
+        [self.tableView reloadData];
+    }
+    if ((indexPath.section == 1) && (indexPath.row == 1)) {
+        TextFieldTableViewCell *cell = (TextFieldTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+        [cell.textField becomeFirstResponder];
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    switch (section) {
+        case 0:
+            return @"Filter Options";
+            break;
+        case 1:
+            return @"Dictance";
+            break;
+            
+        default:
+            break;
+    }
 }
 
 - (NSString *)titleWithOptions:(NSDictionary *)options{
@@ -125,12 +221,6 @@
         }
         [result appendString:[NSString stringWithFormat:@"state: %@", currentType.reportState[[((NSNumber *)options[STATE_FILTER_KEY]) integerValue]]]];
     }
-    if (options[LOCATION_RADIUS_FILTER_KEY]) {
-        if (result.length){
-            [result appendString:@", "];
-        }
-        [result appendString:[NSString stringWithFormat:@"near %.2fkm", [(NSNumber *)options[LOCATION_RADIUS_FILTER_KEY] floatValue]]];
-    }
     if (currentType) {
         for (NSInteger i = 0; i < currentType.additionalAttributes.count; i++) {
             NSString *attribute = currentType.additionalAttributes[i];
@@ -158,6 +248,18 @@
     }
 }
 
+- (void)textFieldTableViewCellDidBeginEditing:(TextFieldTableViewCell *)sender{
+    
+}
+
+- (void)textFieldTableViewCellDidEndEditing:(TextFieldTableViewCell *)sender{
+    CGFloat maxDictance = [sender.textField.text floatValue];
+    if (maxDictance > 0) {
+        self.maxDistance = maxDictance;
+    }else{
+        self.maxDistance = 0;
+    }
+}
 
 #pragma mark - Navigation
 
@@ -181,7 +283,11 @@
                              completion:nil];
 }
 - (IBAction)saveButtonPress:(UIBarButtonItem *)sender {
-    
+
+    if ([self.distanceCell.textLabel isFirstResponder]) {
+        [self.distanceCell.textLabel resignFirstResponder];
+    }
+    [DataHelper instance].locationMaxDistanceFilter = self.maxDistance;
     [self.delegate savePress:self];
     [self dismissViewControllerAnimated:YES
                              completion:nil];
