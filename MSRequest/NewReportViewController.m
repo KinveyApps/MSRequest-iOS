@@ -27,6 +27,8 @@
 #import "LabelTableViewCell.h"
 #import "TextFieldTableViewCell.h"
 
+#import "AHKActionSheet.h"
+
 typedef enum {
     PhotoNewReportTableViewRowIndex = 0,
     TypeNewReportTableViewRowIndex,
@@ -291,12 +293,29 @@ typedef enum {
         switch (indexPath.row) {
                 
             case PhotoNewReportTableViewRowIndex:{
-                UIActionSheet *imageSourceSelectorSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                                                      delegate:self
-                                                                             cancelButtonTitle:@"Cancel"
-                                                                        destructiveButtonTitle:nil
-                                                                             otherButtonTitles:@"Take Photo", @"Choose Existing Photo", nil];
-                [imageSourceSelectorSheet showInView:self.view];
+                AHKActionSheet *actionSheet = [[AHKActionSheet alloc] initWithTitle:@"Add Image"];
+                
+                if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+                    [actionSheet addButtonWithTitle:@"Take Photo"
+                                              image:[UIImage imageNamed:@"GetFoto"]
+                                               type:AHKActionSheetButtonTypeDefault
+                                            handler:^(AHKActionSheet *actionSheet){
+                                                self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+                                                [self presentViewController:self.imagePickerController animated:YES completion:nil];
+                                                [self.navigationController setNavigationBarHidden:YES animated:NO];
+                                            }];
+                }
+                if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+                    [actionSheet addButtonWithTitle:@"Choose Existing Photo"
+                                              image:[UIImage imageNamed:@"GetFromAlbum"]
+                                               type:AHKActionSheetButtonTypeDefault
+                                            handler:^(AHKActionSheet *actionSheet){
+                                                self.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                                                [self presentViewController:self.imagePickerController animated:YES completion:nil];
+                                                [self.navigationController setNavigationBarHidden:YES animated:NO];
+                                            }];
+                }
+                [actionSheet show];
             }break;
                 
             case LocationNewReportTableViewRowIndex:{
@@ -510,39 +529,6 @@ typedef enum {
 {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-#pragma mark - UIActionSheetDelegate
-
-- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    
-    if (buttonIndex == actionSheet.cancelButtonIndex) {
-        return;
-    }
-        
-    switch (buttonIndex) {
-        case 0: // take photo
-            if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-                self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
-            }
-            else {
-                NSLog(@"Camera not available");
-                return;
-            }
-            break;
-        case 1: // choose existing photo
-            if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
-                self.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-            }
-            else {
-                NSLog(@"No photos available");
-                return;
-            }
-            break;
-    }
-    
-    [self presentViewController:self.imagePickerController animated:YES completion:nil];
-    [self.navigationController setNavigationBarHidden:YES animated:NO]; // override showing of nav bar
 }
 
 
