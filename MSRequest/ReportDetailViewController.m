@@ -21,6 +21,7 @@
 #import "PhotoTableViewCell.h"
 #import "LabelTableViewCell.h"
 #import "DejalActivityView.h"
+#import "AHKActionSheet.h"
 
 typedef enum {
     PhotoReportTableViewRowIndex = 0,
@@ -259,17 +260,21 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
                                       sender:self];
         }
         if (indexPath.row == StateReportTableViewRowIndex) {
-            UIActionSheet *imageSourceSelectorSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                                                  delegate:self
-                                                                         cancelButtonTitle:nil
-                                                                    destructiveButtonTitle:nil
-                                                                         otherButtonTitles:nil];
-            for (NSString *state in self.report.type.reportState) {
-                [imageSourceSelectorSheet addButtonWithTitle:state];
+            AHKActionSheet *actionSheet = [[AHKActionSheet alloc] initWithTitle:@"Change status"];
+            actionSheet.cancelHandler = ^(AHKActionSheet *actionSheet){
+                [self.tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:StateReportTableViewRowIndex
+                                                                          inSection:MainReportTableViewSectionIndex]
+                                              animated:YES];
+            };
+            for (NSInteger i = 0; i < self.report.type.reportState.count; i++) {
+                NSString *state = self.report.type.reportState[i];
+                [actionSheet addButtonWithTitle:state
+                                           type:AHKActionSheetButtonTypeDefault
+                                        handler:^(AHKActionSheet *actionSheet){
+                                            [self changeStatusTo:i];
+                                        }];
             }
-            [imageSourceSelectorSheet addButtonWithTitle:@"Cancel"];
-            imageSourceSelectorSheet.cancelButtonIndex = imageSourceSelectorSheet.numberOfButtons - 1;
-            [imageSourceSelectorSheet showInView:self.view];
+            [actionSheet show];
         }
         
     }else if (indexPath.section == ChangeStatusReportTableViewSectionIndex){
@@ -298,21 +303,15 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
     
 }
 
-#pragma mark - UIActionSheetDelegate
-
-- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
+- (void)changeStatusTo:(NSInteger)statusIndex{
     
     [self.tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:StateReportTableViewRowIndex
                                                               inSection:MainReportTableViewSectionIndex]
                                   animated:YES];
     
-    if (buttonIndex == actionSheet.cancelButtonIndex) {
-        return;
-    }
-    
-    if (self.currentServerState != buttonIndex) {
+    if (self.currentServerState != statusIndex) {
         self.statusWasChanged = YES;
-        self.report.state = [NSNumber numberWithInteger:buttonIndex];
+        self.report.state = [NSNumber numberWithInteger:statusIndex];
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
                                                                                  style:UIBarButtonItemStylePlain
                                                                                 target:self
