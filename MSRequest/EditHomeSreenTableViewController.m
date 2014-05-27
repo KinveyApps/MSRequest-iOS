@@ -83,7 +83,7 @@
     // Return the number of rows in the section.
     switch (section) {
         case 0:
-            return self.filterOptions.count;
+            return self.filterOptions.count ? self.filterOptions.count : 1;
             break;
         case 1:
             return self.useLocationFilter ? 2 : 1;
@@ -102,18 +102,31 @@
     switch (indexPath.section) {
         case 0:{
             
-            SubtitleWithButtonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"kCellIdentifierTitleSubtitleWithButton"
-                                                                                    forIndexPath:indexPath];
-            
-            if (!cell){
-                cell = [[SubtitleWithButtonTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                                              reuseIdentifier:@"kCellIdentifierTitleSubtitleWithButton"];
+            if (self.filterOptions.count) {
+                SubtitleWithButtonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"kCellIdentifierTitleSubtitleWithButton"
+                                                                                        forIndexPath:indexPath];
+                
+                if (!cell){
+                    cell = [[SubtitleWithButtonTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                                  reuseIdentifier:@"kCellIdentifierTitleSubtitleWithButton"];
+                }
+                cell.title.text = [self titleWithOptions:self.filterOptions[indexPath.row]];
+                cell.subtitle.text = [self subtitleWithOptions:self.filterOptions[indexPath.row]];
+                cell.delegate = self;
+                
+                return cell;
+            }else{
+                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"kCellIdentifierBasic"];
+                if (!cell) {
+                    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                  reuseIdentifier:@"kCellIdentifierBasic"];
+                }
+                cell.textLabel.text = @"No filter options. Press \"+\" to add first";
+                cell.textLabel.font = [UIFont systemFontOfSize:16];
+                cell.textLabel.textColor = [UIColor grayColor];
+                return cell;
             }
-            cell.title.text = [self titleWithOptions:self.filterOptions[indexPath.row]];
-            cell.subtitle.text = [self subtitleWithOptions:self.filterOptions[indexPath.row]];
-            cell.delegate = self;
             
-            return cell;
         }break;
         case 1:{
             
@@ -160,14 +173,24 @@
     
     if ((indexPath.section == 1) && (indexPath.row == 0)) {
         self.useLocationFilter = !self.useLocationFilter;
+        [tableView beginUpdates];
         if (!self.useLocationFilter) {
             self.maxDistance = 0;
+            [tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row + 1 inSection:indexPath.section]]
+                             withRowAnimation:UITableViewRowAnimationFade];
+        }else{
+            [tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row + 1 inSection:indexPath.section]]
+                             withRowAnimation:UITableViewRowAnimationMiddle];
         }
-        [self.tableView reloadData];
+        [tableView endUpdates];
+        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
     if ((indexPath.section == 1) && (indexPath.row == 1)) {
         TextFieldTableViewCell *cell = (TextFieldTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
         [cell.textField becomeFirstResponder];
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
+    if ((indexPath.section == 0) && (!self.filterOptions.count)) {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
 }
@@ -184,6 +207,7 @@
         default:
             break;
     }
+    return @"";
 }
 
 - (NSString *)titleWithOptions:(NSDictionary *)options{
