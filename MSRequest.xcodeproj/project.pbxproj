@@ -59,6 +59,7 @@
 		1B76CC5218F43B49004713E1 /* where_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B76CC3818F43B49004713E1 /* where_icon.png */; };
 		1B76CC5818F44039004713E1 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CC5718F44039004713E1 /* SignInViewController.m */; };
 		1B76CC5C18F441FB004713E1 /* DejalActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CC5B18F441FB004713E1 /* DejalActivityView.m */; };
+		1BA8CC54193485BF00FA4FDA /* UserRoles.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BA8CC53193485BF00FA4FDA /* UserRoles.m */; };
 		1BC67EE5191929E9009E0617 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1B2825A21917CC7400EC09A4 /* LICENSE.txt */; };
 		1BC67EF019192B4E009E0617 /* AHKActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC67EE919192B4E009E0617 /* AHKActionSheet.m */; };
 		1BC67EF119192B4E009E0617 /* AHKActionSheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC67EEB19192B4E009E0617 /* AHKActionSheetViewController.m */; };
@@ -179,6 +180,8 @@
 		1B76CC5A18F441FB004713E1 /* DejalActivityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DejalActivityView.h; sourceTree = "<group>"; };
 		1B76CC5B18F441FB004713E1 /* DejalActivityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DejalActivityView.m; sourceTree = "<group>"; };
 		1B76CC5D18F442A5004713E1 /* STBlocks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = STBlocks.h; path = Externals/STBlocks.h; sourceTree = SOURCE_ROOT; };
+		1BA8CC52193485BF00FA4FDA /* UserRoles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserRoles.h; path = MSRequest/Model/UserRoles.h; sourceTree = SOURCE_ROOT; };
+		1BA8CC53193485BF00FA4FDA /* UserRoles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserRoles.m; path = MSRequest/Model/UserRoles.m; sourceTree = SOURCE_ROOT; };
 		1BC67EE819192B4E009E0617 /* AHKActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AHKActionSheet.h; sourceTree = "<group>"; };
 		1BC67EE919192B4E009E0617 /* AHKActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AHKActionSheet.m; sourceTree = "<group>"; };
 		1BC67EEA19192B4E009E0617 /* AHKActionSheetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AHKActionSheetViewController.h; sourceTree = "<group>"; };
@@ -426,6 +429,8 @@
 				1B3743E918F5997F00C32AD6 /* TypeOfReport.m */,
 				1B3743F118F683DF00C32AD6 /* Report.h */,
 				1B3743F218F683DF00C32AD6 /* Report.m */,
+				1BA8CC52193485BF00FA4FDA /* UserRoles.h */,
+				1BA8CC53193485BF00FA4FDA /* UserRoles.m */,
 			);
 			name = Models;
 			path = ../Potholes;
@@ -650,6 +655,7 @@
 				1BC67EF219192B4E009E0617 /* UIImage+AHKAdditions.m in Sources */,
 				1B3743F318F683DF00C32AD6 /* Report.m in Sources */,
 				1B3743EA18F5997F00C32AD6 /* TypeOfReport.m in Sources */,
+				1BA8CC54193485BF00FA4FDA /* UserRoles.m in Sources */,
 				1B76CBFE18F43A14004713E1 /* ReportsRootViewController.m in Sources */,
 				1B76CC5818F44039004713E1 /* SignInViewController.m in Sources */,
 				1B76CBD218F43896004713E1 /* AppDelegate.m in Sources */,
