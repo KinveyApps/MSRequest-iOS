@@ -15,6 +15,7 @@
  */
 
 #import "DataHelper.h"
+#import "UserRoles.h"
 
 #define FILTER_OPTIONS_USER_DEFAULTS_KEY @"FilterOptions"
 
@@ -22,6 +23,7 @@
 
 @property (nonatomic, strong) KCSLinkedAppdataStore *typesOfReportLinkedAppdataStore;
 @property (nonatomic, strong) KCSLinkedAppdataStore *reportsLinkedAppdataStore;
+@property (nonatomic, strong) KCSLinkedAppdataStore *userRolesLinkedAppdataStore;
 @property (nonatomic, strong) KCSQuery *currentQuery;
 @end
 
@@ -51,6 +53,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
                                                                        ofClass:[Report class]];
         self.reportsLinkedAppdataStore = [KCSLinkedAppdataStore storeWithOptions:@{ KCSStoreKeyResource       : collectionReports,                  //collection
                                                                                     KCSStoreKeyCachePolicy    : @(KCSCachePolicyNetworkFirst)}];    //default cache policy
+        
+        KCSCollection *collectionUserRoles = [KCSCollection collectionFromString:USER_ROLES_KINVEY_COLLECTIONS_NAME
+                                                                       ofClass:[UserRoles class]];
+        self.userRolesLinkedAppdataStore = [KCSLinkedAppdataStore storeWithOptions:@{ KCSStoreKeyResource       : collectionUserRoles,                  //collection
+                                                                                      KCSStoreKeyCachePolicy    : @(KCSCachePolicyNetworkFirst)}];    //default cache policy
 
 	}
     
@@ -247,6 +254,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
                                                      self.typesOfReport = objectsOrNil;
                                                      self.currentQuery = [self getQueryFromFilterOptions:self.filterOptions];
                                                  }
+                                                 
                                                  if (reportSuccess) reportSuccess(objectsOrNil);
                                              }else{
                                                  if (reportFailure) reportFailure(errorOrNil);
@@ -258,6 +266,27 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
                                              cachePolicy:useCache ? KCSCachePolicyLocalFirst : KCSCachePolicyNetworkFirst];
     
 }
+
+#pragma mark - User Roles
+#pragma mark - Load Entity
+
+- (void)loadUserRolesUseCache:(BOOL)useCache OnSuccess:(void (^)(NSArray *))reportSuccess onFailure:(void (^)(NSError *))reportFailure{
+    
+    [self.userRolesLinkedAppdataStore queryWithQuery:[KCSQuery query]
+                                 withCompletionBlock:^(NSArray *objectsOrNil, NSError *errorOrNil) {
+                                     
+                                     //Return to main thread for update UI
+                                     dispatch_async(dispatch_get_main_queue(), ^{
+                                         if (!errorOrNil) {
+                                             if (reportSuccess) reportSuccess(objectsOrNil);
+                                         }else{
+                                             if (reportFailure) reportFailure(errorOrNil);
+                                         }
+                                     });
+                                 }withProgressBlock:nil
+                                         cachePolicy:useCache ? KCSCachePolicyLocalFirst : KCSCachePolicyNetworkFirst];
+}
+
 
 
 #pragma mark - Reports
@@ -441,12 +470,33 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
     }];
 }
 
+- (void)updateUserRole:(NSString *)roleID OnSuccess:(void (^)(NSArray *))reportSuccess onFailure:(void (^)(NSError *))reportFailure{
+    
+    [self.userRolesLinkedAppdataStore loadObjectWithID:roleID
+                                   withCompletionBlock:^(NSArray *objectsOrNil, NSError *errorOrNil) {
+                                       self.currentUserRole = (UserRoles *)[objectsOrNil firstObject];
+                                       dispatch_async(dispatch_get_main_queue(), ^{
+                                           if (!errorOrNil) {
+                                               if (reportSuccess) {
+                                                   reportSuccess(objectsOrNil);
+                                               }
+                                           }else{
+                                               if (reportFailure) {
+                                                   reportFailure(errorOrNil);
+                                               }
+                                           }
+                                       });
+                                   }withProgressBlock:nil];
+}
+
+
 #pragma mark - Utils
 
 - (NSArray *)allUserInfoKey{
     
     //Return attribute user key which use in app
-    return @[REPORT_TYPE_IDS_FOR_NOTIFICATION];
+    return @[REPORT_TYPE_IDS_FOR_NOTIFICATION,
+             ID_USER_ROLE];
     
 }
 

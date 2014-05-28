@@ -17,6 +17,7 @@
 #import <Foundation/Foundation.h>
 #import "TypeOfReport.h"
 #import "Report.h"
+#import "UserRoles.h"
 
 //Main Filter Options Key
 #define TYPE_FILTER_KEY                 @"type"
@@ -27,6 +28,7 @@
 
 //User Info User Key
 #define REPORT_TYPE_IDS_FOR_NOTIFICATION    @"ArrayIDforPushNotification"
+#define ID_USER_ROLE                        @"UserRoleID"
 
 //Define date format
 #define FORMAT_DATE                             @"dd/MM/yyyy"
@@ -41,8 +43,10 @@
 @property (strong, nonatomic) NSArray *filterOptions;
 @property (strong, nonatomic) CLLocation *currentLocation;
 @property (nonatomic) CGFloat locationMaxDistanceFilter;
+@property (nonatomic, strong) UserRoles *currentUserRole;
 
 - (void)loadTypesOfReportUseCache:(BOOL)useCache OnSuccess:(void (^)(NSArray *))reportSuccess onFailure:(void (^)(NSError *))reportFailure;
+- (void)loadUserRolesUseCache:(BOOL)useCache OnSuccess:(void (^)(NSArray *))reportSuccess onFailure:(void (^)(NSError *))reportFailure;
 
 - (void)loadReportUseCache:(BOOL)useCache withQuery:(KCSQuery *)query OnSuccess:(void (^)(NSArray *))reportSuccess onFailure:(void (^)(NSError *))reportFailure;
 - (void)saveReport:(Report *)report OnSuccess:(void (^)(NSArray *))reportSuccess onFailure:(void (^)(NSError *))reportFailure;
@@ -52,6 +56,7 @@
 
 - (void)saveUserWithInfo:(NSDictionary *)userInfo OnSuccess:(void (^)(NSArray *))reportSuccess onFailure:(void (^)(NSError *))reportFailure;
 - (void)loadUserOnSuccess:(void (^)(NSArray *))reportSuccess onFailure:(void (^)(NSError *))reportFailure;
+- (void)updateUserRole:(NSString *)roleID OnSuccess:(void (^)(NSArray *))reportSuccess onFailure:(void (^)(NSError *))reportFailure;
 
 - (NSArray *)mainFilterKey;
 
