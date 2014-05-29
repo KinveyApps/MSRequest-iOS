@@ -156,6 +156,8 @@
                 }
                 
                 cell.textLabel.text = @"Distance Filte";
+                cell.textLabel.font = [UIFont systemFontOfSize:18];
+                cell.textLabel.textColor = [UIColor blackColor];
                 if (self.useLocationFilter) {
                     [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
                 }else{
