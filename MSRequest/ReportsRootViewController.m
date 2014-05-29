@@ -262,7 +262,7 @@
                                     dispatch_async(dispatch_get_main_queue(), ^{
                                         [DejalBezelActivityView removeView];
                                         if (!error) {
-                                            [[KCSUser activeUser] logout];
+                                            [[AuthenticationHelper instance] logout];
                                             [DataHelper instance].filterOptions = nil;
                                             [self.navigationController popViewControllerAnimated:YES];
                                         }else{

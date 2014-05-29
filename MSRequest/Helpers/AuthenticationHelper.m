@@ -16,6 +16,7 @@
 
 #import "AuthenticationHelper.h"
 #import "SynthesizeSingleton.h"
+#import "DataHelper.h"
 
 @implementation AuthenticationHelper
 
@@ -65,6 +66,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AuthenticationHelper)
 
 - (void)logout
 {
+    [DataHelper instance].locationMaxDistanceFilter = 0;
+    [DataHelper instance].filterOptions = nil;
 	[[KCSUser activeUser] logout];
 }
 
