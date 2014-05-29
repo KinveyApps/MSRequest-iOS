@@ -55,7 +55,7 @@ typedef enum {
         self.filterOptions = [((NSDictionary *)[[DataHelper instance].filterOptions objectAtIndex:self.indexOfFilter]) mutableCopy];
     }
     if (self.filterOptions[TYPE_FILTER_KEY]) {
-        for (TypeOfReport *type in [DataHelper instance].typesOfReport) {
+        for (TypeOfReport *type in [DataHelper instance].currentUserRole.availableTypesForReading) {
             if ([type.entityId isEqualToString:self.filterOptions[TYPE_FILTER_KEY]]) {
                 self.type = type;
                 break;
@@ -88,7 +88,7 @@ typedef enum {
         }break;
             
         case TypeTableViewSectionIndex:{
-            return [[DataHelper instance] typesOfReport].count;
+            return [DataHelper instance].currentUserRole.availableTypesForReading.count;
         }break;
             
         case StateTableViewSectionIndex:{
@@ -131,7 +131,7 @@ typedef enum {
         }break;
             
         case TypeTableViewSectionIndex:{
-            TypeOfReport *typeForIndex = [DataHelper instance].typesOfReport[indexPath.row];
+            TypeOfReport *typeForIndex = [[DataHelper instance].currentUserRole.availableTypesForReading allObjects][indexPath.row];
             return [self labelCellForTableView:tableView
                                      withLabel:typeForIndex.name
                                        checked:[self.filterOptions[TYPE_FILTER_KEY] isEqualToString:typeForIndex.entityId]];
@@ -247,7 +247,7 @@ typedef enum {
         }break;
             
         case TypeTableViewSectionIndex:{
-            TypeOfReport *typeForIndex = [DataHelper instance].typesOfReport[indexPath.row];
+            TypeOfReport *typeForIndex = [[DataHelper instance].currentUserRole.availableTypesForReading allObjects][indexPath.row];
             self.type = typeForIndex;
             if ([self.filterOptions[TYPE_FILTER_KEY] isEqualToString:typeForIndex.entityId]) {
                 [self.filterOptions removeObjectForKey:TYPE_FILTER_KEY];
