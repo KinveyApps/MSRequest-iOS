@@ -73,13 +73,13 @@ typedef enum {
 
 - (NSArray *)typeOfReportNames{
     
-    if ([DataHelper instance].typesOfReport) {
+    if ([DataHelper instance].currentUserRole) {
         
         //Create array of type name
-        if (!_typeOfReportNames.count) {
-            NSMutableArray *typeNames = [NSMutableArray arrayWithCapacity:[DataHelper instance].typesOfReport.count];
+        if (!_typeOfReportNames) {
+            NSMutableArray *typeNames = [NSMutableArray arrayWithCapacity:[DataHelper instance].currentUserRole.availableTypesForCreating.count];
             
-            for (TypeOfReport *type in [DataHelper instance].typesOfReport) {
+            for (TypeOfReport *type in [DataHelper instance].currentUserRole.availableTypesForCreating) {
                 [typeNames addObject:type.name];
             }
             _typeOfReportNames = typeNames;
