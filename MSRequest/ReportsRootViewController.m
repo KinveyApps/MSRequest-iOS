@@ -27,6 +27,7 @@
 #import "DejalActivityView.h"
 #import "EditHomeSreenTableViewController.h"
 #import "NewReportViewController.h"
+#import "AuthenticationHelper.h"
 
 #define MILES_PER_METER     0.000621371192
 
@@ -193,7 +194,12 @@
     self.locationManager.distanceFilter = 1000.0;
     self.locationManager.delegate = self;
     [self.locationManager startUpdatingLocation];
-    
+    if ([DataHelper instance].currentUserRole.availableTypesForCreating.count) {
+        UIBarButtonItem *addBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                                                                          target:self
+                                                                                          action:@selector(newReportButtonPressed:)];
+        [self.navigationItem setRightBarButtonItem:addBarButtonItem animated:YES];
+    }
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self
                             action:@selector(refresh)
@@ -225,9 +231,16 @@
 
 
 - (IBAction)newReportButtonPressed:(id)sender {
-    // animate button
     
-    [self performSegueWithIdentifier:@"kSegueIdentifierNewReport" sender:sender];
+    if ([DataHelper instance].currentUserRole.availableTypesForCreating.count) {
+        [self performSegueWithIdentifier:@"kSegueIdentifierNewReport" sender:sender];
+    }else{
+        [[[UIAlertView alloc] initWithTitle:@"Unavailble Action"
+                                    message:@"You haven't right to create any report."
+                                   delegate:nil
+                          cancelButtonTitle:@"Cancel"
+                          otherButtonTitles:nil] show];
+    }
 
 }
 
