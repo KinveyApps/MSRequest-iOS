@@ -148,30 +148,30 @@ typedef enum {
             }break;
                 
             case TypeNewReportTableViewRowIndex:{
-                LabelTableViewCell *cell = [self labelCellForTableView:tableView
+                UITableViewCell *cell = [self labelCellForTableView:tableView
                                                       withCurrentLabel:self.report.type.name
-                                                        orDefaultLabel:@"Selecte type"];
+                                                        orDefaultLabel:@"Type"];
                 return cell;
             }break;
                 
             case StateNewReportTableViewRowIndex:{
-                LabelTableViewCell *cell = [self labelCellForTableView:tableView
+                UITableViewCell *cell = [self labelCellForTableView:tableView
                                                       withCurrentLabel:self.report.type.reportState[[self.report.state integerValue]]
-                                                        orDefaultLabel: @"Selecte state"];
+                                                        orDefaultLabel: @"State"];
                 return cell;
             }break;
                 
             case LocationNewReportTableViewRowIndex:{
-                LabelTableViewCell *cell = [self labelCellForTableView:tableView
+                UITableViewCell *cell = [self labelCellForTableView:tableView
                                                       withCurrentLabel:self.report.locationString
-                                                        orDefaultLabel:@"Selecte locations"];
+                                                        orDefaultLabel:@"Locations"];
                 return cell;
             }break;
                 
             case DescriptionNewReportTableViewRowIndex:{
-                LabelTableViewCell *cell = [self labelCellForTableView:tableView
+                UITableViewCell *cell = [self labelCellForTableView:tableView
                                                       withCurrentLabel:self.report.descriptionOfReport
-                                                        orDefaultLabel:@"Tap to add description"];
+                                                        orDefaultLabel:@"Description"];
                 return cell;
             }break;
                 
@@ -180,9 +180,9 @@ typedef enum {
                 NSString *additionalAttributeValue = (NSString *)self.additionalAttributedValues[additionalAttributeIndex];
                 
                 if ([self.report.type.additionalAttributesValidValues[additionalAttributeIndex] isKindOfClass:[NSArray class]]) {
-                    LabelTableViewCell *cell = [self labelCellForTableView:tableView
+                    UITableViewCell *cell = [self labelCellForTableView:tableView
                                                           withCurrentLabel:additionalAttributeValue
-                                                            orDefaultLabel:[NSString stringWithFormat:@"Selecte %@", self.report.type.additionalAttributes[additionalAttributeIndex]]];
+                                                            orDefaultLabel:[NSString stringWithFormat:@"%@", ((NSString *)self.report.type.additionalAttributes[additionalAttributeIndex]).capitalizedString]];
                     return cell;
                 }else{
                     TextFieldTableViewCell *cell = [self textFieldCellForTableView:tableView
@@ -231,20 +231,17 @@ typedef enum {
     return cell;
 }
 
-- (LabelTableViewCell *)labelCellForTableView:(UITableView *)tableView withCurrentLabel:(NSString *)currentLabel orDefaultLabel:(NSString *)defaultLabel{
+- (UITableViewCell *)labelCellForTableView:(UITableView *)tableView withCurrentLabel:(NSString *)currentLabel orDefaultLabel:(NSString *)defaultLabel{
     
-    NSString *labelCellID = @"kCellIdentifierLabel";
+    NSString *labelCellID = @"kCellIdentifierRightDetail";
 
-    LabelTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:labelCellID];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:labelCellID];
     if (!cell) {
-        cell = [[LabelTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:labelCellID];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:labelCellID];
     }
     
-    if (currentLabel.length) {
-        cell.label.text = currentLabel;
-    }else{
-        cell.label.text = defaultLabel;
-    }
+    cell.textLabel.text = defaultLabel;
+    cell.detailTextLabel.text = currentLabel;
     
     return cell;
 }
