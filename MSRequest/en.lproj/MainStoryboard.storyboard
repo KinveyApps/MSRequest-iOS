@@ -662,31 +662,29 @@
                                     <outlet property="label" destination="LFh-nC-bDk" id="w1w-bH-YLB"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="kCellIdentifierLabel" id="SOl-2m-uDy" customClass="LabelTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="kCellIdentifierRightDetail" textLabel="zH4-nQ-z6j" detailTextLabel="E2z-8S-rvF" style="IBUITableViewCellStyleValue1" id="SOl-2m-uDy">
                                 <rect key="frame" x="0.0" y="319" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SOl-2m-uDy" id="97D-ZI-7DY">
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Attribute" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="byy-0l-EKu">
-                                            <rect key="frame" x="20" y="11" width="267" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zH4-nQ-z6j">
+                                            <rect key="frame" x="15" y="11" width="33" height="21"/>
+                                            <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="E2z-8S-rvF">
+                                            <rect key="frame" x="241" y="11" width="44" height="21"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="byy-0l-EKu" secondAttribute="trailing" id="2yr-Bt-034"/>
-                                        <constraint firstItem="byy-0l-EKu" firstAttribute="top" secondItem="97D-ZI-7DY" secondAttribute="top" constant="11" id="YlV-6a-MnY"/>
-                                        <constraint firstItem="byy-0l-EKu" firstAttribute="leading" secondItem="97D-ZI-7DY" secondAttribute="leading" constant="20" id="k5j-q5-HeQ"/>
-                                        <constraint firstAttribute="bottom" secondItem="byy-0l-EKu" secondAttribute="bottom" constant="11" id="u3o-iB-Tlg"/>
-                                    </constraints>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="label" destination="byy-0l-EKu" id="eDx-Ko-nI8"/>
-                                </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="kCellIdentifierUpdateStatus" id="zpV-CO-2To" userLabel="Submit Table View Cell - kCellIdentifierSubmit">
                                 <rect key="frame" x="0.0" y="363" width="320" height="44"/>

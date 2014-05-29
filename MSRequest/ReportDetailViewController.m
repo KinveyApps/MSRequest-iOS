@@ -137,18 +137,19 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
             }break;
                 
             case TypeReportTableViewRowIndex:{
-                LabelTableViewCell *cell = [self labelCellForTableView:tableView
-                                                      withCurrentLabel:self.report.type.name
-                                                        orDefaultLabel:@"No type"];
+                UITableViewCell *cell = [self labelCellForTableView:tableView
+                                                          withLabel:@"Type"
+                                                     andDetailLabel:self.report.type.name.length ? self.report.type.name : @"No type"];
+                
                 [cell setAccessoryType:UITableViewCellAccessoryNone];
                 [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
                 return cell;
             }break;
                 
             case StateReportTableViewRowIndex:{
-                LabelTableViewCell *cell = [self labelCellForTableView:tableView
-                                                      withCurrentLabel:self.report.type.reportState[[self.report.state integerValue]]
-                                                        orDefaultLabel: @"No state"];
+                UITableViewCell *cell = [self labelCellForTableView:tableView
+                                                          withLabel:@"State"
+                                                     andDetailLabel:self.report.type.reportState[[self.report.state integerValue]]];
                 if (!self.canChangeState) {
                     [cell setAccessoryType:UITableViewCellAccessoryNone];
                     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
@@ -157,18 +158,20 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
             }break;
                 
             case LocationReportTableViewRowIndex:{
-                LabelTableViewCell *cell = [self labelCellForTableView:tableView
-                                                      withCurrentLabel:self.report.locationString
-                                                        orDefaultLabel:@"No locations"];
+                UITableViewCell *cell = [self labelCellForTableView:tableView
+                                                          withLabel:@"Locations"
+                                                     andDetailLabel:self.report.locationString.length ? self.report.locationString : @"No locations"];
+                
                 [cell setAccessoryType:UITableViewCellAccessoryNone];
                 [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
                 return cell;
             }break;
                 
             case DescriptionReportTableViewRowIndex:{
-                LabelTableViewCell *cell = [self labelCellForTableView:tableView
-                                                      withCurrentLabel:self.report.descriptionOfReport
-                                                        orDefaultLabel:@"No description"];
+                UITableViewCell *cell = [self labelCellForTableView:tableView
+                                                          withLabel:@"Description"
+                                                     andDetailLabel:self.report.descriptionOfReport.length ? self.report.descriptionOfReport : @"No description"];
+                
                 [cell setAccessoryType:UITableViewCellAccessoryNone];
                 [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
                 return cell;
@@ -176,9 +179,9 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
                 
             default:{
                 NSInteger additionalAttributeIndex = indexPath.row - FirstAdditionalAttributeReportTableViewRowIndex;
-                LabelTableViewCell *cell = [self labelCellForTableView:tableView
-                                                      withCurrentLabel:self.report.valuesAdditionalAttributes[additionalAttributeIndex]
-                                                        orDefaultLabel:[NSString stringWithFormat:@"No %@", self.report.type.additionalAttributes[additionalAttributeIndex]]];
+                UITableViewCell *cell = [self labelCellForTableView:tableView
+                                                          withLabel:((NSString *)self.report.type.additionalAttributes[additionalAttributeIndex]).capitalizedString
+                                                     andDetailLabel:((NSString *)self.report.type.additionalAttributes[additionalAttributeIndex]).length ? ((NSString *)self.report.type.additionalAttributes[additionalAttributeIndex]) : @"Not set"];
                 [cell setAccessoryType:UITableViewCellAccessoryNone];
                 [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
                 return cell;
@@ -234,20 +237,17 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
     return cell;
 }
 
-- (LabelTableViewCell *)labelCellForTableView:(UITableView *)tableView withCurrentLabel:(NSString *)currentLabel orDefaultLabel:(NSString *)defaultLabel{
+- (UITableViewCell *)labelCellForTableView:(UITableView *)tableView withLabel:(NSString *)label andDetailLabel:(NSString *)detailLabel{
     
-    NSString *labelCellID = @"kCellIdentifierLabel";
+    NSString *labelCellID = @"kCellIdentifierRightDetail";
     
-    LabelTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:labelCellID];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:labelCellID];
     if (!cell) {
-        cell = [[LabelTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:labelCellID];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:labelCellID];
     }
     
-    if (currentLabel.length) {
-        cell.label.text = currentLabel;
-    }else{
-        cell.label.text = defaultLabel;
-    }
+    cell.textLabel.text = label;
+    cell.detailTextLabel.text = detailLabel;
     
     return cell;
 }
