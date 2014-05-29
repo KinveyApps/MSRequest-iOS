@@ -48,6 +48,8 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
 @property (nonatomic) BOOL statusWasChanged;
 @property (nonatomic) NSInteger currentServerState;
 @property (nonatomic, strong) UIBarButtonItem *defaultBackBarItem;
+@property (nonatomic) BOOL canChangeState;
+
 @end
 
 @implementation ReportDetailViewController
@@ -57,6 +59,13 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
 
 - (void)viewDidLoad{
     [super viewDidLoad];
+    self.canChangeState = NO;
+    for (TypeOfReport *type in [DataHelper instance].currentUserRole.availableTypesForChangingStatus) {
+        if ([type.entityId isEqualToString:self.report.type.entityId]) {
+            self.canChangeState = YES;
+            break;
+        }
+    }
     self.navigationItem.title = [self.report.type.name capitalizedString];
     self.currentServerState = [self.report.state integerValue];
     self.defaultBackBarItem = self.navigationItem.leftBarButtonItem;
@@ -140,6 +149,10 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
                 LabelTableViewCell *cell = [self labelCellForTableView:tableView
                                                       withCurrentLabel:self.report.type.reportState[[self.report.state integerValue]]
                                                         orDefaultLabel: @"No state"];
+                if (!self.canChangeState) {
+                    [cell setAccessoryType:UITableViewCellAccessoryNone];
+                    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+                }
                 return cell;
             }break;
                 
@@ -260,21 +273,23 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
                                       sender:self];
         }
         if (indexPath.row == StateReportTableViewRowIndex) {
-            AHKActionSheet *actionSheet = [[AHKActionSheet alloc] initWithTitle:@"Change status"];
-            actionSheet.cancelHandler = ^(AHKActionSheet *actionSheet){
-                [self.tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:StateReportTableViewRowIndex
-                                                                          inSection:MainReportTableViewSectionIndex]
-                                              animated:YES];
-            };
-            for (NSInteger i = 0; i < self.report.type.reportState.count; i++) {
-                NSString *state = self.report.type.reportState[i];
-                [actionSheet addButtonWithTitle:state
-                                           type:AHKActionSheetButtonTypeDefault
-                                        handler:^(AHKActionSheet *actionSheet){
-                                            [self changeStatusTo:i];
-                                        }];
+            if (self.canChangeState) {
+                AHKActionSheet *actionSheet = [[AHKActionSheet alloc] initWithTitle:@"Change status"];
+                actionSheet.cancelHandler = ^(AHKActionSheet *actionSheet){
+                    [self.tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:StateReportTableViewRowIndex
+                                                                              inSection:MainReportTableViewSectionIndex]
+                                                  animated:YES];
+                };
+                for (NSInteger i = 0; i < self.report.type.reportState.count; i++) {
+                    NSString *state = self.report.type.reportState[i];
+                    [actionSheet addButtonWithTitle:state
+                                               type:AHKActionSheetButtonTypeDefault
+                                            handler:^(AHKActionSheet *actionSheet){
+                                                [self changeStatusTo:i];
+                                            }];
+                }
+                [actionSheet show];
             }
-            [actionSheet show];
         }
         
     }else if (indexPath.section == ChangeStatusReportTableViewSectionIndex){
