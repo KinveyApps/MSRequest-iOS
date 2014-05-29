@@ -71,7 +71,19 @@
                                                                                            withQuery:nil
                                                                                            OnSuccess:^(NSArray *reports){
                                                                                                
-                                                                                               [self performSegueWithIdentifier:@"kSegueIdentifierPushReportRootView" sender:self];
+                                                                                               NSString *userRoleID = [[KCSUser activeUser] getValueForAttribute:ID_USER_ROLE];
+                                                                                               if (userRoleID.length) {
+                                                                                                   [[DataHelper instance] updateUserRole:userRoleID
+                                                                                                                               OnSuccess:^(NSArray *users){
+                                                                                                                                   [self performSegueWithIdentifier:@"kSegueIdentifierPushReportRootView" sender:self];
+                                                                                                                               }onFailure:^(NSError *error){
+                                                                                                                                   
+                                                                                                                                   [self showSignInViewAndAlertWithError:error];
+                                                                                                                               }];
+                                                                                               }
+                                                                                               
+                                                                                               
+                                                                                               
                                                                                                
                                                                                            }onFailure:^(NSError *error){
                                                                                                
