@@ -16,6 +16,7 @@
 
 #import "DataHelper.h"
 #import "UserRoles.h"
+#import "AuthenticationHelper.h"
 
 #define FILTER_OPTIONS_USER_DEFAULTS_KEY @"FilterOptions"
 
@@ -229,6 +230,23 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
     return resultQuery ? resultQuery : [KCSQuery query];
 }
 
+- (KCSQuery *)getQueryForUserRoleAvailableReading:(UserRoles *)role{
+    
+    //Kinvey: create query with condition which always return 0 object
+    //        for case if role not contains type for avalible reading
+    KCSQuery *query = [KCSQuery queryOnField:@"type._id"
+                      withExactMatchForValue:@"idWhichNotExist"];
+    
+    //Add condition for available reading type
+    for (TypeOfReport *type in role.availableTypesForReading) {
+        query = [query queryByJoiningQuery:[KCSQuery queryOnField:@"type._id"
+                                           withExactMatchForValue:type.entityId]
+                             usingOperator:kKCSOr];
+    }
+    
+    return query;
+}
+
 - (NSString *)regexForContaintSubstring:(NSString *)substring{
     
     //Return string of regex format for search substring
@@ -267,6 +285,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
     
 }
 
+
 #pragma mark - User Roles
 #pragma mark - Load Entity
 
@@ -287,6 +306,24 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
                                          cachePolicy:useCache ? KCSCachePolicyLocalFirst : KCSCachePolicyNetworkFirst];
 }
 
+- (void)updateUserRole:(NSString *)roleID OnSuccess:(void (^)(NSArray *))reportSuccess onFailure:(void (^)(NSError *))reportFailure{
+    
+    [self.userRolesLinkedAppdataStore loadObjectWithID:roleID
+                                   withCompletionBlock:^(NSArray *objectsOrNil, NSError *errorOrNil) {
+                                       self.currentUserRole = (UserRoles *)[objectsOrNil firstObject];
+                                       dispatch_async(dispatch_get_main_queue(), ^{
+                                           if (!errorOrNil) {
+                                               if (reportSuccess) {
+                                                   reportSuccess(objectsOrNil);
+                                               }
+                                           }else{
+                                               if (reportFailure) {
+                                                   reportFailure(errorOrNil);
+                                               }
+                                           }
+                                       });
+                                   }withProgressBlock:nil];
+}
 
 
 #pragma mark - Reports
@@ -295,7 +332,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
 - (void)loadReportUseCache:(BOOL)useCache withQuery:(KCSQuery *)query OnSuccess:(void (^)(NSArray *))reportSuccess onFailure:(void (^)(NSError *))reportFailure{
     
     //Kinvey: Load entity from Quote collection which correspond query
-	[self.reportsLinkedAppdataStore queryWithQuery:(query ? query : self.currentQuery)
+	[self.reportsLinkedAppdataStore queryWithQuery:(query ? query : (self.filterOptions.count ? self.currentQuery : [self getQueryForUserRoleAvailableReading:self.currentUserRole]))
                                withCompletionBlock:^(NSArray *objectsOrNil, NSError *errorOrNil) {
                                    
                                    //Return to main thread for update UI
@@ -468,25 +505,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataHelper)
         });
         
     }];
-}
-
-- (void)updateUserRole:(NSString *)roleID OnSuccess:(void (^)(NSArray *))reportSuccess onFailure:(void (^)(NSError *))reportFailure{
-    
-    [self.userRolesLinkedAppdataStore loadObjectWithID:roleID
-                                   withCompletionBlock:^(NSArray *objectsOrNil, NSError *errorOrNil) {
-                                       self.currentUserRole = (UserRoles *)[objectsOrNil firstObject];
-                                       dispatch_async(dispatch_get_main_queue(), ^{
-                                           if (!errorOrNil) {
-                                               if (reportSuccess) {
-                                                   reportSuccess(objectsOrNil);
-                                               }
-                                           }else{
-                                               if (reportFailure) {
-                                                   reportFailure(errorOrNil);
-                                               }
-                                           }
-                                       });
-                                   }withProgressBlock:nil];
 }
 
 
