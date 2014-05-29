@@ -45,7 +45,7 @@
 - (NSMutableSet *)reportTypeIDforNotification{
     
     if (!_reportTypeIDforNotification) {
-        _reportTypeIDforNotification = [NSMutableSet setWithCapacity:[DataHelper instance].typesOfReport.count];
+        _reportTypeIDforNotification = [NSMutableSet setWithCapacity:[DataHelper instance].currentUserRole.availableTypesForReading.count];
     }
     return _reportTypeIDforNotification;
 }
@@ -88,7 +88,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
     // Return the number of rows in the section.
-    return [DataHelper instance].typesOfReport.count;
+    return [DataHelper instance].currentUserRole.availableTypesForReading.count;
 }
 
 
@@ -100,7 +100,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"kCellIdentifierBasic"];
     }
    
-    TypeOfReport *type = (TypeOfReport *)[DataHelper instance].typesOfReport[indexPath.row];
+    TypeOfReport *type = (TypeOfReport *)[[DataHelper instance].currentUserRole.availableTypesForReading allObjects][indexPath.row];
     
     cell.textLabel.text = [type.name capitalizedString];
     if ([self.reportTypeIDforNotification containsObject:type.entityId]) {
@@ -127,7 +127,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    TypeOfReport *type = (TypeOfReport *)[DataHelper instance].typesOfReport[indexPath.row];
+    TypeOfReport *type = (TypeOfReport *)[[DataHelper instance].currentUserRole.availableTypesForReading allObjects][indexPath.row];
     
     if ([self.reportTypeIDforNotification containsObject:type.entityId]) {
         [self.reportTypeIDforNotification removeObject:type.entityId];
