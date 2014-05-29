@@ -16,6 +16,8 @@
 #import "SignInViewController.h"
 #import "AuthenticationHelper.h"
 #import "DejalActivityView.h"
+#import "DataHelper.h"
+#import "AHKActionSheet.h"
 
 @interface SignInViewController ()
 
@@ -104,32 +106,80 @@
 
 - (IBAction)pressedSignUp:(id)sender{
     
+    void (^errorBlock)(NSError *) = ^(NSError *error){
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                            message:error.localizedDescription ? error.localizedDescription : @"Some wrong"
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+        [alertView show];
+    };
+    
 	[DejalBezelActivityView activityViewForView:self.view.window];
     
-    //Sign up new Kinvey user 
-	[[AuthenticationHelper instance] signUpWithUsername:self.usernameField.text
-                                               password:self.passwordField.text
-											  onSuccess:^{
-                                                  
-												  [DejalActivityView removeView];
-                                                  
-                                                  [self dismissViewControllerAnimated:YES completion:nil];
-                                                  
-                                                  //Start push service
-                                                  [KCSPush registerForPush];
-
-											  }
-											  onFailure:^(NSError *error) {
-                                                  
-												  [DejalBezelActivityView removeView];
-                                                  
-                                                  UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                                                      message:error.localizedDescription ? error.localizedDescription : @"Some wrong"
-                                                                                                     delegate:nil
-                                                                                            cancelButtonTitle:@"OK"
-                                                                                            otherButtonTitles:nil];
-                                                  [alertView show];
-											  }];
+    [[AuthenticationHelper instance] loginWithUsername:@"demoMSRequest"
+                                              password:@"123456"
+											 onSuccess:^{
+                                                 
+                                                 [[DataHelper instance] loadUserRolesUseCache:YES
+                                                                                    OnSuccess:^(NSArray *userRoles){
+                                                                                        
+                                                                                        [[AuthenticationHelper instance] logout];
+                                                                                        
+                                                                                        [DejalActivityView removeView];
+                                                                                        
+                                                                                        AHKActionSheet *actionSheet = [[AHKActionSheet alloc] initWithTitle:@"Select User Role"];
+                                                                                        
+                                                                                        for (UserRoles *role in userRoles) {
+                                                                                            NSString *buttonTitle = [role.name capitalizedString];
+                                                                                            [actionSheet addButtonWithTitle:buttonTitle
+                                                                                                                       type:AHKActionSheetButtonTypeDefault
+                                                                                                                    handler:^(AHKActionSheet *actionSheet){
+                                                                                                                        
+                                                                                                                        [DejalBezelActivityView activityViewForView:self.view.window];
+                                                                                                                        
+                                                                                                                        //Sign up new Kinvey user
+                                                                                                                        [[AuthenticationHelper instance] signUpWithUsername:self.usernameField.text
+                                                                                                                                                                   password:self.passwordField.text
+                                                                                                                                                                  onSuccess:^{
+                                                                                                                                                                      
+                                                                                                                                                                      [[DataHelper instance] saveUserWithInfo:@{ID_USER_ROLE: role.kinveyId}
+                                                                                                                                                                                                    OnSuccess:^(NSArray *users){
+                                                                                                                                                                                                        
+                                                                                                                                                                                                        [DejalActivityView removeView];
+                                                                                                                                                                                                        
+                                                                                                                                                                                                        [self dismissViewControllerAnimated:YES completion:nil];
+                                                                                                                                                                                                        
+                                                                                                                                                                                                        //Start push service
+                                                                                                                                                                                                        [KCSPush registerForPush];
+                                                                                                                                                                                                        
+                                                                                                                                                                                                    }onFailure:^(NSError *error){
+                                                                                                                                                                                                        
+                                                                                                                                                                                                        [DejalBezelActivityView removeView];
+                                                                                                                                                                                                        errorBlock(error);
+                                                                                                                                                                                                    }];
+                                                                                                                                                                      
+                                                                                                                                                                  }
+                                                                                                                                                                  onFailure:^(NSError *error){
+                                                                                                                                                                      [DejalBezelActivityView removeView];
+                                                                                                                                                                      
+                                                                                                                                                                      errorBlock(error);
+                                                                                                                                                                  }];
+                                                                                                                    }];
+                                                                                        }
+                                                                                        [actionSheet show];
+                                                                                    }onFailure:^(NSError *error){
+                                                                                        [DejalActivityView removeView];
+                                                                                        
+                                                                                        errorBlock(error);
+                                                                                    }];
+                                             }
+                                             onFailure:^(NSError *error){
+                                                 [DejalActivityView removeView];
+                                                 
+                                                 errorBlock(error);
+                                             }];
 }
 
 - (IBAction)pressedLogin:(id)sender{
