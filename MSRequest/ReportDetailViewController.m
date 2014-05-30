@@ -181,7 +181,7 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
                 NSInteger additionalAttributeIndex = indexPath.row - FirstAdditionalAttributeReportTableViewRowIndex;
                 UITableViewCell *cell = [self labelCellForTableView:tableView
                                                           withLabel:((NSString *)self.report.type.additionalAttributes[additionalAttributeIndex]).capitalizedString
-                                                     andDetailLabel:((NSString *)self.report.type.additionalAttributes[additionalAttributeIndex]).length ? ((NSString *)self.report.type.additionalAttributes[additionalAttributeIndex]) : @"Not set"];
+                                                     andDetailLabel:((NSString *)self.report.valuesAdditionalAttributes[additionalAttributeIndex]).length ? ((NSString *)self.report.valuesAdditionalAttributes[additionalAttributeIndex]) : @"Not set"];
                 [cell setAccessoryType:UITableViewCellAccessoryNone];
                 [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
                 return cell;
