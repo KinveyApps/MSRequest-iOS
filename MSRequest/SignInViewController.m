@@ -215,10 +215,43 @@
 
 - (IBAction)demoPress:(id)sender {
     
-    self.usernameField.text = @"demoMSRequest";
-    self.passwordField.text = @"123456";
-    [self pressedLogin:sender];
-    
+    AHKActionSheet *actionSheet = [[AHKActionSheet alloc] initWithTitle:@"Select Guest Role"];
+    [actionSheet addButtonWithTitle:@"Employee"
+                               type:AHKActionSheetButtonTypeDefault
+                            handler:^(AHKActionSheet *actionSheet){
+                                self.usernameField.text = @"demoEmployeeMSRequest";
+                                self.passwordField.text = @"123456";
+                                [self pressedLogin:sender];
+                            }];
+    [actionSheet addButtonWithTitle:@"Hardware Engineer"
+                               type:AHKActionSheetButtonTypeDefault
+                            handler:^(AHKActionSheet *actionSheet){
+                                self.usernameField.text = @"demoHardwareEngineerMSRequest";
+                                self.passwordField.text = @"123456";
+                                [self pressedLogin:sender];
+                            }];
+    [actionSheet addButtonWithTitle:@"Software Engineer"
+                               type:AHKActionSheetButtonTypeDefault
+                            handler:^(AHKActionSheet *actionSheet){
+                                self.usernameField.text = @"demoSoftwareEngineerMSRequest";
+                                self.passwordField.text = @"123456";
+                                [self pressedLogin:sender];
+                            }];
+    [actionSheet addButtonWithTitle:@"Security Engineer"
+                               type:AHKActionSheetButtonTypeDefault
+                            handler:^(AHKActionSheet *actionSheet){
+                                self.usernameField.text = @"demoSecurityEngineerMSRequest";
+                                self.passwordField.text = @"123456";
+                                [self pressedLogin:sender];
+                            }];
+    [actionSheet addButtonWithTitle:@"Manager"
+                               type:AHKActionSheetButtonTypeDefault
+                            handler:^(AHKActionSheet *actionSheet){
+                                self.usernameField.text = @"demoManagerMSRequest";
+                                self.passwordField.text = @"123456";
+                                [self pressedLogin:sender];
+                            }];
+    [actionSheet show];
 }
 
 #pragma mark UITextFieldDelegate methods
