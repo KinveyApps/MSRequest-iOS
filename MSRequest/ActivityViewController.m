@@ -80,9 +80,9 @@
                                                                                                                                    
                                                                                                                                    [self showSignInViewAndAlertWithError:error];
                                                                                                                                }];
+                                                                                               }else{
+                                                                                                   [self showSignInViewAndAlertWithError:nil];
                                                                                                }
-                                                                                               
-                                                                                               
                                                                                                
                                                                                                
                                                                                            }onFailure:^(NSError *error){
