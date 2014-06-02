@@ -125,6 +125,10 @@
                                                  [[DataHelper instance] loadUserRolesUseCache:YES
                                                                                     OnSuccess:^(NSArray *userRoles){
                                                                                         
+                                                                                        [[KCSPush sharedPush] unRegisterDeviceToken:^(BOOL success, NSError* error){
+                                                                                            
+                                                                                        }];
+                                                                                        
                                                                                         [[AuthenticationHelper instance] logout];
                                                                                         
                                                                                         [DejalActivityView removeView];
