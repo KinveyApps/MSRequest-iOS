@@ -19,6 +19,7 @@
 #import "DataHelper.h"
 #import "AHKActionSheet.h"
 
+
 @interface SignInViewController ()
 
 @property (weak, nonatomic) IBOutlet UIButton *signUpButton;
@@ -34,6 +35,8 @@
 @implementation SignInViewController
 
 
+#pragma mark - Initialization
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
     
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -44,10 +47,18 @@
     return self;
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
+
+#pragma mark - View lifecycle
+
 - (void)viewWillAppear:(BOOL)animated{
     
 	[super viewWillAppear:animated];
     
+    //Subcribe on keyboard notification
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     [notificationCenter addObserver:self
                            selector:@selector(keyboardWillShow:)
@@ -65,6 +76,9 @@
 
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
+
+#pragma mark - Keyboard notification
 
 -(void)keyboardWillShow:(NSNotification *)notification{
 
@@ -104,6 +118,9 @@
                      completion:nil];
 }
 
+
+#pragma mark - Actions
+
 - (IBAction)pressedSignUp:(id)sender{
     
     void (^errorBlock)(NSError *) = ^(NSError *error){
@@ -118,6 +135,7 @@
     
 	[DejalBezelActivityView activityViewForView:self.view.window];
     
+    //Login with demo account for get avaliable role list
     [[AuthenticationHelper instance] loginWithUsername:@"demoMSRequest"
                                               password:@"123456"
 											 onSuccess:^{
@@ -125,18 +143,20 @@
                                                  [[DataHelper instance] loadUserRolesUseCache:YES
                                                                                     OnSuccess:^(NSArray *userRoles){
                                                                                         
-                                                                                        [[KCSPush sharedPush] unRegisterDeviceToken:^(BOOL success, NSError* error){
-                                                                                            
-                                                                                        }];
+                                                                                        //Kinvey: unregister device token for push notification
+                                                                                        [[KCSPush sharedPush] unRegisterDeviceToken:^(BOOL success, NSError* error){}];
                                                                                         
+                                                                                        //Log out demo account
                                                                                         [[AuthenticationHelper instance] logout];
                                                                                         
                                                                                         [DejalActivityView removeView];
                                                                                         
                                                                                         AHKActionSheet *actionSheet = [[AHKActionSheet alloc] initWithTitle:@"Select User Role"];
                                                                                         
+                                                                                        //Create action sheet with list avaliable user role
                                                                                         for (UserRoles *role in userRoles) {
                                                                                             NSString *buttonTitle = [role.name capitalizedString];
+                                                                                            
                                                                                             [actionSheet addButtonWithTitle:buttonTitle
                                                                                                                        type:AHKActionSheetButtonTypeDefault
                                                                                                                     handler:^(AHKActionSheet *actionSheet){
@@ -148,6 +168,7 @@
                                                                                                                                                                    password:self.passwordField.text
                                                                                                                                                                   onSuccess:^{
                                                                                                                                                                       
+                                                                                                                                                                      //Set selected user role
                                                                                                                                                                       [[DataHelper instance] saveUserWithInfo:@{ID_USER_ROLE: role.kinveyId}
                                                                                                                                                                                                     OnSuccess:^(NSArray *users){
                                                                                                                                                                                                         
@@ -219,6 +240,7 @@
 
 - (IBAction)demoPress:(id)sender {
     
+    //Create action sheet with list avaliable demo accounts with different user's role
     AHKActionSheet *actionSheet = [[AHKActionSheet alloc] initWithTitle:@"Select Guest Role"];
     [actionSheet addButtonWithTitle:@"Employee"
                                type:AHKActionSheetButtonTypeDefault
@@ -270,10 +292,6 @@
 	}
     
 	return YES;
-}
-
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
 }
 
 @end

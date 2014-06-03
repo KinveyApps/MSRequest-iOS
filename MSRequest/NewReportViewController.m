@@ -66,6 +66,7 @@ typedef enum {
 
 @end
 
+
 @implementation NewReportViewController
 
 
@@ -75,7 +76,7 @@ typedef enum {
     
     if ([DataHelper instance].currentUserRole) {
         
-        //Create array of type name
+        //Create array of type name reading avaliable for current role
         if (!_typeOfReportNames) {
             NSMutableArray *typeNames = [NSMutableArray arrayWithCapacity:[DataHelper instance].currentUserRole.availableTypesForCreating.count];
             
@@ -107,6 +108,7 @@ typedef enum {
 #pragma mark - Data Source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
     if (section == MainNewReportTableViewSectionIndex) {
         if (self.report.type) {
             
@@ -114,22 +116,25 @@ typedef enum {
             
         }else{
             
-            return 2;
+            return 2;   //add image and select type
         }
     }else if (section == SubmitNewReportTableViewSectionIndex){
         if (self.report.type && self.image) {
             
-            return 1;
+            return 1;   //submit report
         }
     }
     return  0;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    
     if (self.report.type && self.image) {
-        return 2;
+        
+        return 2;   //report info and submit report
     }else{
-        return 1;
+        
+        return 1;   //only report info
     }
 }
 
@@ -149,29 +154,29 @@ typedef enum {
                 
             case TypeNewReportTableViewRowIndex:{
                 UITableViewCell *cell = [self labelCellForTableView:tableView
-                                                      withCurrentLabel:self.report.type.name
-                                                        orDefaultLabel:@"Type"];
+                                                      withValue:self.report.type.name
+                                                        forLabel:@"Type"];
                 return cell;
             }break;
                 
             case StateNewReportTableViewRowIndex:{
                 UITableViewCell *cell = [self labelCellForTableView:tableView
-                                                      withCurrentLabel:self.report.type.reportState[[self.report.state integerValue]]
-                                                        orDefaultLabel: @"State"];
+                                                      withValue:self.report.type.reportState[[self.report.state integerValue]]
+                                                        forLabel: @"State"];
                 return cell;
             }break;
                 
             case LocationNewReportTableViewRowIndex:{
                 UITableViewCell *cell = [self labelCellForTableView:tableView
-                                                      withCurrentLabel:self.report.locationString
-                                                        orDefaultLabel:@"Locations"];
+                                                      withValue:self.report.locationString
+                                                        forLabel:@"Locations"];
                 return cell;
             }break;
                 
             case DescriptionNewReportTableViewRowIndex:{
                 UITableViewCell *cell = [self labelCellForTableView:tableView
-                                                      withCurrentLabel:self.report.descriptionOfReport
-                                                        orDefaultLabel:@"Description"];
+                                                      withValue:self.report.descriptionOfReport
+                                                        forLabel:@"Description"];
                 return cell;
             }break;
                 
@@ -180,11 +185,15 @@ typedef enum {
                 NSString *additionalAttributeValue = (NSString *)self.additionalAttributedValues[additionalAttributeIndex];
                 
                 if ([self.report.type.additionalAttributesValidValues[additionalAttributeIndex] isKindOfClass:[NSArray class]]) {
+                    
+                    //attribut with list avaliable values
                     UITableViewCell *cell = [self labelCellForTableView:tableView
-                                                          withCurrentLabel:additionalAttributeValue
-                                                            orDefaultLabel:[NSString stringWithFormat:@"%@", ((NSString *)self.report.type.additionalAttributes[additionalAttributeIndex]).capitalizedString]];
+                                                          withValue:additionalAttributeValue
+                                                            forLabel:[NSString stringWithFormat:@"%@", ((NSString *)self.report.type.additionalAttributes[additionalAttributeIndex]).capitalizedString]];
                     return cell;
                 }else{
+                    
+                    //atribut with value wich user can type in keyboard
                     TextFieldTableViewCell *cell = [self textFieldCellForTableView:tableView
                                                                    withCurrentText:additionalAttributeValue
                                                                     andPlaceholder:[NSString stringWithFormat:@"Enter %@", self.report.type.additionalAttributes[additionalAttributeIndex]]];
@@ -231,7 +240,7 @@ typedef enum {
     return cell;
 }
 
-- (UITableViewCell *)labelCellForTableView:(UITableView *)tableView withCurrentLabel:(NSString *)currentLabel orDefaultLabel:(NSString *)defaultLabel{
+- (UITableViewCell *)labelCellForTableView:(UITableView *)tableView withValue:(NSString *)value forLabel:(NSString *)label{
     
     NSString *labelCellID = @"kCellIdentifierRightDetail";
 
@@ -240,8 +249,8 @@ typedef enum {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:labelCellID];
     }
     
-    cell.textLabel.text = defaultLabel;
-    cell.detailTextLabel.text = currentLabel;
+    cell.textLabel.text = label;
+    cell.detailTextLabel.text = value;
     
     return cell;
 }
@@ -292,6 +301,7 @@ typedef enum {
             case PhotoNewReportTableViewRowIndex:{
                 AHKActionSheet *actionSheet = [[AHKActionSheet alloc] initWithTitle:@"Add Image"];
                 
+                //create action sheet with list avaliable source of image
                 if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
                     [actionSheet addButtonWithTitle:@"Take Photo"
                                               image:[UIImage imageNamed:@"GetFoto"]
@@ -302,6 +312,7 @@ typedef enum {
                                                 [self.navigationController setNavigationBarHidden:YES animated:NO];
                                             }];
                 }
+                
                 if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
                     [actionSheet addButtonWithTitle:@"Choose Existing Photo"
                                               image:[UIImage imageNamed:@"GetFromAlbum"]

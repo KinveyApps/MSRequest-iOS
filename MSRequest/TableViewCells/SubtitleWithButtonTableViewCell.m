@@ -18,6 +18,9 @@
 
 @implementation SubtitleWithButtonTableViewCell
 
+
+#pragma mark - Actions
+
 - (IBAction)rigthButtonPress:(UIButton *)sender {
     
     [self.delegate rigthButtonPress:self];

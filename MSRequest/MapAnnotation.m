@@ -19,7 +19,11 @@
 #import "DataHelper.h"
 
 @implementation MapAnnotation
+
 @synthesize subtitle=_subtitle;
+
+
+#pragma mark - Initialization
 
 - (id)initWithCoordinate:(CLLocationCoordinate2D)myCoord title:(NSString *)myTitle {
     self = [super init];
@@ -51,6 +55,9 @@
     }
     return self;
 }
+
+
+#pragma mark - Setters and Getters
 
 - (NSString *) subtitle {
     if (_subtitle == nil) {

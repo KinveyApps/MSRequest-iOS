@@ -20,6 +20,9 @@
 
 @implementation ActivityViewController
 
+
+#pragma mark - Initialization
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -29,14 +32,12 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    if (![AuthenticationHelper instance].isSignedIn) {
-        [self performSegueWithIdentifier:@"kSegueIdentifierModalSignInView" sender:self];
-    }
+
+#pragma mark - View lifecycle
+
+- (void)viewDidLoad{
     
-    self.navigationController.toolbarHidden = YES;
+    [super viewDidLoad];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -47,12 +48,19 @@
     self.navigationController.toolbarHidden = YES;
     
     if ([AuthenticationHelper instance].isSignedIn) {
-        
         [self preloadDataAndOpenReportRootView];
     }else{
-        [self performSegueWithIdentifier:@"kSegueIdentifierModalSignInView" sender:self];
+        [self performSegueWithIdentifier:@"kSegueIdentifierModalSignInView"
+                                  sender:self];
     }
 }
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
+
+#pragma mark - Utility
 
 - (void)preloadDataAndOpenReportRootView{
     
@@ -111,10 +119,6 @@
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
     [alertView show];
-}
-
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
 }
 
 @end

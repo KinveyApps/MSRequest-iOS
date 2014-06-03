@@ -19,9 +19,14 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
+
 @end
 
+
 @implementation KinveyImageView
+
+
+#pragma mark - Initialization
 
 - (id)initWithFrame:(CGRect)frame{
     
@@ -48,6 +53,9 @@
     self.view.frame = self.bounds;
 }
 
+
+#pragma mark - Setter
+
 - (void)setKinveyID:(NSString *)kinveyID{
         
     if (kinveyID.length) {
@@ -57,6 +65,7 @@
             [self.spinner startAnimating];
             
             self.imageView.image = nil;
+            
             //Kinvey: Laod image file
             [KCSFileStore downloadFile:kinveyID                         //File ID
                                options:@{KCSFileOnlyIfNewer : @(YES)}   //Get file from cache if can
@@ -85,6 +94,9 @@
         self.imageView.image = nil;
     }
 }
+
+
+#pragma mark - Utility
 
 - (UIImage *)imageWithImage:(UIImage *)image size:(CGSize)size {
     

@@ -27,9 +27,7 @@
 
 @end
 
-@interface NewReportViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, 
-PickerTableViewControllerDelegate, MapViewControllerDelegate, DescriptionEditorViewControllerDelegate, 
-UITextFieldDelegate, MapAnnotationDelegate>
+@interface NewReportViewController : UIViewController <UIImagePickerControllerDelegate, PickerTableViewControllerDelegate, MapViewControllerDelegate, DescriptionEditorViewControllerDelegate, UITextFieldDelegate, MapAnnotationDelegate>
 
 @property (strong, nonatomic) Report *report;
 

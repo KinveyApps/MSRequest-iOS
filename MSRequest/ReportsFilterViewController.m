@@ -37,7 +37,11 @@ typedef enum {
 
 @end
 
+
 @implementation ReportsFilterViewController
+
+
+#pragma mark - Setters and Getters
 
 - (NSMutableDictionary *)filterOptions{
     if (!_filterOptions) {
@@ -46,15 +50,21 @@ typedef enum {
     return _filterOptions;
 }
 
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     if ([DataHelper instance].filterOptions.count > self.indexOfFilter){
+        
+        //load filter options for edit
         self.filterOptions = [((NSDictionary *)[[DataHelper instance].filterOptions objectAtIndex:self.indexOfFilter]) mutableCopy];
     }
     if (self.filterOptions[TYPE_FILTER_KEY]) {
+        
+        //find filter type by type id
         for (TypeOfReport *type in [DataHelper instance].currentUserRole.availableTypesForReading) {
             if ([type.entityId isEqualToString:self.filterOptions[TYPE_FILTER_KEY]]) {
                 self.type = type;
@@ -71,40 +81,50 @@ typedef enum {
 }
 
 
-#pragma mark - UITableViewDataSource
+#pragma mark - Table View Data Source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    
     if (self.type) {
+        
         return FirstAdditionalAttributeTableViewSectionIndex + self.type.additionalAttributes.count;
     }else{
-        return 2;
+        
+        return 2;   //self/all and type
     }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
     switch (section) {
         case OriginatorTableViewSectionIndex:{
-            return 2;
+            
+            return 2;   //self and all
         }break;
             
         case TypeTableViewSectionIndex:{
+            
             return [DataHelper instance].currentUserRole.availableTypesForReading.count;
         }break;
             
         case StateTableViewSectionIndex:{
+            
             return self.type.reportState.count;
         }break;
             
         case DescriptionTableViewSectionIndex:{
-            return 1;
+            
+            return 1;   //cell with text field
         }
             
         default:{
             NSInteger additionalAttributeIndex = section - FirstAdditionalAttributeTableViewSectionIndex;
             if ([self.type.additionalAttributesValidValues[additionalAttributeIndex] isKindOfClass:[NSArray class]]) {
+                
                 return ((NSArray *)self.type.additionalAttributesValidValues[additionalAttributeIndex]).count;
             }else{
-                return 1;
+                
+                return 1;   //cell with text field
             }
         }break;
     }
@@ -116,14 +136,17 @@ typedef enum {
 #define DESCRIPTION_FILTER_PLACEHOLDER @"Enter Filter Substring"
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     switch (indexPath.section) {
         case OriginatorTableViewSectionIndex:{
             BOOL checkedSelf = [self.filterOptions[ORIGINATOR_FILTER_KEY] isEqualToString:[KCSUser activeUser].userId];
             if (indexPath.row) {
+                
                 return [self labelCellForTableView:tableView
                                          withLabel:SELF_ORIGINATOR
                                            checked:checkedSelf];
             }else{
+                
                 return [self labelCellForTableView:tableView
                                          withLabel:ALL_ORIGINATOR
                                            checked:!checkedSelf];
@@ -132,6 +155,7 @@ typedef enum {
             
         case TypeTableViewSectionIndex:{
             TypeOfReport *typeForIndex = [[DataHelper instance].currentUserRole.availableTypesForReading allObjects][indexPath.row];
+            
             return [self labelCellForTableView:tableView
                                      withLabel:typeForIndex.name
                                        checked:[self.filterOptions[TYPE_FILTER_KEY] isEqualToString:typeForIndex.entityId]];
@@ -139,12 +163,14 @@ typedef enum {
             
         case StateTableViewSectionIndex:{
             NSInteger currentFilterState = [(NSNumber *)self.filterOptions[STATE_FILTER_KEY] integerValue];
+            
             return [self labelCellForTableView:tableView
                                      withLabel:self.type.reportState[indexPath.row]
                                        checked:self.filterOptions[STATE_FILTER_KEY] ? currentFilterState == indexPath.row : NO];
         }break;
             
         case DescriptionTableViewSectionIndex:{
+            
             return [self textFieldCellForTableView:tableView
                                    withCurrentText:self.filterOptions[DESCRIPTION_FILTER_KEY]
                                     andPlaceholder:DESCRIPTION_FILTER_PLACEHOLDER];
@@ -156,10 +182,12 @@ typedef enum {
             if ([self.type.additionalAttributesValidValues[additionalAttributeIndex] isKindOfClass:[NSArray class]]) {
                 NSString *cellLabel = self.type.additionalAttributesValidValues[additionalAttributeIndex][indexPath.row];
                 BOOL checked = [self.filterOptions[additionalAttributeName] isEqualToString:cellLabel];
+                
                 return [self labelCellForTableView:tableView
                                          withLabel:cellLabel
                                            checked:checked];
             }else{
+                
                 return [self textFieldCellForTableView:tableView
                                        withCurrentText:self.filterOptions[additionalAttributeName]
                                         andPlaceholder:DESCRIPTION_FILTER_PLACEHOLDER];
@@ -170,24 +198,30 @@ typedef enum {
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    
     switch (section) {
         case OriginatorTableViewSectionIndex:{
+            
             return ORIGINATOR_FILTER_KEY;
         }break;
             
         case TypeTableViewSectionIndex:{
+            
             return TYPE_FILTER_KEY;
         }break;
             
         case StateTableViewSectionIndex:{
+            
             return STATE_FILTER_KEY;
         }break;
             
         case DescriptionTableViewSectionIndex:{
+            
             return DESCRIPTION_FILTER_KEY;
         }break;
         default:{
             NSInteger additionalAttributeIndex = section - FirstAdditionalAttributeTableViewSectionIndex;
+            
             return self.type.additionalAttributes[additionalAttributeIndex];
         }break;
     }
@@ -234,9 +268,10 @@ typedef enum {
 }
 
 
-#pragma mark - UITableViewDelegate
+#pragma mark - Table View Delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     switch (indexPath.section) {
         case OriginatorTableViewSectionIndex:{
             if (indexPath.row) {
@@ -320,22 +355,29 @@ typedef enum {
 #pragma mark - Action
 
 - (IBAction)doneButtonPressed:(id)sender {
+    
     if ([self.currentEditingTextFieldCell.textField isFirstResponder]) {
         [self.currentEditingTextFieldCell.textField resignFirstResponder];
     }
+    
     NSMutableArray *filterOprionsArray = [[DataHelper instance].filterOptions mutableCopy];
     if (filterOprionsArray.count > self.indexOfFilter) {
         filterOprionsArray[self.indexOfFilter] = self.filterOptions;
     }else{
         [filterOprionsArray addObject:self.filterOptions];
     }
+    
     [DataHelper instance].filterOptions = [filterOprionsArray copy];
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
+
 - (IBAction)resetButtonPressed:(UIBarButtonItem *)sender {
+    
     self.filterOptions = nil;
     [DataHelper instance].filterOptions = nil;
     self.type = nil;
+    
     [self.tableView reloadData];
 }
 

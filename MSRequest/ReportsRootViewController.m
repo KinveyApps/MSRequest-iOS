@@ -62,7 +62,7 @@
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
-    return 1;
+    return 1;   //report avaliable for reading
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -110,8 +110,8 @@
 
 #pragma mark - Utils
 
-- (void)showDetailViewForReport:(Report *)report
-{
+- (void)showDetailViewForReport:(Report *)report{
+    
     if (self.navigationController.topViewController != self) {
         
         [self.navigationController popToViewController:self animated:NO];
@@ -164,6 +164,10 @@
                                     }];
 }
 
+- (void)refresh{
+    [self dataLoadUseCache:NO];
+}
+
 
 #pragma mark - Segue
 
@@ -191,15 +195,19 @@
 
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    self.locationManager.distanceFilter = 1000.0;
+    self.locationManager.distanceFilter = 1000.0;   //for get only one update location if user not move
     self.locationManager.delegate = self;
     [self.locationManager startUpdatingLocation];
+    
     if ([DataHelper instance].currentUserRole.availableTypesForCreating.count) {
+        
+        //add tab bar button of new report
         UIBarButtonItem *addBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
                                                                                           target:self
                                                                                           action:@selector(newReportButtonPressed:)];
         [self.navigationItem setRightBarButtonItem:addBarButtonItem animated:YES];
     }
+    
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self
                             action:@selector(refresh)
@@ -208,11 +216,11 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated{
+    
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
     self.navigationItem.hidesBackButton = YES;
     [self dataLoadUseCache:YES];
-    
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -225,10 +233,8 @@
     return UIStatusBarStyleLightContent;
 }
 
-- (void)refresh{
-    [self dataLoadUseCache:NO];
-}
 
+#pragma mark - Actions
 
 - (IBAction)newReportButtonPressed:(id)sender {
     
@@ -245,6 +251,8 @@
 }
 
 - (IBAction)settingButtonPress:(UIBarButtonItem *)sender {
+    
+    //create action sheet with setting actions
     AHKActionSheet *actionSheet = [[AHKActionSheet alloc] initWithTitle:@"Settings"];
     
     [actionSheet addButtonWithTitle:@"Edit Home Screen"

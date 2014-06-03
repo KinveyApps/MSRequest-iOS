@@ -52,6 +52,7 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
 
 @end
 
+
 @implementation ReportDetailViewController
 
 
@@ -60,6 +61,8 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
 - (void)viewDidLoad{
     [super viewDidLoad];
     self.canChangeState = NO;
+    
+    //Check that user role provide status changing for report type
     for (TypeOfReport *type in [DataHelper instance].currentUserRole.availableTypesForChangingStatus) {
         if ([type.entityId isEqualToString:self.report.type.entityId]) {
             self.canChangeState = YES;
@@ -71,7 +74,6 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
     self.defaultBackBarItem = self.navigationItem.leftBarButtonItem;
 }
 
-// in viewWillAppear/Disappear, toggle nav bar hidden for smooth transition with parent vc
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
@@ -110,17 +112,20 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
             return 2;
         }
     }else if (section == ChangeStatusReportTableViewSectionIndex){
-        return 1;
+        
+        return 1;   //change status button
     }
     return 0;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     if (self.statusWasChanged) {
-        return 2;
+        
+        return 2;   //report info and submit status
     }
-    return 1;
+    return 1;       //only report info
 }
+
 
 #pragma mark - Delegate
 
@@ -274,6 +279,8 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
         }
         if (indexPath.row == StateReportTableViewRowIndex) {
             if (self.canChangeState) {
+                
+                //create action sheet with list avaliable status value
                 AHKActionSheet *actionSheet = [[AHKActionSheet alloc] initWithTitle:@"Change status"];
                 actionSheet.cancelHandler = ^(AHKActionSheet *actionSheet){
                     [self.tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:StateReportTableViewRowIndex
@@ -317,6 +324,9 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
     
     
 }
+
+
+#pragma mark - Utils
 
 - (void)changeStatusTo:(NSInteger)statusIndex{
     
@@ -372,4 +382,6 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
     }
     [self.tableView endUpdates];
 }
+
+
 @end

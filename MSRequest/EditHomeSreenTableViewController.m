@@ -34,6 +34,9 @@
 
 @implementation EditHomeSreenTableViewController
 
+
+#pragma mark - Initialization
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -42,6 +45,9 @@
     }
     return self;
 }
+
+
+#pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
@@ -75,7 +81,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 2;
+    return 2;   //filter options and distance filter
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -215,6 +221,7 @@
 - (NSString *)titleWithOptions:(NSDictionary *)options{
     
     if (options[TYPE_FILTER_KEY]){
+        
         for (TypeOfReport *type in [DataHelper instance].typesOfReport){
             if ([type.entityId isEqualToString:options[TYPE_FILTER_KEY]]){
                 
@@ -262,6 +269,9 @@
     return result;
 }
 
+
+#pragma mark - SubtitleWithButtonTableViewCellDelegate
+
 - (void)rigthButtonPress:(SubtitleWithButtonTableViewCell *)sender{
     NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
     
@@ -273,6 +283,9 @@
         [self.tableView reloadData];
     }
 }
+
+
+#pragma mark - TextFieldTableViewCellDelegate
 
 - (void)textFieldTableViewCellDidBeginEditing:(TextFieldTableViewCell *)sender{
     
@@ -287,14 +300,14 @@
     }
 }
 
-#pragma mark - Navigation
 
+#pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"kSegueIdentifierAddFilterOption"]) {
         ReportsFilterViewController *destinationViewController = (ReportsFilterViewController *)segue.destinationViewController;
-        destinationViewController.indexOfFilter = 1000;
+        destinationViewController.indexOfFilter = NSUIntegerMax;
     }else if ([segue.identifier isEqualToString:@"kSegueIdentifierEditFilterOption"]){
         ReportsFilterViewController *destinationViewController = (ReportsFilterViewController *)segue.destinationViewController;
         NSIndexPath *indexPath = [self.tableView indexPathForCell:(UITableViewCell *)sender];
@@ -302,12 +315,16 @@
     }
 }
 
+
+#pragma mark - Actions
+
 - (IBAction)cancelButtonPress:(UIBarButtonItem *)sender {
     
     [DataHelper instance].filterOptions = self.oldFilterOptions;
     [self dismissViewControllerAnimated:YES
                              completion:nil];
 }
+
 - (IBAction)saveButtonPress:(UIBarButtonItem *)sender {
 
     if ([self.distanceCell.textLabel isFirstResponder]) {

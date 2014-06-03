@@ -20,6 +20,7 @@
 
 @implementation MapViewController
 
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
@@ -29,9 +30,27 @@
     self.mapView.showsUserLocation = YES;
 }
 
+- (void)viewDidUnload
+{
+    [self setMapView:nil];
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    // Return YES for supported orientations
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+
+#pragma mark - Actions
+
 - (IBAction)doneButtonPressed:(id)sender {
     [_delegate mapViewControllerDoneButtonPressedWithAnnotation:self.reportAnnotation];
 }
+
 
 #pragma mark - MKMapViewDelegate
 
@@ -91,20 +110,6 @@
             [self.mapView addAnnotation:(id <MKAnnotation>)self.reportAnnotation];
         }
     }
-}
-
-- (void)viewDidUnload
-{
-    [self setMapView:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 @end

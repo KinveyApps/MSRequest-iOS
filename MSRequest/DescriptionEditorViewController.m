@@ -29,10 +29,6 @@
     if (self.description) self.descriptionTextField.text = self.description;
 }
 
-- (IBAction)doneButtonPressed:(id)sender {
-    [_delegate descriptionEditorFinishedEditingWithText:self.descriptionTextField.text];
-}
-
 - (void)viewDidUnload
 {
     [self setDescriptionTextField:nil];
@@ -43,6 +39,13 @@
 {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+
+#pragma mark - Actions
+
+- (IBAction)doneButtonPressed:(id)sender {
+    [_delegate descriptionEditorFinishedEditingWithText:self.descriptionTextField.text];
 }
 
 @end
