@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B02BF971940A74400F5B954 /* iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B02BF961940A74400F5B954 /* iPad.storyboard */; };
 		1B3743EA18F5997F00C32AD6 /* TypeOfReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3743E918F5997F00C32AD6 /* TypeOfReport.m */; };
 		1B3743EF18F599A400C32AD6 /* AuthenticationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3743EC18F599A400C32AD6 /* AuthenticationHelper.m */; };
 		1B3743F018F599A400C32AD6 /* DataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3743EE18F599A400C32AD6 /* DataHelper.m */; };
@@ -15,7 +16,7 @@
 		1B3743FA18F7FFE500C32AD6 /* LabelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3743F918F7FFE500C32AD6 /* LabelTableViewCell.m */; };
 		1B3743FD18F800F600C32AD6 /* TextFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3743FC18F800F600C32AD6 /* TextFieldTableViewCell.m */; };
 		1B76CBD218F43896004713E1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CBD118F43896004713E1 /* AppDelegate.m */; };
-		1B76CBD518F43920004713E1 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B76CBD318F43920004713E1 /* MainStoryboard.storyboard */; };
+		1B76CBD518F43920004713E1 /* iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B76CBD318F43920004713E1 /* iPhone.storyboard */; };
 		1B76CBE118F4398D004713E1 /* ActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CBE018F4398D004713E1 /* ActivityViewController.m */; };
 		1B76CBE918F439B0004713E1 /* DescriptionEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CBE818F439B0004713E1 /* DescriptionEditorViewController.m */; };
 		1B76CBEC18F439BA004713E1 /* ImageScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76CBEB18F439BA004713E1 /* ImageScrollViewController.m */; };
@@ -100,6 +101,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1B02BF961940A74400F5B954 /* iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = iPad.storyboard; sourceTree = SOURCE_ROOT; };
 		1B2825A21917CC7400EC09A4 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = SOURCE_ROOT; };
 		1B3743E818F5997F00C32AD6 /* TypeOfReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TypeOfReport.h; path = MSRequest/Model/TypeOfReport.h; sourceTree = SOURCE_ROOT; };
 		1B3743E918F5997F00C32AD6 /* TypeOfReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TypeOfReport.m; path = MSRequest/Model/TypeOfReport.m; sourceTree = SOURCE_ROOT; };
@@ -118,7 +120,7 @@
 		1B76CBC618F425AC004713E1 /* SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SynthesizeSingleton.h; path = Externals/SynthesizeSingleton.h; sourceTree = SOURCE_ROOT; };
 		1B76CBD018F43896004713E1 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = MSRequest/AppDelegate.h; sourceTree = SOURCE_ROOT; };
 		1B76CBD118F43896004713E1 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = MSRequest/AppDelegate.m; sourceTree = SOURCE_ROOT; };
-		1B76CBD418F43920004713E1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = MSRequest/en.lproj/MainStoryboard.storyboard; sourceTree = SOURCE_ROOT; };
+		1B76CBD418F43920004713E1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = MSRequest/en.lproj/iPhone.storyboard; sourceTree = SOURCE_ROOT; };
 		1B76CBDF18F4398D004713E1 /* ActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActivityViewController.h; path = MSRequest/ActivityViewController.h; sourceTree = SOURCE_ROOT; };
 		1B76CBE018F4398D004713E1 /* ActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActivityViewController.m; path = MSRequest/ActivityViewController.m; sourceTree = SOURCE_ROOT; };
 		1B76CBE718F439B0004713E1 /* DescriptionEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DescriptionEditorViewController.h; path = MSRequest/DescriptionEditorViewController.h; sourceTree = SOURCE_ROOT; };
@@ -261,6 +263,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B02BF9519408D4700F5B954 /* iPad */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = iPad;
+			sourceTree = "<group>";
+		};
 		1B3743F418F7FEAC00C32AD6 /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
@@ -344,11 +353,13 @@
 		27B8720B1641BBA7001F590E /* MSRequest */ = {
 			isa = PBXGroup;
 			children = (
+				1B02BF9519408D4700F5B954 /* iPad */,
 				1B76CBC518F424F9004713E1 /* Externals */,
 				5EE6632315912A8900E0C9F9 /* Categories */,
 				1B76CBD018F43896004713E1 /* AppDelegate.h */,
 				1B76CBD118F43896004713E1 /* AppDelegate.m */,
-				1B76CBD318F43920004713E1 /* MainStoryboard.storyboard */,
+				1B76CBD318F43920004713E1 /* iPhone.storyboard */,
+				1B02BF961940A74400F5B954 /* iPad.storyboard */,
 				5EE6632215912A3F00E0C9F9 /* Views */,
 				1B3743F418F7FEAC00C32AD6 /* TableViewCells */,
 				1BEAAED918FD27A9003AE701 /* CollectionsViewCells */,
@@ -609,11 +620,12 @@
 				275EF729164D4C1600933278 /* Default@2x.png in Resources */,
 				1B76CC4718F43B49004713E1 /* light_grey_report_box.png in Resources */,
 				1B76CC4518F43B49004713E1 /* large_x_button.png in Resources */,
-				1B76CBD518F43920004713E1 /* MainStoryboard.storyboard in Resources */,
+				1B76CBD518F43920004713E1 /* iPhone.storyboard in Resources */,
 				1B76CC5018F43B49004713E1 /* submit_button.png in Resources */,
 				1B76CC4E18F43B49004713E1 /* settings_icon.png in Resources */,
 				1B76CC4D18F43B49004713E1 /* photo_icon.png in Resources */,
 				1B76CC3B18F43B49004713E1 /* arrow@2x.png in Resources */,
+				1B02BF971940A74400F5B954 /* iPad.storyboard in Resources */,
 				1B76CC3E18F43B49004713E1 /* blue_top_bar.png in Resources */,
 				1B76CC4B18F43B49004713E1 /* map_button.png in Resources */,
 				1B76CC4018F43B49004713E1 /* earth.jpg in Resources */,
@@ -673,12 +685,12 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		1B76CBD318F43920004713E1 /* MainStoryboard.storyboard */ = {
+		1B76CBD318F43920004713E1 /* iPhone.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				1B76CBD418F43920004713E1 /* en */,
 			);
-			name = MainStoryboard.storyboard;
+			name = iPhone.storyboard;
 			sourceTree = "<group>";
 		};
 		1B76CC1C18F43AC8004713E1 /* InfoPlist.strings */ = {
@@ -778,7 +790,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MSRequest/MSRequest-Prefix.pch";
 				INFOPLIST_FILE = "MSRequest/MSRequest-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-all_load",
@@ -787,6 +799,7 @@
 				PRODUCT_NAME = MSRequest;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -807,7 +820,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MSRequest/MSRequest-Prefix.pch";
 				INFOPLIST_FILE = "MSRequest/MSRequest-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-all_load",
@@ -816,6 +829,7 @@
 				PRODUCT_NAME = MSRequest;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
