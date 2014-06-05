@@ -247,6 +247,11 @@
     
     //Create action sheet with list avaliable demo accounts with different user's role
     AHKActionSheet *actionSheet = [[AHKActionSheet alloc] initWithTitle:@"Select Guest Role"];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.alignment = NSTextAlignmentCenter;
+    actionSheet.titleTextAttributes = @{NSParagraphStyleAttributeName: paragraphStyle,
+                                        NSForegroundColorAttributeName: [UIColor grayColor]};
+    actionSheet.buttonTextCenteringEnabled = @YES;
     [actionSheet addButtonWithTitle:@"Employee"
                                type:AHKActionSheetButtonTypeDefault
                             handler:^(AHKActionSheet *actionSheet){
