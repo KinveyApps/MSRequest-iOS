@@ -81,6 +81,11 @@
 #pragma mark - Keyboard notification
 
 -(void)keyboardWillShow:(NSNotification *)notification{
+    
+    NSValue *v = [notification.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey];
+	CGRect rect = [v CGRectValue];
+	rect = [self.view convertRect:rect fromView:nil];
+	CGFloat keyboardHeight = CGRectGetHeight(rect);
 
     // get keyboard size and loctaion
 	NSNumber *duration = [notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
@@ -93,7 +98,7 @@
                         options:animationOptions
                      animations:^{
                          // set views with new info
-						 self.bottomConstaraint.constant = 94;
+						 self.bottomConstaraint.constant = keyboardHeight - 122;
                          [self.view layoutIfNeeded];
                      }
                      completion:nil];
