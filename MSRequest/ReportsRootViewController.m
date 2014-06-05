@@ -38,6 +38,7 @@
 @property (strong, nonatomic) KCSQuery *query;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
+@property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *reportCollectionViewFlowLayout;
 
 @end
 
@@ -223,10 +224,30 @@
     [self dataLoadUseCache:YES];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+- (void)viewDidAppear:(BOOL)animated{
+    
+    [super viewDidAppear:animated];
+    [self updateCollectionViewCellSize];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation{
+    [self updateCollectionViewCellSize];
+}
+
+- (void)updateCollectionViewCellSize{
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
+        
+        NSInteger cellCount = 2;
+        if ((UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))) {
+            cellCount = 3;
+        }
+        
+        CGFloat width = ((NSInteger)(self.collectionView.bounds.size.width -
+                                     self.reportCollectionViewFlowLayout.sectionInset.right -
+                                     self.reportCollectionViewFlowLayout.sectionInset.left -
+                                     self.reportCollectionViewFlowLayout.minimumInteritemSpacing * (cellCount - 1))) / cellCount;
+        self.reportCollectionViewFlowLayout.itemSize = CGSizeMake(width, width);
+    }
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
