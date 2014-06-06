@@ -39,6 +39,7 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *reportCollectionViewFlowLayout;
+@property (nonatomic, weak) UIPopoverController *popoverCotroller;
 
 @end
 
@@ -209,13 +210,10 @@
     self.locationManager.delegate = self;
     [self.locationManager startUpdatingLocation];
     
-    if ([DataHelper instance].currentUserRole.availableTypesForCreating.count) {
+    if (![DataHelper instance].currentUserRole.availableTypesForCreating.count) {
         
-        //add tab bar button of new report
-        UIBarButtonItem *addBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
-                                                                                          target:self
-                                                                                          action:@selector(newReportButtonPressed:)];
-        [self.navigationItem setRightBarButtonItem:addBarButtonItem animated:YES];
+        //remove tab bar button of new report
+        [self.navigationItem setRightBarButtonItem:nil animated:YES];
     }
     
     self.refreshControl = [[UIRefreshControl alloc] init];
@@ -353,6 +351,7 @@
 
 - (void)submitFinish:(NewReportViewController *)sender{
     [self refresh];
+    [self.popoverCotroller dismissPopoverAnimated:YES];
 }
 
 @end

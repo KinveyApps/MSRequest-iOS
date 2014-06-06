@@ -520,6 +520,7 @@ typedef enum {
     self.navigationController.navigationBarHidden = NO;
     self.navigationController.toolbarHidden = YES;
     self.navigationItem.hidesBackButton = YES;
+    self.preferredContentSize = CGSizeMake(320, self.tableView.contentSize.height);
     [self.tableView reloadData];
 }
 
@@ -575,6 +576,8 @@ typedef enum {
             }
         }break;
     }
+    self.preferredContentSize = CGSizeMake(320, self.tableView.contentSize.height);
+    [self.view layoutIfNeeded];
 }
 
 - (void)clearAdditionalAttributes{
@@ -671,6 +674,7 @@ typedef enum {
 
 - (IBAction)cancelButtonPressed:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
+    [self.delegate submitFinish:self];
 }
 
 @end
