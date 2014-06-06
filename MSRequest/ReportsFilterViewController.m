@@ -154,7 +154,7 @@ typedef enum {
         }break;
             
         case TypeTableViewSectionIndex:{
-            TypeOfReport *typeForIndex = [[DataHelper instance].currentUserRole.availableTypesForReading allObjects][indexPath.row];
+            TypeOfReport *typeForIndex = [DataHelper instance].currentUserRole.availableTypesForReading[indexPath.row];
             
             return [self labelCellForTableView:tableView
                                      withLabel:typeForIndex.name
@@ -282,7 +282,7 @@ typedef enum {
         }break;
             
         case TypeTableViewSectionIndex:{
-            TypeOfReport *typeForIndex = [[DataHelper instance].currentUserRole.availableTypesForReading allObjects][indexPath.row];
+            TypeOfReport *typeForIndex = [DataHelper instance].currentUserRole.availableTypesForReading[indexPath.row];
             self.type = typeForIndex;
             if ([self.filterOptions[TYPE_FILTER_KEY] isEqualToString:typeForIndex.entityId]) {
                 [self.filterOptions removeObjectForKey:TYPE_FILTER_KEY];

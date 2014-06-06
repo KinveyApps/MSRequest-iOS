@@ -15,8 +15,8 @@
 @property (nonatomic, retain) NSString *kinveyId;
 @property (nonatomic, retain) KCSMetadata *metadata;
 @property (nonatomic, retain) NSString *name;
-@property (nonatomic, retain) NSSet *availableTypesForReading;
-@property (nonatomic, retain) NSSet *availableTypesForCreating;
-@property (nonatomic, retain) NSSet *availableTypesForChangingStatus;
+@property (nonatomic, retain) NSArray *availableTypesForReading;
+@property (nonatomic, retain) NSArray *availableTypesForCreating;
+@property (nonatomic, retain) NSArray *availableTypesForChangingStatus;
 
 @end

@@ -100,7 +100,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"kCellIdentifierBasic"];
     }
    
-    TypeOfReport *type = (TypeOfReport *)[[DataHelper instance].currentUserRole.availableTypesForReading allObjects][indexPath.row];
+    TypeOfReport *type = (TypeOfReport *)[DataHelper instance].currentUserRole.availableTypesForReading[indexPath.row];
     
     cell.textLabel.text = [type.name capitalizedString];
     if ([self.reportTypeIDforNotification containsObject:type.entityId]) {
@@ -127,7 +127,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    TypeOfReport *type = (TypeOfReport *)[[DataHelper instance].currentUserRole.availableTypesForReading allObjects][indexPath.row];
+    TypeOfReport *type = (TypeOfReport *)[DataHelper instance].currentUserRole.availableTypesForReading[indexPath.row];
     
     if ([self.reportTypeIDforNotification containsObject:type.entityId]) {
         [self.reportTypeIDforNotification removeObject:type.entityId];
