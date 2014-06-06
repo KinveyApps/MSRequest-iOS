@@ -323,6 +323,9 @@ typedef enum {
                                                 [self.navigationController setNavigationBarHidden:YES animated:NO];
                                             }];
                 }
+                actionSheet.cancelHandler = ^(AHKActionSheet *actionSheet){
+                    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+                };
                 [actionSheet show];
             }break;
                 
