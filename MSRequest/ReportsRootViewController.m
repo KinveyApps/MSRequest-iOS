@@ -184,6 +184,15 @@
             EditHomeSreenTableViewController *vc = (EditHomeSreenTableViewController *)[nvc.viewControllers firstObject];
             vc.delegate = self;
         }
+    }else if ([segue.identifier isEqualToString:@"kSegueIdentifierNewReport"]){
+        if ([segue isKindOfClass:[UIStoryboardPopoverSegue class]]) {
+            self.popoverCotroller = [(UIStoryboardPopoverSegue *)segue popoverController];
+        }
+        if ([segue.destinationViewController isKindOfClass:[UINavigationController class]]) {
+            UINavigationController *nvc = (UINavigationController *)segue.destinationViewController;
+            NewReportViewController *vc = (NewReportViewController *)[nvc.viewControllers firstObject];
+            vc.delegate = self;
+        }
     }
 }
 

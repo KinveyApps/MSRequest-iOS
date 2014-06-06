@@ -927,6 +927,11 @@
                                 <action selector="settingButtonPress:" destination="iWa-pP-Plf" id="fga-4c-b0R"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="ZT9-Ar-YFR">
+                            <connections>
+                                <action selector="newReportButtonPressed:" destination="iWa-pP-Plf" id="Ydq-7a-gM4"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>

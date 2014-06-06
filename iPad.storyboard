@@ -925,6 +925,11 @@
                                 <action selector="settingButtonPress:" destination="hKb-eg-NOy" id="eCL-3q-ghE"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="7HO-vR-qgU">
+                            <connections>
+                                <action selector="newReportButtonPressed:" destination="hKb-eg-NOy" id="PKm-m3-9dh"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
