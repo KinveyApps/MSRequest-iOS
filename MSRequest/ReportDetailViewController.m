@@ -238,7 +238,7 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
                                    OnSuccess:^(UIImage *image){
                                        
                                        cell.imageView.image = image;
-                                       cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
+                                       cell.imageView.contentMode = UIViewContentModeScaleAspectFill;
                                        [cell setNeedsDisplay];
                                        
                                    }onFailure:^(NSError *error){
@@ -299,6 +299,11 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
                                                                               inSection:MainReportTableViewSectionIndex]
                                                   animated:YES];
                 };
+                NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+                paragraphStyle.alignment = NSTextAlignmentCenter;
+                actionSheet.titleTextAttributes = @{NSParagraphStyleAttributeName: paragraphStyle,
+                                                    NSForegroundColorAttributeName: [UIColor grayColor]};
+                actionSheet.buttonTextCenteringEnabled = @YES;
                 for (NSInteger i = 0; i < self.report.type.reportState.count; i++) {
                     NSString *state = self.report.type.reportState[i];
                     [actionSheet addButtonWithTitle:state
