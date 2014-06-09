@@ -349,7 +349,7 @@ typedef enum {
         }
 
     }else if (indexPath.section == SubmitNewReportTableViewSectionIndex){
-        [DejalBezelActivityView activityViewForView:self.view.window withLabel:@"Upload Image"];
+        [DejalBezelActivityView activityViewForView:self.navigationController.view withLabel:@"Upload Image"];
         
         //save full image in kinvey
         [[DataHelper instance] saveImage:self.image
@@ -429,10 +429,17 @@ typedef enum {
 
 - (void)keyboardShow:(NSNotification *)notification{
     
-    CGRect keyboardOriginFrame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    NSValue *v = [notification.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey];
+	CGRect rect = [v CGRectValue];
+	rect = [self.view.window convertRect:rect toView:self.view];
+	CGFloat keyboardHeight = self.tableView.frame.size.height - rect.origin.y;
+    if (keyboardHeight < 0) {
+        keyboardHeight = 0;
+    }
+    
     [UIView animateWithDuration:0.2
                      animations:^{
-                         self.bottomTableViewConstraint.constant = keyboardOriginFrame.size.height;
+                         self.bottomTableViewConstraint.constant = keyboardHeight;
                          [self.view layoutIfNeeded];
                      }];
 }
@@ -501,7 +508,7 @@ typedef enum {
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardShow:)
-                                                 name:UIKeyboardWillShowNotification
+                                                 name:UIKeyboardDidShowNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardHide:)

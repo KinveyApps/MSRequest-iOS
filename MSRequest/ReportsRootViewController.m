@@ -114,10 +114,10 @@
 
 - (void)showDetailViewForReport:(Report *)report{
     
-    if (self.navigationController.topViewController != self) {
-        
-        [self.navigationController popToViewController:self animated:NO];
-    }
+//    if (self.navigationController.topViewController != self) {
+//        
+//        [self.navigationController popToViewController:self animated:NO];
+//    }
     [self performSegueWithIdentifier:@"kSegueIdentifierPushReportDetails" sender:report];
 }
 
@@ -177,7 +177,13 @@
 {
     if ([segue.identifier isEqualToString:@"kSegueIdentifierPushReportDetails"]) {
         if ([sender isKindOfClass:[Report class]]) {
-            ((ReportDetailViewController *)segue.destinationViewController).report = sender;
+            if ([segue.destinationViewController isKindOfClass:[ReportDetailViewController class]]) {
+                ((ReportDetailViewController *)segue.destinationViewController).report = sender;
+            }
+            if ([segue.destinationViewController isKindOfClass:[UINavigationController class]]) {
+                ReportDetailViewController *vc = (ReportDetailViewController *)[((UINavigationController *)segue.destinationViewController).viewControllers firstObject];
+                vc.report = sender;
+            }
         }
     }else if ([segue.identifier isEqualToString:@"kSegueIdentifierReportFilter"]){
         if ([segue.destinationViewController isKindOfClass:[UINavigationController class]]) {

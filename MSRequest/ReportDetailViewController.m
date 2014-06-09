@@ -69,6 +69,13 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
             break;
         }
     }
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        UIBarButtonItem *back = [[UIBarButtonItem alloc] initWithTitle:@"Back"
+                                                                 style:UIBarButtonItemStylePlain
+                                                                target:self
+                                                                action:@selector(backPress)];
+        self.navigationItem.leftBarButtonItem = back;
+    }
     self.navigationItem.title = [self.report.type.name capitalizedString];
     self.currentServerState = [self.report.state integerValue];
     self.defaultBackBarItem = self.navigationItem.leftBarButtonItem;
@@ -85,6 +92,10 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)backPress{
+    [self dismissViewControllerAnimated:YES
+                             completion:nil];
+}
 
 #pragma mark - segue methods
 
@@ -227,6 +238,7 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
                                    OnSuccess:^(UIImage *image){
                                        
                                        cell.imageView.image = image;
+                                       cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
                                        [cell setNeedsDisplay];
                                        
                                    }onFailure:^(NSError *error){
@@ -300,14 +312,18 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
         }
         
     }else if (indexPath.section == ChangeStatusReportTableViewSectionIndex){
-        [DejalBezelActivityView activityViewForView:self.view.window withLabel:@"Update Status"];
+        [DejalBezelActivityView activityViewForView:self.view withLabel:@"Update Status"];
 
         //Update entity in kinvey
         [[DataHelper instance] saveReport:self.report
                                 OnSuccess:^(NSArray *reports){
                                     
                                     [DejalBezelActivityView removeView];
-                                    [self.navigationController popViewControllerAnimated:YES];
+                                    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+                                        [self dismissViewControllerAnimated:YES completion:nil];
+                                    }else{
+                                        [self.navigationController popViewControllerAnimated:YES];
+                                    }
                                     self.statusWasChanged = NO;
                                     
                                 }onFailure:^(NSError *error){

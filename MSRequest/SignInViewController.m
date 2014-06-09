@@ -138,7 +138,7 @@
         [alertView show];
     };
     
-	[DejalBezelActivityView activityViewForView:self.view.window];
+	[DejalBezelActivityView activityViewForView:self.view];
     
     //Login with demo account for get avaliable role list
     [[AuthenticationHelper instance] loginWithUsername:@"demoMSRequest"
@@ -166,7 +166,7 @@
                                                                                                                        type:AHKActionSheetButtonTypeDefault
                                                                                                                     handler:^(AHKActionSheet *actionSheet){
                                                                                                                         
-                                                                                                                        [DejalBezelActivityView activityViewForView:self.view.window];
+                                                                                                                        [DejalBezelActivityView activityViewForView:self.view];
                                                                                                                         
                                                                                                                         //Sign up new Kinvey user
                                                                                                                         [[AuthenticationHelper instance] signUpWithUsername:self.usernameField.text
@@ -214,7 +214,7 @@
 
 - (IBAction)pressedLogin:(id)sender{
     
-	[DejalBezelActivityView activityViewForView:self.view.window];
+	[DejalBezelActivityView activityViewForView:self.view];
     
     //Login Kinvey user
 	[[AuthenticationHelper instance] loginWithUsername:self.usernameField.text
