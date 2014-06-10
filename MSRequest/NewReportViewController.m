@@ -496,6 +496,7 @@ typedef enum {
         ((DescriptionEditorViewController *)segue.destinationViewController).delegate = self;
         ((DescriptionEditorViewController *)segue.destinationViewController).description = self.report.descriptionOfReport;
     }
+    ((UIViewController *)segue.destinationViewController).preferredContentSize = self.preferredContentSize;
 }
 
 
@@ -583,7 +584,8 @@ typedef enum {
             }
         }break;
     }
-    self.preferredContentSize = CGSizeMake(320, self.tableView.contentSize.height);
+    self.preferredContentSize = CGSizeMake(320, (self.tableView.contentSize.height < 600) ? self.tableView.contentSize.height : 600);
+    [self.delegate needChangeToSize:self.preferredContentSize sender:self];
     [self.view layoutIfNeeded];
 }
 

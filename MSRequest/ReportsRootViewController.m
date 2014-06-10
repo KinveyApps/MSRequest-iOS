@@ -360,4 +360,8 @@
     [self.popoverCotroller dismissPopoverAnimated:YES];
 }
 
+- (void)needChangeToSize:(CGSize)size sender:(NewReportViewController *)sender{
+    [self.popoverCotroller setPopoverContentSize:size animated:NO];
+}
+
 @end

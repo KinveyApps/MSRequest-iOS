@@ -24,6 +24,7 @@
 @protocol NewReportViewControllerDelegate <NSObject>
 
 - (void)submitFinish:(NewReportViewController *)sender;
+- (void)needChangeToSize:(CGSize)size sender:(NewReportViewController *)sender;
 
 @end
 
