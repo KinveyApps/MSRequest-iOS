@@ -317,7 +317,7 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
         }
         
     }else if (indexPath.section == ChangeStatusReportTableViewSectionIndex){
-        [DejalBezelActivityView activityViewForView:self.view withLabel:@"Update Status"];
+        [DejalBezelActivityView activityViewForView:self.view.superview.superview.superview withLabel:@"Update Status"];
 
         //Update entity in kinvey
         [[DataHelper instance] saveReport:self.report

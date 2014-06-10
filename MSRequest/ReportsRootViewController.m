@@ -308,7 +308,7 @@
                                type:AHKActionSheetButtonTypeDestructive
                             handler:^(AHKActionSheet *actionSheet){
                                 
-                                [DejalBezelActivityView activityViewForView:self.view];
+                                [DejalBezelActivityView activityViewForView:self.view.superview.superview.superview];
                                 
                                 //Kinvey: remove device token from user info
                                 [[KCSPush sharedPush] unRegisterDeviceToken:^(BOOL success, NSError* error){

@@ -150,7 +150,7 @@
 
 - (IBAction)savePress:(UIBarButtonItem *)sender {
     
-    [DejalBezelActivityView activityViewForView:self.view.window
+    [DejalBezelActivityView activityViewForView:self.view.superview.superview.superview
                                       withLabel:@"Save Settings"];
     
     //Save set of report type IDs in user info by attribute ArrayIDforPushNotification

@@ -349,7 +349,7 @@ typedef enum {
         }
 
     }else if (indexPath.section == SubmitNewReportTableViewSectionIndex){
-        [DejalBezelActivityView activityViewForView:self.navigationController.view withLabel:@"Upload Image"];
+        [DejalBezelActivityView activityViewForView:self.view.superview withLabel:@"Upload Image"];
         
         //save full image in kinvey
         [[DataHelper instance] saveImage:self.image
@@ -363,7 +363,7 @@ typedef enum {
                                                               self.report.thumbnailId = thumbnailID;
                                                               
                                                               [DejalBezelActivityView removeView];
-                                                              [DejalBezelActivityView activityViewForView:self.view withLabel:@"Submit Report"];
+                                                              [DejalBezelActivityView activityViewForView:self.view.superview withLabel:@"Submit Report"];
                                                               
                                                               self.report.metadata = [[KCSMetadata alloc] init];
                                                               [self.report.metadata setGloballyReadable:YES];
