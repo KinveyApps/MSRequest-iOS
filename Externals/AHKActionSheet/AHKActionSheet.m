@@ -11,7 +11,7 @@
 #import "AHKActionSheetViewController.h"
 #import "UIImage+AHKAdditions.h"
 #import "UIWindow+AHKAdditions.h"
-
+#import "UIView+SnapshotImage.h"
 
 static CGFloat const kDefaultAnimationDuration = 0.5f;
 // Length of the range at which the blurred background is being hidden when the user scrolls the tableView to the top.
@@ -47,6 +47,7 @@ static CGFloat topSpaceMarginFraction = 0.333f;
 @property (weak, nonatomic) UITableView *tableView;
 @property (weak, nonatomic) UIButton *cancelButton;
 @property (weak, nonatomic) UIView *cancelButtonShadowView;
+@property (strong, nonatomic) AHKActionSheetViewController *actionSheetViewController;
 @end
 
 @implementation AHKActionSheet
@@ -81,6 +82,20 @@ static CGFloat topSpaceMarginFraction = 0.333f;
     self = [super init];
 
     if (self) {
+        _blurRadius = 10.0f;
+        _blurTintColor = [UIColor colorWithWhite:1.0f alpha:0.5f];
+        _blurSaturationDeltaFactor = 1.2f;
+        _buttonHeight = 60.0f;
+        _cancelButtonHeight = 44.0f;
+        _automaticallyTintButtonImages = @YES;
+        _selectedBackgroundColor = [UIColor colorWithWhite:0.1f alpha:0.2f];
+        _cancelButtonTextAttributes = @{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f],
+                                         NSForegroundColorAttributeName : [UIColor darkGrayColor] };
+        _buttonTextAttributes = @{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f]};
+        _destructiveButtonTextAttributes = @{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f],
+                                              NSForegroundColorAttributeName : [UIColor redColor] };
+        _titleTextAttributes = @{ NSFontAttributeName : [UIFont systemFontOfSize:14.0f],
+                                  NSForegroundColorAttributeName : [UIColor grayColor] };
         _title = title;
         _cancelButtonTitle = @"Cancel";
     }
@@ -205,7 +220,7 @@ static CGFloat topSpaceMarginFraction = 0.333f;
     [self.items addObject:item];
 }
 
-- (void)show
+- (void)showInView:(UIViewController *)viewController
 {
     NSAssert([self.items count] > 0, @"Please add some buttons before calling -show.");
 
@@ -215,9 +230,9 @@ static CGFloat topSpaceMarginFraction = 0.333f;
     }
 
     self.previousKeyWindow = [UIApplication sharedApplication].keyWindow;
-    UIImage *previousKeyWindowSnapshot = [self.previousKeyWindow ahk_snapshot];
+    UIImage *previousKeyWindowSnapshot = [viewController.view snapshot];
 
-    [self setUpNewWindow];
+    [self setUpInViewController:viewController];
     [self setUpBlurredBackgroundWithSnapshot:previousKeyWindowSnapshot];
     [self setUpCancelButton];
     [self setUpTableView];
@@ -266,13 +281,13 @@ static CGFloat topSpaceMarginFraction = 0.333f;
 
     void(^tearDownView)(void) = ^(void) {
         // remove the views because it's easiest to just recreate them if the action sheet is shown again
-        for (UIView *view in @[self.tableView, self.cancelButton, self.blurredBackgroundView, self.window]) {
+        for (UIView *view in @[self.tableView, self.cancelButton, self.blurredBackgroundView, self.actionSheetViewController.view]) {
             [view removeFromSuperview];
         }
-
+        [self.actionSheetViewController removeFromParentViewController];
         self.window = nil;
         [self.previousKeyWindow makeKeyAndVisible];
-
+        
         if (completionHandler) {
             completionHandler(self);
         }
@@ -297,16 +312,22 @@ static CGFloat topSpaceMarginFraction = 0.333f;
     }
 }
 
-- (void)setUpNewWindow
+- (void)setUpInViewController:(UIViewController *)viewController
 {
-    AHKActionSheetViewController *actionSheetVC = [[AHKActionSheetViewController alloc] initWithNibName:nil bundle:nil];
-    actionSheetVC.actionSheet = self;
+    self.actionSheetViewController = [[AHKActionSheetViewController alloc] initWithNibName:nil bundle:nil];
+    
+    self.actionSheetViewController.actionSheet = self;
 
-    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    self.window.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    self.window.opaque = NO;
-    self.window.rootViewController = actionSheetVC;
-    [self.window makeKeyAndVisible];
+//    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+//    self.window.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+//    self.window.opaque = NO;
+//    self.window.rootViewController = actionSheetVC;
+//    [self.window makeKeyAndVisible];
+    [viewController addChildViewController:self.actionSheetViewController];
+//    [actionSheetVC didMoveToParentViewController:viewController];
+    self.actionSheetViewController.view.frame = viewController.view.frame;
+    self.frame = viewController.view.frame;
+    [viewController.view addSubview:self.actionSheetViewController.view];
 }
 
 - (void)setUpBlurredBackgroundWithSnapshot:(UIImage *)previousKeyWindowSnapshot
