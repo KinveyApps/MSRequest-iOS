@@ -312,7 +312,7 @@ NSString *const kSegueIdentifierPushImageViewer = @"kSegueIdentifierPushImageVie
                                                 [self changeStatusTo:i];
                                             }];
                 }
-                [actionSheet show];
+                [actionSheet showInView:self.navigationController];
             }
         }
         

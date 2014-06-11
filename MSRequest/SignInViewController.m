@@ -18,6 +18,7 @@
 #import "DejalActivityView.h"
 #import "DataHelper.h"
 #import "AHKActionSheet.h"
+#import "UIView+SnapshotImage.h"
 
 
 @interface SignInViewController ()
@@ -198,7 +199,7 @@
                                                                                                                                                                   }];
                                                                                                                     }];
                                                                                         }
-                                                                                        [actionSheet show];
+                                                                                        [actionSheet showInView:self];
                                                                                     }onFailure:^(NSError *error){
                                                                                         [DejalActivityView removeView];
                                                                                         
@@ -215,7 +216,7 @@
 - (IBAction)pressedLogin:(id)sender{
     
 	[DejalBezelActivityView activityViewForView:self.view];
-    
+        
     //Login Kinvey user
 	[[AuthenticationHelper instance] loginWithUsername:self.usernameField.text
                                               password:self.passwordField.text
@@ -287,7 +288,7 @@
                                 self.passwordField.text = @"123456";
                                 [self pressedLogin:sender];
                             }];
-    [actionSheet show];
+    [actionSheet showInView:self];
 }
 
 #pragma mark UITextFieldDelegate methods

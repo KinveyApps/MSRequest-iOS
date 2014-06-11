@@ -309,7 +309,6 @@ typedef enum {
                                             handler:^(AHKActionSheet *actionSheet){
                                                 self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
                                                 [self presentViewController:self.imagePickerController animated:YES completion:nil];
-                                                [self.navigationController setNavigationBarHidden:YES animated:NO];
                                             }];
                 }
                 
@@ -320,13 +319,12 @@ typedef enum {
                                             handler:^(AHKActionSheet *actionSheet){
                                                 self.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
                                                 [self presentViewController:self.imagePickerController animated:YES completion:nil];
-                                                [self.navigationController setNavigationBarHidden:YES animated:NO];
                                             }];
                 }
                 actionSheet.cancelHandler = ^(AHKActionSheet *actionSheet){
                     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
                 };
-                [actionSheet show];
+                [actionSheet showInView:self.navigationController];
             }break;
                 
             case LocationNewReportTableViewRowIndex:{

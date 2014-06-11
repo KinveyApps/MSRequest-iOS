@@ -331,7 +331,7 @@
                                 }];
                             }];
     
-    [actionSheet show];
+    [actionSheet showInView:self.navigationController];
     
 }
 
