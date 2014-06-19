@@ -970,7 +970,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
                         </subviews>
-                        <color key="backgroundColor" red="0.76470588235294112" green="0.38431372549019605" blue="0.26666666666666666" alpha="1" colorSpace="deviceRGB"/>
+                        <color key="backgroundColor" red="0.65882354970000001" green="0.88627457620000005" blue="0.86666673419999996" alpha="1" colorSpace="deviceRGB"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="CKU-hP-Wdq" secondAttribute="centerX" id="Hkn-d2-beL"/>
                             <constraint firstAttribute="centerY" secondItem="CKU-hP-Wdq" secondAttribute="centerY" id="ICh-32-elw"/>
@@ -998,10 +998,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BackgroundClearImage" translatesAutoresizingMaskIntoConstraints="NO" id="OhV-oa-H2f">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SZ9-Px-s9I">
                                 <rect key="frame" x="0.0" y="88" width="320" height="480"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1106,12 +1102,8 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="SZ9-Px-s9I" secondAttribute="trailing" id="6f8-Nm-yld"/>
                             <constraint firstItem="UvA-mg-Glx" firstAttribute="top" secondItem="SZ9-Px-s9I" secondAttribute="bottom" id="8uV-tw-e2b"/>
-                            <constraint firstItem="OhV-oa-H2f" firstAttribute="leading" secondItem="csY-z5-TIv" secondAttribute="leading" id="9bw-hL-mOy"/>
-                            <constraint firstItem="UvA-mg-Glx" firstAttribute="top" secondItem="OhV-oa-H2f" secondAttribute="bottom" id="J2o-av-FVL"/>
-                            <constraint firstAttribute="trailing" secondItem="OhV-oa-H2f" secondAttribute="trailing" id="U5b-91-CYV"/>
                             <constraint firstItem="SZ9-Px-s9I" firstAttribute="top" secondItem="6kp-P5-4TQ" secondAttribute="bottom" constant="68" id="Ve5-ZP-cvk"/>
                             <constraint firstItem="SZ9-Px-s9I" firstAttribute="leading" secondItem="csY-z5-TIv" secondAttribute="leading" id="spL-gf-yMC"/>
-                            <constraint firstItem="OhV-oa-H2f" firstAttribute="top" secondItem="csY-z5-TIv" secondAttribute="top" id="tjZ-01-qBN"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
@@ -1232,8 +1224,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="BackgroundClearImage" width="320" height="568"/>
-        <image name="Logo" width="189" height="189"/>
+        <image name="Logo" width="200" height="200"/>
         <image name="SettingButton" width="25" height="25"/>
         <image name="TrashButtonImage" width="24" height="24"/>
         <image name="photo_icon.png" width="46" height="46"/>

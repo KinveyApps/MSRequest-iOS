@@ -59,6 +59,8 @@
     
 	[super viewWillAppear:animated];
     
+    self.view.backgroundColor = [UIColor colorWithRed:0 green:0.549 blue:0.5176 alpha:1.0];
+    
     //Subcribe on keyboard notification
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     [notificationCenter addObserver:self
