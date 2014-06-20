@@ -29,6 +29,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstaraint;
+@property (weak, nonatomic) IBOutlet UIView *usernameBackgroundView;
+@property (weak, nonatomic) IBOutlet UIView *passwordBackgroundView;
 
 @end
 
@@ -55,11 +57,21 @@
 
 #pragma mark - View lifecycle
 
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    
+    self.usernameBackgroundView.layer.cornerRadius = 6.0f;
+    self.passwordBackgroundView.layer.cornerRadius = 6.0f;
+    self.loginButton.layer.cornerRadius = 6.0f;
+    self.view.backgroundColor = [UIColor colorWithRed:0 green:0.549 blue:0.5176 alpha:1.0];
+    self. loginButton.tintColor = [UIColor colorWithRed:0 green:0.549 blue:0.5176 alpha:1.0];
+
+}
+
 - (void)viewWillAppear:(BOOL)animated{
     
 	[super viewWillAppear:animated];
     
-    self.view.backgroundColor = [UIColor colorWithRed:0 green:0.549 blue:0.5176 alpha:1.0];
     
     //Subcribe on keyboard notification
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
