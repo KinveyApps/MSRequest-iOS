@@ -82,8 +82,8 @@ static CGFloat topSpaceMarginFraction = 0.333f;
     self = [super init];
 
     if (self) {
-        _blurRadius = 10.0f;
-        _blurTintColor = [UIColor colorWithWhite:1.0f alpha:0.5f];
+        _blurRadius = 8.0f;
+        _blurTintColor = [UIColor colorWithWhite:1.0f alpha:0.6f];
         _blurSaturationDeltaFactor = 1.2f;
         _buttonHeight = 60.0f;
         _cancelButtonHeight = 44.0f;
