@@ -261,15 +261,15 @@
 - (IBAction)demoPress:(id)sender {
     
     //Create action sheet with list avaliable demo accounts with different user's role
-    AHKActionSheet *actionSheet = [[AHKActionSheet alloc] initWithTitle:@"Select Guest Role"];
+    AHKActionSheet *actionSheet = [[AHKActionSheet alloc] initWithTitle:@"Select Guest Role:"];
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.alignment = NSTextAlignmentCenter;
     actionSheet.titleTextAttributes = @{NSParagraphStyleAttributeName: paragraphStyle,
                                         NSForegroundColorAttributeName: [UIColor colorWithRed:0 green:0.549 blue:0.5176 alpha:1.0],
-                                        NSFontAttributeName: [UIFont fontWithName:@"Helvetica Neue" size:17.0]};
+                                        NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Medium" size:18.0]};
     actionSheet.cancelButtonTextAttributes = @{NSParagraphStyleAttributeName: paragraphStyle,
                                                NSForegroundColorAttributeName: [UIColor colorWithRed:0 green:0.549 blue:0.5176 alpha:1.0],
-                                               NSFontAttributeName: [UIFont fontWithName:@"Helvetica Neue" size:16.0]};
+                                               NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Thin" size:18.0]};
     actionSheet.buttonTextCenteringEnabled = @YES;
     [actionSheet addButtonWithTitle:@"Employee"
                                type:AHKActionSheetButtonTypeDefault

@@ -86,16 +86,18 @@ static CGFloat topSpaceMarginFraction = 0.333f;
         _blurTintColor = [UIColor colorWithWhite:1.0f alpha:0.6f];
         _blurSaturationDeltaFactor = 1.2f;
         _buttonHeight = 60.0f;
-        _cancelButtonHeight = 44.0f;
+        _cancelButtonHeight = 66.0f;
         _automaticallyTintButtonImages = @YES;
         _selectedBackgroundColor = [UIColor colorWithWhite:0.1f alpha:0.2f];
-        _cancelButtonTextAttributes = @{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f],
-                                         NSForegroundColorAttributeName : [UIColor darkGrayColor] };
-        _buttonTextAttributes = @{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f]};
-        _destructiveButtonTextAttributes = @{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f],
+        _cancelButtonTextAttributes = @{ NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Thin" size:18.0f],
+                                         NSForegroundColorAttributeName : [UIColor colorWithRed:0 green:0.549 blue:0.5176 alpha:1.0] };
+        _buttonTextAttributes = @{ NSFontAttributeName : [UIFont fontWithName:@"Helvetica Neue" size:18.0f],
+                                   NSForegroundColorAttributeName : [UIColor blackColor]};
+        _destructiveButtonTextAttributes = @{ NSFontAttributeName : [UIFont fontWithName:@"Helvetica Neue" size:18.0f],
                                               NSForegroundColorAttributeName : [UIColor redColor] };
-        _titleTextAttributes = @{ NSFontAttributeName : [UIFont systemFontOfSize:14.0f],
-                                  NSForegroundColorAttributeName : [UIColor grayColor] };
+        _titleTextAttributes = @{ NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Medium" size:18.0f],
+                                  NSForegroundColorAttributeName : [UIColor colorWithRed:0 green:0.549 blue:0.5176 alpha:1.0] };
+        _separatorColor = [UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:0.7];
         _title = title;
         _cancelButtonTitle = @"Cancel";
     }
