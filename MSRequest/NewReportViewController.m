@@ -30,8 +30,8 @@
 #import "AHKActionSheet.h"
 
 typedef enum {
-    PhotoNewReportTableViewRowIndex = 0,
-    TypeNewReportTableViewRowIndex,
+    TypeNewReportTableViewRowIndex = 0,
+    PhotoNewReportTableViewRowIndex,
     StateNewReportTableViewRowIndex,
     LocationNewReportTableViewRowIndex,
     DescriptionNewReportTableViewRowIndex,
@@ -155,7 +155,7 @@ typedef enum {
             case TypeNewReportTableViewRowIndex:{
                 UITableViewCell *cell = [self labelCellForTableView:tableView
                                                       withValue:self.report.type.name
-                                                        forLabel:@"Type"];
+                                                       forLabel:(self.report.type.name.length ? @"Type" : @"Select Type")];
                 return cell;
             }break;
                 
@@ -232,7 +232,7 @@ typedef enum {
         cell.label.text = @"";
         cell.imageView.contentMode = UIViewContentModeScaleToFill;
     }else{
-        cell.imageView.image = [UIImage imageNamed:@"photo_icon"];
+        cell.imageView.image = [UIImage imageNamed:@"AddFoto"];
         cell.label.text = @"Tap to add or take a photo";
         cell.imageView.contentMode = UIViewContentModeCenter;
     }
