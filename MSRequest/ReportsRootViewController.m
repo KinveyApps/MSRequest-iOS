@@ -76,6 +76,7 @@
                                                                                  forIndexPath:indexPath];
         if (!cell) {
             cell = [[RootCollectionViewCell alloc] init];
+            [self setupCell:cell];
         }
         Report *report = (Report *)self.reportsData[indexPath.row];
         if (report) {
@@ -103,6 +104,30 @@
         
     }
     
+}
+
+- (void)setupCell:(RootCollectionViewCell *)cell{
+    [self setBlurForView:cell.headerBlurView];
+
+}
+
+- (void)setBlurForView:(UIView *)view{
+    [view setClipsToBounds:YES];
+    UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:[view bounds]];
+    toolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    toolbar.barStyle = UIBarStyleDefault;
+    toolbar.translucent = YES;
+    toolbar.barTintColor = nil;
+
+    [view insertSubview:toolbar atIndex:0];
+    [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[toolbar]|"
+                                                                 options:0
+                                                                 metrics:0
+                                                                   views:NSDictionaryOfVariableBindings(toolbar)]];
+    [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[toolbar]|"
+                                                                 options:0
+                                                                 metrics:0
+                                                                   views:NSDictionaryOfVariableBindings(toolbar)]];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
