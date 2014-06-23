@@ -518,6 +518,9 @@ typedef enum {
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     self.locationManager.delegate = self;
     [self.locationManager startUpdatingLocation];
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:0 green:0.549 blue:0.5176 alpha:1.0];
+    }
     
 }
 
