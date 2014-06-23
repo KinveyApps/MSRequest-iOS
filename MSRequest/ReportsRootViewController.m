@@ -84,7 +84,7 @@
             cell.descriptionLabel.text = report.descriptionOfReport;
             cell.locationsLabel.text = report.locationString;
             cell.kinveyImageView.kinveyID = report.thumbnailId;
-            cell.distanceLabel.text = [NSString stringWithFormat:@"%.3f m", [self reportDistanceFromCurrentLocation:report]];
+            cell.distanceLabel.text = [NSString stringWithFormat:@"%.1f m", [self reportDistanceFromCurrentLocation:report]];
             [self setupCell:cell];
         }
         
@@ -284,7 +284,7 @@
                                      self.reportCollectionViewFlowLayout.sectionInset.right -
                                      self.reportCollectionViewFlowLayout.sectionInset.left -
                                      self.reportCollectionViewFlowLayout.minimumInteritemSpacing * (cellCount - 1))) / cellCount;
-        self.reportCollectionViewFlowLayout.itemSize = CGSizeMake(width, width);
+        self.reportCollectionViewFlowLayout.itemSize = CGSizeMake(width, width * 1.25);
     }
 }
 
