@@ -575,11 +575,6 @@
 			attributes = {
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Kinvey, Inc.";
-				TargetAttributes = {
-					5E2C877714C5BA880062229A = {
-						DevelopmentTeam = 5W7CYNR7UE;
-					};
-				};
 			};
 			buildConfigurationList = 5E2C877214C5BA880062229A /* Build configuration list for PBXProject "MSRequest" */;
 			compatibilityVersion = "Xcode 3.2";

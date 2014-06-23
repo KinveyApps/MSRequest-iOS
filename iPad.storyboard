@@ -989,10 +989,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BackgroundClearImage" translatesAutoresizingMaskIntoConstraints="NO" id="VD0-rX-LlE">
-                                <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="KtH-Yf-3jp">
                                 <rect key="frame" x="366" y="494" width="37" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1000,12 +996,8 @@
                         </subviews>
                         <color key="backgroundColor" red="0.76470588240000004" green="0.38431372549999998" blue="0.2666666667" alpha="1" colorSpace="deviceRGB"/>
                         <constraints>
-                            <constraint firstItem="VD0-rX-LlE" firstAttribute="top" secondItem="b3y-du-xxg" secondAttribute="top" id="60E-nb-RyH"/>
                             <constraint firstAttribute="centerY" secondItem="KtH-Yf-3jp" secondAttribute="centerY" id="8WM-8X-YUW"/>
                             <constraint firstAttribute="centerX" secondItem="KtH-Yf-3jp" secondAttribute="centerX" id="Ljk-qU-HgE"/>
-                            <constraint firstItem="VD0-rX-LlE" firstAttribute="leading" secondItem="b3y-du-xxg" secondAttribute="leading" id="cMp-OQ-4r4"/>
-                            <constraint firstAttribute="trailing" secondItem="VD0-rX-LlE" secondAttribute="trailing" id="cjQ-ev-XhT"/>
-                            <constraint firstItem="6kw-LT-whN" firstAttribute="top" secondItem="VD0-rX-LlE" secondAttribute="bottom" id="xQK-uR-Dmp"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="0MS-x7-Im5"/>
@@ -1378,7 +1370,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="BackgroundClearImage" width="320" height="568"/>
         <image name="Logo" width="200" height="200"/>
         <image name="MapPoint" width="7" height="12"/>
         <image name="Password" width="32" height="42"/>
