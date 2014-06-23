@@ -3,12 +3,12 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "EditHomeSreeenSmall.png"
+      "filename" : "EditHomeScreen.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "EditHomeSreeen.png"
+      "filename" : "EditHomeScreen@2x.png"
     }
   ],
   "info" : {

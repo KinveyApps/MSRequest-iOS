@@ -3,12 +3,12 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "SingOutSmall.png"
+      "filename" : "LogOut.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "SingOut.png"
+      "filename" : "LogOut@2x.png"
     }
   ],
   "info" : {
