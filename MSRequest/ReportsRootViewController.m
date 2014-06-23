@@ -76,16 +76,16 @@
                                                                                  forIndexPath:indexPath];
         if (!cell) {
             cell = [[RootCollectionViewCell alloc] init];
-            [self setupCell:cell];
         }
         Report *report = (Report *)self.reportsData[indexPath.row];
         if (report) {
-            cell.typeLabel.text = report.type.name;
-            cell.statusLabel.text = [NSString stringWithFormat:@"State: %@", report.type.reportState[[report.state integerValue]]];
+            cell.typeLabel.text = [report.type.name capitalizedString];
+            cell.statusLabel.text = report.type.reportState[[report.state integerValue]];
             cell.descriptionLabel.text = report.descriptionOfReport;
             cell.locationsLabel.text = report.locationString;
             cell.kinveyImageView.kinveyID = report.thumbnailId;
-            cell.distanceLabel.text = [NSString stringWithFormat:@"distance: %.3f km", [self reportDistanceFromCurrentLocation:report]/1000.0];
+            cell.distanceLabel.text = [NSString stringWithFormat:@"%.3f m", [self reportDistanceFromCurrentLocation:report]];
+            [self setupCell:cell];
         }
         
         return cell;
@@ -108,7 +108,7 @@
 
 - (void)setupCell:(RootCollectionViewCell *)cell{
     [self setBlurForView:cell.headerBlurView];
-
+    cell.statusLabel.textColor = [UIColor colorWithRed:0 green:0.549 blue:0.5176 alpha:1.0];
 }
 
 - (void)setBlurForView:(UIView *)view{

@@ -46,7 +46,7 @@
 	[UINavigationBar appearance].barTintColor = [UIColor colorWithRed:0 green:0.549 blue:0.5176 alpha:1.0];
     [UINavigationBar appearance].titleTextAttributes = @{NSFontAttributeName: [UIFont fontWithName:@"Helvetica Neue" size:17.0],
                                                          NSForegroundColorAttributeName: [UIColor colorWithRed:0.6471 green:0.8784 blue:0.8627 alpha:1.0]};
-    [UIToolbar appearance].barTintColor = [UIColor colorWithRed:0 green:0.549 blue:0.5176 alpha:1.0];
+    [UIToolbar appearance].barTintColor = [UIColor colorWithRed:0 green:0.549 blue:0.5176 alpha:0.5];
     
     //Start push service
     [KCSPush registerForPush];
