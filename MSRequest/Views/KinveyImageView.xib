@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="KinveyImageView">
             <connections>
+                <outlet property="blurHeaderView" destination="3Zo-yp-WNA" id="cBP-wR-pyI"/>
+                <outlet property="headerImageView" destination="uJu-ub-lXu" id="cdB-cq-FuF"/>
                 <outlet property="imageView" destination="OlH-eJ-2xV" id="jJb-zF-pQL"/>
                 <outlet property="spinner" destination="2gn-q2-6R0" id="XdB-n2-wcQ"/>
                 <outlet property="view" destination="1" id="w3h-MD-FRg"/>
@@ -25,14 +27,36 @@
                     <rect key="frame" x="101" y="78" width="20" height="20"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </activityIndicatorView>
+                <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Zo-yp-WNA">
+                    <rect key="frame" x="0.0" y="0.0" width="223" height="44"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uJu-ub-lXu">
+                            <rect key="frame" x="0.0" y="0.0" width="223" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="uJu-ub-lXu" secondAttribute="bottom" id="1b6-wK-AMe"/>
+                        <constraint firstItem="uJu-ub-lXu" firstAttribute="top" secondItem="3Zo-yp-WNA" secondAttribute="top" id="6Ru-uY-6uQ"/>
+                        <constraint firstAttribute="trailing" secondItem="uJu-ub-lXu" secondAttribute="trailing" id="IMs-1G-XIE"/>
+                        <constraint firstAttribute="height" constant="44" id="rKW-0R-tbj"/>
+                        <constraint firstItem="uJu-ub-lXu" firstAttribute="leading" secondItem="3Zo-yp-WNA" secondAttribute="leading" id="xhs-e2-jRu"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="3Zo-yp-WNA" firstAttribute="top" secondItem="1" secondAttribute="top" id="Kta-dT-NWe"/>
                 <constraint firstAttribute="trailing" secondItem="OlH-eJ-2xV" secondAttribute="trailing" id="L0e-eU-JZ7"/>
                 <constraint firstItem="2gn-q2-6R0" firstAttribute="centerY" secondItem="OlH-eJ-2xV" secondAttribute="centerY" id="OVu-kg-SjI"/>
                 <constraint firstItem="OlH-eJ-2xV" firstAttribute="top" secondItem="1" secondAttribute="top" id="QW4-JD-rwH"/>
                 <constraint firstAttribute="bottom" secondItem="OlH-eJ-2xV" secondAttribute="bottom" id="ggW-TQ-8Mg"/>
+                <constraint firstAttribute="trailing" secondItem="3Zo-yp-WNA" secondAttribute="trailing" id="jtO-4X-uL6"/>
                 <constraint firstItem="2gn-q2-6R0" firstAttribute="centerX" secondItem="OlH-eJ-2xV" secondAttribute="centerX" constant="-0.5" id="lZP-o9-ucQ"/>
+                <constraint firstItem="3Zo-yp-WNA" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="xlm-La-Mag"/>
                 <constraint firstItem="OlH-eJ-2xV" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="yor-0A-PGc"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

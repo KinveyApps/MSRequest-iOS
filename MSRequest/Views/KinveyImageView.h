@@ -19,5 +19,7 @@
 
 @property (strong, nonatomic) IBOutlet UIView *view;
 @property (strong, nonatomic) NSString *kinveyID;
+@property (weak, nonatomic) IBOutlet UIView *blurHeaderView;
+@property (weak, nonatomic) IBOutlet UIImageView *headerImageView;
 
 @end

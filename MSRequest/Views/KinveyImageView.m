@@ -14,6 +14,8 @@
  */
 
 #import "KinveyImageView.h"
+#import "UIView+SnapshotImage.h"
+#import "UIImage+AHKAdditions.h"
 
 @interface KinveyImageView ()
 
@@ -65,6 +67,7 @@
             [self.spinner startAnimating];
             
             self.imageView.image = nil;
+            self.headerImageView.image = nil;
             
             //Kinvey: Laod image file
             [KCSFileStore downloadFile:kinveyID                         //File ID
@@ -77,9 +80,14 @@
                                    NSURL* fileURL = file.localURL;
                                    UIImage* image = [UIImage imageWithContentsOfFile:[fileURL path]];
                                    
+                                   
                                    //Return to main thread for update UI
                                    dispatch_async(dispatch_get_main_queue(), ^{
                                        self.imageView.image = image;
+                                       UIImage *headerImage = [self.blurHeaderView snapshot];
+                                       headerImage = [headerImage ahk_applyBlurWithRadius:10.0f
+                                                                                tintColor:[UIColor colorWithWhite:1.0f alpha:0.5f] saturationDeltaFactor:1.8f maskImage:nil];
+                                       self.headerImageView.image = headerImage;
                                        [self.spinner stopAnimating];
                                        [self.imageView setNeedsDisplay];
                                    });

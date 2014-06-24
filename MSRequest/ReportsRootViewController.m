@@ -107,7 +107,7 @@
 }
 
 - (void)setupCell:(RootCollectionViewCell *)cell{
-    [self setBlurForView:cell.headerBlurView];
+//    [self setBlurForView:cell.headerBlurView];
     cell.statusLabel.textColor = [UIColor colorWithRed:0 green:0.549 blue:0.5176 alpha:1.0];
 }
 
